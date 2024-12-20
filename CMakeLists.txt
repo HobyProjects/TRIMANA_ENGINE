@@ -38,27 +38,27 @@ else()
     add_compile_definitions(TRIMANA_BUILD_STATIC)
 endif()
 
+####################################################################################################
+
+set(CORE_DIR ${PROJECT_SOURCE_DIR}/src/core)
+set(WINDOW_DIR ${PROJECT_SOURCE_DIR}/src/window)
+
 
 ####################################################################################################
 
-set(TRIMANA_WINDOW "trimana_window")
-set(
-    TRIMANA_WINDOW_INCLUDE_DIR 
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/window
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core
-)
+set(TRIMANA_WINDOW "trimana_win")
 
 set(
     TRIMANA_WINDOW_HEADERS 
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/base.hpp 
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/window/window.hpp 
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/window/glfw_window.hpp
+        ${CORE_DIR}/base.hpp 
+        ${WINDOW_DIR}/window.hpp 
+        ${WINDOW_DIR}/glfw_window.hpp
 )
 
 set(
     TRIMANA_WINDOW_SOURCES 
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/window/window.cpp 
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/window/glfw_window.cpp
+        ${WINDOW_DIR}/window.cpp 
+        ${WINDOW_DIR}/glfw_window.cpp
 )
 
 if(BUILD_SHARED_LIBS)
@@ -67,7 +67,7 @@ else()
     add_library(${TRIMANA_WINDOW} STATIC ${TRIMANA_WINDOW_HEADERS} ${TRIMANA_WINDOW_SOURCES})
 endif()
 
-target_include_directories(${TRIMANA_WINDOW} PUBLIC ${TRIMANA_WINDOW_INCLUDE_DIR})
+target_include_directories(${TRIMANA_WINDOW} PUBLIC ${CORE_DIR} ${WINDOW_DIR})
 target_link_libraries(${TRIMANA_WINDOW} PUBLIC glfw)
 
 ####################################################################################################

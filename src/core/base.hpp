@@ -1,6 +1,7 @@
 #pragma once
 
 #ifdef TRIMANA_DEBUG
+
 #if defined(TRIMANA_PLATFORM_WINDOWS)
     #define TRIMANA_DEBUGBREAK() __debugbreak()
 #elif defined(TRIMANA_PLATFORM_LINUX)
@@ -9,6 +10,7 @@
 #else   
     #error "Platform doesn't support debugbreak yet!"
 #endif
+
 #ifdef TRIMANA_BUILD_SHARED
     #if defined(TRIMANA_PLATFORM_WINDOWS)
         #ifdef TRIMANA_EXPORT
@@ -21,10 +23,12 @@
     #else
         #define TRIMANA_API
     #endif
+
 #endif // TRIMANA_WINDOW_BUILD_SHARED
 #ifdef TRIMANA_BUILD_STATIC
     #define TRIMANA_API
 #endif // TRIMANA_WINDOW_BUILD_STATIC
+
 #endif // TRIMANA_DEBUG
 
 #ifdef TRIMANA_RELEASE

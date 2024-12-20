@@ -56,7 +56,7 @@ def get_os_base_configure_preset(os: str, inherits: str, cache_variables: list):
         }
     }
     result["cacheVariables"] = {
-        "CMAKE_BUILD_TYPE_INIT": f"{cache_variables[0]}",
+        "CMAKE_BUILD_TYPE": f"{cache_variables[0]}",
         "CMAKE_INSTALL_PREFIX": f"{cache_variables[1]}",
         "CMAKE_PREFIX_PATH": f"{cache_variables[1]}"
     }
@@ -73,7 +73,7 @@ def get_os_preset(os: str, inherits: str, arch: str, conf: str):
         "displayName": f"{arch}-{conf}",
         "architecture": { "value": arch, "strategy": "external"},
         "cacheVariables": {
-            "CMAKE_BUILD_TYPE_INIT": f"{conf}"
+            "CMAKE_BUILD_TYPE": f"{conf}"
         }
     }
     return result

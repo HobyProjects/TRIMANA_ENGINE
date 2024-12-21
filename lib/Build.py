@@ -228,7 +228,7 @@ if __name__ == "__main__":
 
     EXTERNAL_LIBRARIES = [
         PreCompileLibraries("glfw", "glfw", "build/config/glfw", "build/packages/glfw", ""),
-        #PreCompileLibraries("spdlog", "lib/spdlog", "lib/build/config/spdlog", "lib/build/packages/spdlog", ""),
+        PreCompileLibraries("spdlog", "spdlog", "build/config/spdlog", "build/packages/spdlog", ""),
         #PreCompileLibraries("glad", "lib/glad", "lib/build/config/glad", "lib/build/packages/glad", ""),
         #PreCompileLibraries("glm", "lib/glm", "lib/build/config/glm", "lib/build/packages/glm", ""),
         #PreCompileLibraries("imgui", "lib/imgui_docking", "lib/build/config/imgui", "lib/build/packages/imgui", ""),

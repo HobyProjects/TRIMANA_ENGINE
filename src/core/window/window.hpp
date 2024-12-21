@@ -58,7 +58,7 @@ namespace trimana::core{
             
             virtual bool init() = 0;
             virtual void quit() = 0;
-            virtual platform_service_apis get_api() = 0;
+            virtual platform_service_apis api() = 0;
     };
 
     class TRIMANA_API window{
@@ -69,14 +69,15 @@ namespace trimana::core{
             virtual void* native_window() const = 0;
             virtual window_properties* properties() = 0;
             virtual void swap_buffers() const = 0;
-    };
-
-    class TRIMANA_API window_builder{
-        private:
-            window_builder() = default;
-            ~window_builder() = default;
 
         public:
-            static std::unique_ptr<window> create(const std::string& title, platform_service_apis api);
+            class window_builder{
+                private:
+                    window_builder() = default;
+                    ~window_builder() = default;
+                
+                public:
+                    static std::unique_ptr<window> create(const std::string& title, platform_service_apis api);
+            };
     };
 }

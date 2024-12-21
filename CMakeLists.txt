@@ -13,6 +13,7 @@ set(CMAKE_C_EXTENSIONS OFF)
 # Dependencies
 ###############################################################################
 find_package(glfw3 REQUIRED)
+find_package(spdlog REQUIRED)
 
 
 
@@ -52,6 +53,7 @@ set(
 #Header Files
 set(
     TRIMANA_CORE_HEADERS 
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/log.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/base.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/window.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/glfw_window.hpp
@@ -60,17 +62,18 @@ set(
 #Source Files
 set(
     TRIMANA_CORE_SOURCES
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/log.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/window.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/glfw_window.cpp
 )
 
 if(BUILD_SHARED_LIBS)
-    add_library(TrimanaEngine SHARED ${TRIMANA_CORE_HEADERS} ${TRIMANA_CORE_SOURCES})
+    add_library(TrimanaEngineCore SHARED ${TRIMANA_CORE_HEADERS} ${TRIMANA_CORE_SOURCES})
 else()
-    add_library(TrimanaEngine STATIC ${TRIMANA_CORE_HEADERS} ${TRIMANA_CORE_SOURCES})
+    add_library(TrimanaEngineCore STATIC ${TRIMANA_CORE_HEADERS} ${TRIMANA_CORE_SOURCES})
 endif()
 
-target_include_directories(TrimanaEngine PUBLIC ${TRIMANA_CORE_INCLUDE_DIRS})
-target_link_libraries(TrimanaEngine PUBLIC glfw)
+target_include_directories(TrimanaEngineCore PUBLIC ${TRIMANA_CORE_INCLUDE_DIRS})
+target_link_libraries(TrimanaEngineCore PUBLIC glfw spdlog::spdlog)
 
 ###############################################################################

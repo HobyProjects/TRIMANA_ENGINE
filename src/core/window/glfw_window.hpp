@@ -14,7 +14,7 @@ namespace trimana::core{
 
             virtual bool init() override;
             virtual void quit() override;
-            virtual platform_service_apis get_api() override { return platform_service_apis::glfw_api; }
+            virtual platform_service_apis api() override { return platform_service_apis::glfw_api; }
 
         private:
             bool m_initialized{false};

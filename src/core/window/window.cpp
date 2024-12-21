@@ -1,8 +1,9 @@
 #include "glfw_window.hpp"
+#include "window.hpp"
 
 namespace trimana::core{
     
-    std::unique_ptr<window> window_builder::create(const std::string& title, platform_service_apis api){
+    std::unique_ptr<window> trimana::core::window::window_builder::create(const std::string & title, platform_service_apis api){
         switch(api){
             case platform_service_apis::glfw_api:{
                 return std::make_unique<glfw_window>(title);

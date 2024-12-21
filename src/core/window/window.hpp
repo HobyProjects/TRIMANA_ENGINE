@@ -6,11 +6,12 @@
 #include "base.hpp"
 
 namespace trimana::core{
-
+    
     enum class window_state {
-        fullscreen,  
-        minimized,    
-        maximized     
+        fullscreen  = 0,  
+        minimized   = 1,    
+        maximized   = 2,    
+        normal      = 3     
     };
 
     struct window_properties{
@@ -36,6 +37,7 @@ namespace trimana::core{
 
         uint32_t pos_x{0};
         uint32_t pos_y{0};
+
         int32_t framebuffer_width{0};
         int32_t framebuffer_height{0};
 
@@ -64,11 +66,17 @@ namespace trimana::core{
             window() = default;
             virtual ~window() = default;
 
-            virtual void* get_native_window() const = 0;
-            virtual window_properties& get_window_properties() = 0;
-            virtual void swap_buffers() = 0;
+            virtual void* native_window() const = 0;
+            virtual window_properties* properties() = 0;
+            virtual void swap_buffers() const = 0;
     };
 
-    TRIMANA_API std::shared_ptr<platform_service_api> get_platform_service_api();
-    TRIMANA_API std::shared_ptr<window> create_window(const std::string& title, platform_service_apis api);
+    class TRIMANA_API window_builder{
+        private:
+            window_builder() = default;
+            ~window_builder() = default;
+
+        public:
+            static std::unique_ptr<window> create(const std::string& title, platform_service_apis api);
+    };
 }

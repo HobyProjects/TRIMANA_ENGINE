@@ -25,11 +25,9 @@ namespace trimana::core{
      * @details This struct is used to store the properties of a window, such as its size, position, title and other settings.
      */
     struct window_properties {
+        std::string title{""};                                      /**< The title of the window. */
         uint32_t width{0};                                          /**< Width of the window. */
         uint32_t height{0};                                         /**< Height of the window. */
-        bool is_vsync_enabled{false};                               /**< If vsync is enabled or not. */
-        bool is_active{false};                                      /**< If the window is active or not. */
-        bool is_focused{false};                                     /**< If the window is focused or not. */
         uint32_t red_color_bits{8};                                 /**< The number of red color bits. */
         uint32_t green_color_bits{8};                               /**< The number of green color bits. */
         uint32_t blue_color_bits{8};                                /**< The number of blue color bits. */
@@ -46,7 +44,9 @@ namespace trimana::core{
         int32_t framebuffer_width{0};                               /**< The width of the framebuffer. */
         int32_t framebuffer_height{0};                              /**< The height of the framebuffer. */
         window_state window_state{window_state::maximized};         /**< The state of the window. */
-        std::string title{""};                                      /**< The title of the window. */
+        bool is_vsync_enabled{false};                               /**< If vsync is enabled or not. */
+        bool is_focused{false};                                     /**< If the window is focused or not. */
+        bool is_active{false};                                      /**< If the window is active or not. */
     };
 
 

@@ -5,6 +5,8 @@
 #include <string_view>
 #include <source_location>
 
+#include "log.hpp"
+
 namespace trimana::core{
 
     /**
@@ -25,17 +27,12 @@ namespace trimana::core{
              */
             virtual ~exception() = default;
 
-            /**
-             * @brief Gets the exception message.
-             * @return The exception message.
-             */
-            virtual const std::string_view& what() const noexcept {};
 
             /**
-             * @brief Gets the source location where the exception occurred.
-             * @return The source location.
+             * @brief Gets a string representation of the exception.
+             * @return The exception message.
              */
-            virtual const std::source_location& location() const noexcept {};
+            virtual void what() const noexcept {};
 
         protected:
             std::string_view m_message{};       /**< The exception message. */
@@ -65,20 +62,13 @@ namespace trimana::core{
              */
             virtual ~uninitialize_exception() = default;
 
-            /**
-             * @brief Gets the exception message.
-             * @return The exception message.
-             */
-            const std::string_view& what() const noexcept override {
-                return m_message.data();
-            }
 
             /**
-             * @brief Gets the source location where the exception occurred.
-             * @return The source location.
+             * @brief Gets a string representation of the exception.
+             * @return The exception message.
              */
-            const std::source_location& location() const noexcept override {
-                return m_location;
+            void what() const noexcept override {
+                TRIMANA_CRITICAL("Uninitialized exception: {0} (in file:{1} | at line: {2})", m_message, m_location.file_name(), m_location.line());
             }
     };
 
@@ -106,19 +96,11 @@ namespace trimana::core{
             virtual ~not_implemented_exception() = default;
 
             /**
-             * @brief Gets the exception message.
+             * @brief Gets a string representation of the exception.
              * @return The exception message.
              */
-            const std::string_view& what() const noexcept override {
-                return m_message.data();
-            }
-
-            /**
-             * @brief Gets the source location where the exception occurred.
-             * @return The source location.
-             */
-            const std::source_location& location() const noexcept override {
-                return m_location;
+            void what() const noexcept override {
+                TRIMANA_CRITICAL("not_implemented_exception: {0} (in file:{1} | at line: {2})", m_message, m_location.file_name(), m_location.line());
             }
     };
 
@@ -146,19 +128,11 @@ namespace trimana::core{
             virtual ~api_failure_exception() = default;
 
             /**
-             * @brief Gets the exception message.
+             * @brief Gets a string representation of the exception.
              * @return The exception message.
              */
-            const std::string_view& what() const noexcept override {
-                return m_message.data();
+            void what() const noexcept override {
+                TRIMANA_CRITICAL("api_failure_exception : {0} (in file:{1} | at line: {2})", m_message, m_location.file_name(), m_location.line());
             }
-
-            /**
-             * @brief Gets the source location where the exception occurred.
-             * @return The source location.
-             */
-            const std::source_location& location() const noexcept override {
-                return m_location;
-            }   
     };
 }

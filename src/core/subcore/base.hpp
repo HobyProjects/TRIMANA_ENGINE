@@ -1,5 +1,7 @@
 #pragma once
 
+#include <type_traits>
+
 #ifdef TRIMANA_DEBUG
     #if defined(TRIMANA_PLATFORM_WINDOWS)
         #define TRIMANA_DEBUGBREAK() __debugbreak()

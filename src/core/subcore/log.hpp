@@ -18,14 +18,52 @@ namespace trimana::core{
     };
 }
 
-#define TRIMANA_CORE_TRACE(...) ::trimana::core::logger::get_core_logger()->trace(__VA_ARGS__)
-#define TRIMANA_CORE_INFO(...) ::trimana::core::logger::get_core_logger()->info(__VA_ARGS__)
-#define TRIMANA_CORE_WARN(...) ::trimana::core::logger::get_core_logger()->warn(__VA_ARGS__)    
-#define TRIMANA_CORE_ERROR(...) ::trimana::core::logger::get_core_logger()->error(__VA_ARGS__)
-#define TRIMANA_CORE_CRITICAL(...) ::trimana::core::logger::get_core_logger()->critical(__VA_ARGS__)
+template<typename... Args>
+inline TRIMANA_API void TRIMANA_CORE_TRACE(Args&&... args){
+    trimana::core::logger::get_core_logger()->trace(str_fmt, std::forward<Args>(args)...);
+}
 
-#define TRIMANA_TRACE(...) ::trimana::core::logger::get_client_logger()->trace(__VA_ARGS__)
-#define TRIMANA_INFO(...) ::trimana::core::logger::get_client_logger()->info(__VA_ARGS__)
-#define TRIMANA_WARN(...) ::trimana::core::logger::get_client_logger()->warn(__VA_ARGS__)    
-#define TRIMANA_ERROR(...) ::trimana::core::logger::get_client_logger()->error(__VA_ARGS__)
-#define TRIMANA_CRITICAL(...) ::trimana::core::logger::get_client_logger()->critical(__VA_ARGS__)
+template<typename... Args>
+inline TRIMANA_API void TRIMANA_CORE_INFO(Args&&... args){
+    trimana::core::logger::get_core_logger()->info(str_fmt, std::forward<Args>(args)...);
+}
+
+template<typename... Args>
+inline TRIMANA_API void TRIMANA_CORE_WARN(Args&&... args){
+    trimana::core::logger::get_core_logger()->warn(str_fmt, std::forward<Args>(args)...);
+}
+
+template<typename... Args>
+inline TRIMANA_API void TRIMANA_CORE_ERROR(Args&&... args){
+    trimana::core::logger::get_core_logger()->error(str_fmt, std::forward<Args>(args)...);
+}
+
+template<typename... Args>
+inline TRIMANA_API void TRIMANA_CORE_CRITICAL(Args&&... args){
+    trimana::core::logger::get_core_logger()->critical(str_fmt, std::forward<Args>(args)...);
+}
+
+template<typename... Args>
+inline TRIMANA_API void TRIMANA_TRACE(Args&&... args){
+    trimana::core::logger::get_client_logger()->trace(str_fmt, std::forward<Args>(args)...);
+}
+
+template<typename... Args>
+inline TRIMANA_API void TRIMANA_INFO(Args&&... args){
+    trimana::core::logger::get_client_logger()->info(str_fmt, std::forward<Args>(args)...);
+}
+
+template<typename... Args>
+inline TRIMANA_API void TRIMANA_WARN(Args&&... args){
+    trimana::core::logger::get_client_logger()->warn(str_fmt, std::forward<Args>(args)...);
+}
+
+template<typename... Args>
+inline TRIMANA_API void TRIMANA_ERROR(Args&&... args){
+    trimana::core::logger::get_client_logger()->error(str_fmt, std::forward<Args>(args)...);
+}
+
+template<typename... Args>
+inline TRIMANA_API void TRIMANA_CRITICAL(Args&&... args){
+    trimana::core::logger::get_client_logger()->critical(str_fmt, std::forward<Args>(args)...);
+}

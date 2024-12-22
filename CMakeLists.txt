@@ -14,6 +14,7 @@ set(CMAKE_C_EXTENSIONS OFF)
 ###############################################################################
 find_package(glfw3 REQUIRED)
 find_package(spdlog REQUIRED)
+find_package(SDL3 REQUIRED)
 
 
 
@@ -57,6 +58,7 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/base.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/window.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/glfw_window.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/sdl_window.hpp
 )
 
 #Source Files
@@ -65,6 +67,7 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/log.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/window.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/glfw_window.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/sdl_window.cpp
 )
 
 if(BUILD_SHARED_LIBS)
@@ -74,6 +77,6 @@ else()
 endif()
 
 target_include_directories(TrimanaEngineCore PUBLIC ${TRIMANA_CORE_INCLUDE_DIRS})
-target_link_libraries(TrimanaEngineCore PUBLIC glfw spdlog::spdlog)
+target_link_libraries(TrimanaEngineCore PUBLIC glfw spdlog::spdlog SDL3::SDL3)
 
 ###############################################################################

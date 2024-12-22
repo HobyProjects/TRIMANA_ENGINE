@@ -1,12 +1,15 @@
 #include "glfw_window.hpp"
+#include "log.hpp"
 
 namespace trimana::core{
 
     bool glfw_service_api::init(){
         if(!glfwInit()){
+            TRIMANA_CORE_CRITICAL("Failed to initialize GLFW");
             return (m_initialized = false);
         }
 
+        TRIMANA_CORE_INFO("GLFW initialized successfully");
         return (m_initialized = true);
     }
 
@@ -31,7 +34,9 @@ namespace trimana::core{
             m_properties.blue_color_bits = mode->blueBits;
             m_properties.alpha_color_bits = 8;
             m_properties.refresh_rate = mode->refreshRate;
+
         }else{
+            TRIMANA_CORE_WARN("Failed to get video mode, using default values");
             m_properties.width = 1280;
             m_properties.height = 720;
             m_properties.fixed_width = 0;
@@ -65,6 +70,7 @@ namespace trimana::core{
 
         m_window = glfwCreateWindow(m_properties.width, m_properties.height, m_properties.title.c_str(), nullptr, nullptr);
         if(m_window != nullptr){
+            TRIMANA_CORE_INFO("GLFW window created successfully");
             glfwSetWindowSizeLimits(m_window, m_properties.min_width, m_properties.min_height, GLFW_DONT_CARE, GLFW_DONT_CARE);
             glfwGetFramebufferSize(m_window, &m_properties.framebuffer_width, &m_properties.framebuffer_height);
             glfwMakeContextCurrent(m_window);
@@ -76,6 +82,7 @@ namespace trimana::core{
         }
         else{
             
+            TRIMANA_CORE_CRITICAL("Failed to create GLFW window");
             glfwTerminate();
         }
     }

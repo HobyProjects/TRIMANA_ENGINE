@@ -24,6 +24,7 @@ namespace trimana::core{
     };
 
     class uninitialize_exception : public exception {
+        public:
             uninitialize_exception(const std::string_view& message) : exception(message, std::source_location::current()) {};
             uninitialize_exception(const std::string_view& message, const std::source_location location): exception(message, location) {};
             virtual ~uninitialize_exception() = default;
@@ -38,6 +39,7 @@ namespace trimana::core{
     };
 
     class not_implemented_exception : public exception {
+        public:
             not_implemented_exception(const std::string_view& message) : exception(message, std::source_location::current()) {};
             not_implemented_exception(const std::string_view& message, const std::source_location location): exception(message, location) {};
             virtual ~not_implemented_exception() = default;
@@ -52,6 +54,7 @@ namespace trimana::core{
     };
 
     class api_failure_exception : public exception {
+        public:
             api_failure_exception(const std::string_view& message) : exception(message, std::source_location::current()) {};
             api_failure_exception(const std::string_view& message, const std::source_location location): exception(message, location) {};
             virtual ~api_failure_exception() = default;

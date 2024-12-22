@@ -5,7 +5,7 @@
 
 namespace trimana::core{
 
-    class TRIMANA_API sdl_service_api final : public platform_service_api{
+    class sdl_service_api final : public platform_service_api{
         public:
             sdl_service_api() = default;
             virtual ~sdl_service_api() = default;
@@ -18,7 +18,7 @@ namespace trimana::core{
             bool m_initialized{false};
     };
 
-    class TRIMANA_API sdl_window final : public window {
+    class sdl_window final : public window {
         public:
             sdl_window(const std::string& title);
             virtual ~sdl_window();

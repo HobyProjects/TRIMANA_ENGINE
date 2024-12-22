@@ -7,7 +7,7 @@
 
 namespace trimana::core{
 
-    class TRIMANA_API glfw_service_api final : public platform_service_api{
+    class glfw_service_api final : public platform_service_api{
         public:
             glfw_service_api() = default;
             ~glfw_service_api() = default;
@@ -20,7 +20,7 @@ namespace trimana::core{
             bool m_initialized{false};
     };
 
-    class TRIMANA_API glfw_window final : public window {
+    class glfw_window final : public window {
         public:
             glfw_window(const std::string& title);
             ~glfw_window();

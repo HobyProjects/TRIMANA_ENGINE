@@ -1,11 +1,12 @@
 #include "glfw_window.hpp"
+#include "exceptions.hpp"
 #include "log.hpp"
 
 namespace trimana::core{
 
     bool glfw_service_api::init(){
         if(!glfwInit()){
-            TRIMANA_CORE_CRITICAL("Failed to initialize GLFW");
+            throw uninitialize_exception("Failed to initialize GLFW");
             return (m_initialized = false);
         }
 
@@ -73,6 +74,8 @@ namespace trimana::core{
             TRIMANA_CORE_INFO("GLFW window created successfully");
             glfwSetWindowSizeLimits(m_window, m_properties.min_width, m_properties.min_height, GLFW_DONT_CARE, GLFW_DONT_CARE);
             glfwGetFramebufferSize(m_window, &m_properties.framebuffer_width, &m_properties.framebuffer_height);
+
+            // [TODO]: Context creation must be handled by the renderer
             glfwMakeContextCurrent(m_window);
             glfwSwapInterval(1);
 
@@ -82,7 +85,7 @@ namespace trimana::core{
         }
         else{
             
-            TRIMANA_CORE_CRITICAL("Failed to create GLFW window");
+            throw api_failure_exception("Failed to create GLFW window");
             glfwTerminate();
         }
     }

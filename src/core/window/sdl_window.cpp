@@ -1,11 +1,12 @@
 #include "sdl_window.hpp"
+#include "exceptions.hpp"
 #include "log.hpp"
 
 namespace trimana::core{
 
     bool sdl_service_api::init() {
         if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) != 0){
-            TRIMANA_CORE_CRITICAL("Failed to initialize SDL");
+            throw uninitialize_exception("Failed to initialize SDL");
             return (m_initialized = false);
         }
 

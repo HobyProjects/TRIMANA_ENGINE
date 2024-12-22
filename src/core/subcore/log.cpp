@@ -5,7 +5,7 @@
 
 namespace trimana::core{
 
-    static bool s_Initialized = false;
+    static std::once_flag s_Initialized;
     static std::shared_ptr<spdlog::logger> s_CoreLogger = nullptr;
     static std::shared_ptr<spdlog::logger> s_ClientLogger = nullptr;
 
@@ -25,21 +25,15 @@ namespace trimana::core{
         spdlog::register_logger(s_ClientLogger);
         s_ClientLogger->set_level(spdlog::level::trace);
         s_ClientLogger->flush_on(spdlog::level::trace);
-
-        s_Initialized = true;
     }
 
     std::shared_ptr<spdlog::logger>& logger::get_core_logger(){
-        if(!s_Initialized)
-            init_loggers();
-
+        std::call_once(s_Initialized, init_loggers);
         return s_CoreLogger;
     }
 
     std::shared_ptr<spdlog::logger>& logger::get_client_logger(){
-        if(!s_Initialized)
-            init_loggers();
-
+        std::call_once(s_Initialized, init_loggers);
         return s_ClientLogger;
     }   
 }

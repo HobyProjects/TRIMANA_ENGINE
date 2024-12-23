@@ -4,6 +4,7 @@
 #include <string>
 
 #include "base.hpp"
+#include "context.hpp"
 
 namespace trimana::core {
 
@@ -12,10 +13,10 @@ namespace trimana::core {
 	 * @brief Enum with the possible states a window can have.
 	 */
 	enum class window_state {
-		fullscreen = 0,    //< Fullscreen state.
-		minimized = 1,    //< Minimized state.
-		maximized = 2,    //< Maximized state.
-		normal = 3     //< Normal state.
+		fullscreen	= 0,		//< Fullscreen state.
+		minimized	= 1,		//< Minimized state.
+		maximized	= 2,		//< Maximized state.
+		normal		= 3			//< Normal state.
 	};
 
 
@@ -116,6 +117,12 @@ namespace trimana::core {
 		 * @brief Swaps the window buffers.
 		 */
 		virtual void swap_buffers() const = 0;
+
+		/**
+		 * @brief Retrieves the window context.
+		 * @return A pointer to the window context.
+		 */
+		virtual std::shared_ptr<context> window_context() const = 0;
 
 	public:
 		/**

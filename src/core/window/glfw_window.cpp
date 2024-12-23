@@ -54,6 +54,8 @@ namespace trimana::core {
 
 		m_properties.title = title;
 
+		//[TODO]: Window hints must be base on what rendering API is being used
+
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 		glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -76,9 +78,10 @@ namespace trimana::core {
 			glfwSetWindowSizeLimits(m_window, m_properties.min_width, m_properties.min_height, GLFW_DONT_CARE, GLFW_DONT_CARE);
 			glfwGetFramebufferSize(m_window, &m_properties.framebuffer_width, &m_properties.framebuffer_height);
 
-			// [TODO]: Context creation must be handled by the renderer
-			glfwMakeContextCurrent(m_window);
-			glfwSwapInterval(1);
+			m_context = context::context_builder::create(m_window, rendering_api::opengl);
+			if (m_context != nullptr) {
+				m_context->make_context();
+			}
 
 			m_properties.is_active = true;
 			m_properties.is_focused = glfwGetWindowAttrib(m_window, GLFW_FOCUSED);

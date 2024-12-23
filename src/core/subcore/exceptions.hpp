@@ -138,5 +138,38 @@ namespace trimana::core {
 			TRIMANA_CRITICAL("api failure exception : {0} (in file:{1} | at line: {2})", m_message, m_location.file_name(), m_location.line());
 			TRIMANA_DEBUGBREAK();
 		}
+	};	
+
+	/**
+	 * @brief Exception class for null pointers.
+	 */
+	class null_pointer_exception : public exception {
+	public:
+		/**
+		 * @brief Constructs a null pointer exception with the specified message and current source location.
+		 * @param message The exception message.
+		 */
+		null_pointer_exception(const std::string_view& message) : exception(message, std::source_location::current()) {};
+
+		/**
+		 * @brief Constructs a null pointer exception with the specified message and source location.
+		 * @param message The exception message.
+		 * @param location The source location where the exception occurred.
+		 */
+		null_pointer_exception(const std::string_view& message, const std::source_location location) : exception(message, location) {};
+
+		/**
+		 * @brief Default destructor.
+		 */
+		virtual ~null_pointer_exception() = default;
+
+		/**
+		 * @brief Gets a string representation of the exception.
+		 * @return The exception message.
+		 */
+		void what() const noexcept override {
+			TRIMANA_CRITICAL("null pointer exception : {0} (in file:{1} | at line: {2})", m_message, m_location.file_name(), m_location.line());
+			TRIMANA_DEBUGBREAK();
+		}
 	};
 }

@@ -230,7 +230,7 @@ if __name__ == "__main__":
         PreCompileLibraries("glfw", "glfw", "build/config/glfw", "build/packages/glfw", ""),
         PreCompileLibraries("spdlog", "spdlog", "build/config/spdlog", "build/packages/spdlog", ""),
         PreCompileLibraries("SDL", "SDL", "build/config/SDL", "build/packages/SDL", ""),
-        #PreCompileLibraries("glad", "lib/glad", "lib/build/config/glad", "lib/build/packages/glad", ""),
+        PreCompileLibraries("glad", "glad", "build/config/glad", "build/packages/glad", ""),
         #PreCompileLibraries("glm", "lib/glm", "lib/build/config/glm", "lib/build/packages/glm", ""),
         #PreCompileLibraries("imgui", "lib/imgui_docking", "lib/build/config/imgui", "lib/build/packages/imgui", ""),
         #PreCompileLibraries("stb", "lib/stb_image", "lib/build/config/stb", "lib/build/packages/stb", ""),

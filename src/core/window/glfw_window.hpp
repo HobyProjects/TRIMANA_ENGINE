@@ -28,9 +28,11 @@ namespace trimana::core {
 		virtual void* native_window() const override { return m_window; }
 		virtual window_properties* properties() override { return &m_properties; }
 		virtual void swap_buffers() const override;
+		virtual std::shared_ptr<context> window_context() const override { return m_context; }
 
 	private:
 		GLFWwindow* m_window{ nullptr };
 		window_properties m_properties{};
+		std::shared_ptr<context> m_context{ nullptr };
 	};
 }

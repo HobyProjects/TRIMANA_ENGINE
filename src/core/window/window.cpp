@@ -8,7 +8,7 @@ namespace trimana::core {
 		switch (api) {
 		case platform_service_apis::glfw_api:				return std::make_unique<glfw_window>(title);
 		case platform_service_apis::sdl_api:				return std::make_unique<sdl_window>(title);
-		case platform_service_apis::win32_api:				throw not_implemented_exception("Win32 API is not implemented yet"); return nullptr;
+		case platform_service_apis::win32_api:				throw unimplemented_feature_exception("Win32 API is not implemented yet"); return nullptr;
 		default:											return nullptr;
 		};
 	}

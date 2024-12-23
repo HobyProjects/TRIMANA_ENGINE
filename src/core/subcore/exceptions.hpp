@@ -43,25 +43,25 @@ namespace trimana::core {
 	/**
 	 * @brief Exception class for uninitialized objects.
 	 */
-	class uninitialize_exception : public exception {
+	class uninitialized_object_exception : public exception {
 	public:
 		/**
 		 * @brief Constructs an uninitialized exception with the specified message and current source location.
 		 * @param message The exception message.
 		 */
-		uninitialize_exception(const std::string_view& message) : exception(message, std::source_location::current()) {};
+		uninitialized_object_exception(const std::string_view& message) : exception(message, std::source_location::current()) {};
 
 		/**
 		 * @brief Constructs an uninitialized exception with the specified message and source location.
 		 * @param message The exception message.
 		 * @param location The source location where the exception occurred.
 		 */
-		uninitialize_exception(const std::string_view& message, const std::source_location location) : exception(message, location) {};
+		uninitialized_object_exception(const std::string_view& message, const std::source_location location) : exception(message, location) {};
 
 		/**
 		 * @brief Default destructor.
 		 */
-		virtual ~uninitialize_exception() = default;
+		virtual ~uninitialized_object_exception() = default;
 
 
 		/**
@@ -69,7 +69,7 @@ namespace trimana::core {
 		 * @return The exception message.
 		 */
 		void what() const noexcept override {
-			TRIMANA_CRITICAL("Uninitialized exception: {0} (in file:{1} | at line: {2})", m_message, m_location.file_name(), m_location.line());
+			TRIMANA_CRITICAL("Uninitialized object exception: {0} (in file:{1} | at line: {2})", m_message, m_location.file_name(), m_location.line());
 			TRIMANA_DEBUGBREAK();
 		}
 	};
@@ -77,32 +77,32 @@ namespace trimana::core {
 	/**
 	 * @brief Exception class for not implemented functionality.
 	 */
-	class not_implemented_exception : public exception {
+	class unimplemented_feature_exception : public exception {
 	public:
 		/**
 		 * @brief Constructs a not implemented exception with the specified message and current source location.
 		 * @param message The exception message.
 		 */
-		not_implemented_exception(const std::string_view& message) : exception(message, std::source_location::current()) {};
+		unimplemented_feature_exception(const std::string_view& message) : exception(message, std::source_location::current()) {};
 
 		/**
 		 * @brief Constructs a not implemented exception with the specified message and source location.
 		 * @param message The exception message.
 		 * @param location The source location where the exception occurred.
 		 */
-		not_implemented_exception(const std::string_view& message, const std::source_location location) : exception(message, location) {};
+		unimplemented_feature_exception(const std::string_view& message, const std::source_location location) : exception(message, location) {};
 
 		/**
 		 * @brief Default destructor.
 		 */
-		virtual ~not_implemented_exception() = default;
+		virtual ~unimplemented_feature_exception() = default;
 
 		/**
 		 * @brief Gets a string representation of the exception.
 		 * @return The exception message.
 		 */
 		void what() const noexcept override {
-			TRIMANA_CRITICAL("not implemented exception: {0} (in file:{1} | at line: {2})", m_message, m_location.file_name(), m_location.line());
+			TRIMANA_CRITICAL("Unimplemented feature exception: {0} (in file:{1} | at line: {2})", m_message, m_location.file_name(), m_location.line());
 			TRIMANA_DEBUGBREAK();
 		}
 	};
@@ -110,32 +110,32 @@ namespace trimana::core {
 	/**
 	 * @brief Exception class for API failures.
 	 */
-	class api_failure_exception : public exception {
+	class api_response_exception : public exception {
 	public:
 		/**
 		 * @brief Constructs an API failure exception with the specified message and current source location.
 		 * @param message The exception message.
 		 */
-		api_failure_exception(const std::string_view& message) : exception(message, std::source_location::current()) {};
+		api_response_exception(const std::string_view& message) : exception(message, std::source_location::current()) {};
 
 		/**
 		 * @brief Constructs an API failure exception with the specified message and source location.
 		 * @param message The exception message.
 		 * @param location The source location where the exception occurred.
 		 */
-		api_failure_exception(const std::string_view& message, const std::source_location location) : exception(message, location) {};
+		api_response_exception(const std::string_view& message, const std::source_location location) : exception(message, location) {};
 
 		/**
 		 * @brief Default destructor.
 		 */
-		virtual ~api_failure_exception() = default;
+		virtual ~api_response_exception() = default;
 
 		/**
 		 * @brief Gets a string representation of the exception.
 		 * @return The exception message.
 		 */
 		void what() const noexcept override {
-			TRIMANA_CRITICAL("api failure exception : {0} (in file:{1} | at line: {2})", m_message, m_location.file_name(), m_location.line());
+			TRIMANA_CRITICAL("Api response exception : {0} (in file:{1} | at line: {2})", m_message, m_location.file_name(), m_location.line());
 			TRIMANA_DEBUGBREAK();
 		}
 	};	
@@ -168,7 +168,7 @@ namespace trimana::core {
 		 * @return The exception message.
 		 */
 		void what() const noexcept override {
-			TRIMANA_CRITICAL("null pointer exception : {0} (in file:{1} | at line: {2})", m_message, m_location.file_name(), m_location.line());
+			TRIMANA_CRITICAL("Null pointer exception : {0} (in file:{1} | at line: {2})", m_message, m_location.file_name(), m_location.line());
 			TRIMANA_DEBUGBREAK();
 		}
 	};

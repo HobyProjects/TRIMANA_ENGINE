@@ -6,7 +6,7 @@ namespace trimana::core {
 
 	bool sdl_service_api::init() {
 		if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) != 0) {
-			throw uninitialize_exception("Failed to initialize SDL");
+			throw uninitialized_object_exception("Failed to initialize SDL");
 			return (m_initialized = false);
 		}
 

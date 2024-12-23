@@ -13,11 +13,11 @@ namespace trimana::core {
 			break;
 		}
 		case rendering_api::vulkan: {
-			throw not_implemented_exception("Vulkan renderer is not implemented yet");
+			throw unimplemented_feature_exception("Vulkan renderer is not implemented yet");
 			break;
 		}
 		case rendering_api::directx: {
-			throw not_implemented_exception("DirectX renderer is not implemented yet");
+			throw unimplemented_feature_exception("DirectX renderer is not implemented yet");
 			break;
 		}
 		default: {
@@ -34,11 +34,11 @@ namespace trimana::core {
 			break;
 		}
 		case rendering_api::vulkan: {
-			throw not_implemented_exception("Vulkan renderer is not implemented yet");
+			throw unimplemented_feature_exception("Vulkan renderer is not implemented yet");
 			break;
 		}
 		case rendering_api::directx: {
-			throw not_implemented_exception("DirectX renderer is not implemented yet");
+			throw unimplemented_feature_exception("DirectX renderer is not implemented yet");
 			break;
 		}
 		default: {
@@ -63,11 +63,11 @@ namespace trimana::core {
 			break;
 		}
 		case rendering_api::vulkan: {
-			throw not_implemented_exception("Vulkan renderer is not implemented yet");
+			throw unimplemented_feature_exception("Vulkan renderer is not implemented yet");
 			break;
 		}
 		case rendering_api::directx: {
-			throw not_implemented_exception("DirectX renderer is not implemented yet");
+			throw unimplemented_feature_exception("DirectX renderer is not implemented yet");
 			break;
 		}
 		default: {
@@ -84,11 +84,11 @@ namespace trimana::core {
 			break;
 		}
 		case rendering_api::vulkan: {
-			throw not_implemented_exception("Vulkan renderer is not implemented yet");
+			throw unimplemented_feature_exception("Vulkan renderer is not implemented yet");
 			break;
 		}
 		case rendering_api::directx: {
-			throw not_implemented_exception("DirectX renderer is not implemented yet");
+			throw unimplemented_feature_exception("DirectX renderer is not implemented yet");
 			break;
 		}
 		default: {
@@ -105,11 +105,11 @@ namespace trimana::core {
 			break;
 		}
 		case rendering_api::vulkan: {
-			throw not_implemented_exception("Vulkan renderer is not implemented yet");
+			throw unimplemented_feature_exception("Vulkan renderer is not implemented yet");
 			break;
 		}
 		case rendering_api::directx: {
-			throw not_implemented_exception("DirectX renderer is not implemented yet");
+			throw unimplemented_feature_exception("DirectX renderer is not implemented yet");
 			break;
 		}
 		default: {

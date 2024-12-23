@@ -9,7 +9,7 @@ namespace trimana::core {
 
 		GLenum status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		if (status == GL_FALSE) {
-			throw uninitialize_exception("Failed to initialize GLAD");
+			throw uninitialized_object_exception("Failed to initialize GLAD");
 			return false;
 		}
 

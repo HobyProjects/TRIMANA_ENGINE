@@ -7,7 +7,7 @@ namespace trimana::core {
 
 	bool glfw_service_api::init() {
 		if (!glfwInit()) {
-			throw uninitialize_exception("Failed to initialize GLFW");
+			throw uninitialized_object_exception("Failed to initialize GLFW");
 			return (m_initialized = false);
 		}
 
@@ -62,6 +62,10 @@ namespace trimana::core {
 			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 			glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
 			glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE);
+
+#if defined(TRIMANA_DEBUG)
+			glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+#endif
 		}
 
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
@@ -90,7 +94,7 @@ namespace trimana::core {
 		}
 		else {
 
-			throw api_failure_exception("Failed to create GLFW window");
+			throw api_response_exception("Failed to create GLFW window");
 			glfwTerminate();
 		}
 	}

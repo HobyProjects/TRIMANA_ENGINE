@@ -24,6 +24,7 @@ find_package(glfw3 REQUIRED)
 find_package(spdlog REQUIRED)
 find_package(SDL3 REQUIRED)
 find_package(glad REQUIRED)
+find_package(glm REQUIRED)
 
 
 
@@ -82,8 +83,11 @@ set(
 
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/renderer.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/context.hpp
+
+
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_renderer.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_context.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_debug.hpp
 )
 
 #Source Files
@@ -99,9 +103,10 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/context.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_renderer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_context.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_debug.cpp
 )
 
 
 add_library(TrimanaEngineCore STATIC ${TRIMANA_CORE_HEADERS} ${TRIMANA_CORE_SOURCES})
 target_include_directories(TrimanaEngineCore PUBLIC ${TRIMANA_CORE_INCLUDE_DIRS})
-target_link_libraries(TrimanaEngineCore PUBLIC glfw spdlog::spdlog SDL3::SDL3 glad::glad)
+target_link_libraries(TrimanaEngineCore PUBLIC glfw spdlog::spdlog SDL3::SDL3 glad::glad glm::glm)

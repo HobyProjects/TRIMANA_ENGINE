@@ -1,5 +1,6 @@
 #include "glfw_window.hpp"
 #include "exceptions.hpp"
+#include "renderer.hpp"
 #include "log.hpp"
 
 namespace trimana::core {
@@ -54,16 +55,16 @@ namespace trimana::core {
 
 		m_properties.title = title;
 
-		//[TODO]: Window hints must be base on what rendering API is being used
+		if (renderer::api() == rendering_api::opengl) {
+			glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
+			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+			glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
+			glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE);
+		}
 
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
-		glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
-		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
-		glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE);
-
 		glfwWindowHint(GLFW_RED_BITS, m_properties.red_color_bits);
 		glfwWindowHint(GLFW_GREEN_BITS, m_properties.green_color_bits);
 		glfwWindowHint(GLFW_BLUE_BITS, m_properties.blue_color_bits);
@@ -78,7 +79,7 @@ namespace trimana::core {
 			glfwSetWindowSizeLimits(m_window, m_properties.min_width, m_properties.min_height, GLFW_DONT_CARE, GLFW_DONT_CARE);
 			glfwGetFramebufferSize(m_window, &m_properties.framebuffer_width, &m_properties.framebuffer_height);
 
-			m_context = context::context_builder::create(m_window, rendering_api::opengl);
+			m_context = context::context_builder::create(m_window, renderer::api());
 			if (m_context != nullptr) {
 				m_context->make_context();
 			}

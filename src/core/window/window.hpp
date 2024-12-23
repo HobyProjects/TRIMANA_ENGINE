@@ -56,9 +56,9 @@ namespace trimana::core {
 	 * @brief Enum representing different platform service APIs.
 	 */
 	enum class platform_service_apis {
-		glfw_api = TRIMANA_BIT(1),  /**< GLFW API bit flag. */
-		sdl_api = TRIMANA_BIT(2),  /**< SDL API bit flag. */
-		win32_api = TRIMANA_BIT(3)   /**< Win32 API bit flag. */
+		glfw_api	= TRIMANA_BIT(1),  /**< GLFW API bit flag. */
+		sdl_api		= TRIMANA_BIT(2),  /**< SDL API bit flag. */
+		win32_api	= TRIMANA_BIT(3)   /**< Win32 API bit flag. */
 	};
 
 	/**
@@ -143,6 +143,18 @@ namespace trimana::core {
 			 * @return A pointer to a window.
 			 */
 			static std::unique_ptr<window> create(const std::string& title, platform_service_apis api);
+
+			/**
+			 * @brief Retrieves the platform service API.
+			 * @return The platform service API.
+			 */
+			static platform_service_apis get_platform_service_api();
+
+			/**
+			 * @brief Changes the platform service API.
+			 * @param api The platform service API to change to.
+			 */
+			static void change_service_api(platform_service_apis api);
 		};
 	};
 }

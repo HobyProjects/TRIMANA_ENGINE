@@ -22,7 +22,15 @@ namespace trimana::core {
 		}
 	}
 
-	glfw_window::glfw_window(const std::string& title) {
+	glfw_window::glfw_window(const std::string& title, const std::shared_ptr<glfw_service_api>& glfw_service_api) {
+		if (glfw_service_api != nullptr) { 
+			m_glfw_service_api = glfw_service_api; 
+		}
+		else {
+			throw uninitialized_object_exception("An attempt to create a window, before initializing the service api");
+			return;
+		}
+
 		const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 		if (mode != nullptr) {
 			m_properties.width = mode->width;
@@ -87,6 +95,16 @@ namespace trimana::core {
 			if (m_context != nullptr) {
 				m_context->make_context();
 			}
+			else {
+				throw api_response_exception("Failed to create context");
+				if (!m_glfw_service_api.expired()) {
+					auto service_api = m_glfw_service_api.lock();
+					service_api->quit();
+				}
+
+				return;
+			}
+
 
 			m_properties.is_active = true;
 			m_properties.is_focused = glfwGetWindowAttrib(m_window, GLFW_FOCUSED);
@@ -95,7 +113,10 @@ namespace trimana::core {
 		else {
 
 			throw api_response_exception("Failed to create GLFW window");
-			glfwTerminate();
+			if (!m_glfw_service_api.expired()) {
+				auto service_api = m_glfw_service_api.lock();
+				service_api->quit();
+			}
 		}
 	}
 

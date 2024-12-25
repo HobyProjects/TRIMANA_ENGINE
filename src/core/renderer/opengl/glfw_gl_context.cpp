@@ -1,9 +1,9 @@
-#include "gl_context.hpp"
+#include "glfw_gl_context.hpp"
 #include "exceptions.hpp"
 
 namespace trimana::core {
 
-	bool gl_context::make_context() {
+	bool glfw_gl_context::make_context() {
 		if (!m_native_window)
 			throw null_pointer_exception("window is null");
 
@@ -18,13 +18,13 @@ namespace trimana::core {
 		return true;
 	}
 
-	void gl_context::swap_buffers() {
+	void glfw_gl_context::swap_buffers() {
 		if (!m_native_window)
 			throw null_pointer_exception("window is null");
 		glfwSwapBuffers((GLFWwindow*)m_native_window);
 	}
 
-	void gl_context::change_swap_interval(uint32_t interval) {
+	void glfw_gl_context::change_swap_interval(uint32_t interval) {
 		if (!m_native_window)
 			throw null_pointer_exception("window is null");
 		glfwSwapInterval(interval);

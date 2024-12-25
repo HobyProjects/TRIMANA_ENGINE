@@ -82,11 +82,10 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/sdl_window.hpp
 
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/renderer.hpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/context.hpp
 
 
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/glfw_gl_context.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_renderer.hpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_context.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_debug.hpp
 )
 
@@ -100,9 +99,9 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/sdl_window.cpp
 
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/renderer.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/context.cpp
+
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/glfw_gl_context.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_renderer.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_context.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_debug.cpp
 )
 

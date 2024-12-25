@@ -5,14 +5,14 @@
 #include <glad/glad.h>
 
 #include "base.hpp"
-#include "context.hpp"
+#include "window.hpp"
 
 namespace trimana::core {
 
-	class gl_context final : public context {
+	class glfw_gl_context final : public context {
 	public:
-		gl_context(void* native_window) : m_native_window(native_window) {}
-		virtual ~gl_context() = default;
+		glfw_gl_context(void* native_window) : m_native_window(native_window) {}
+		virtual ~glfw_gl_context() = default;
 
 		virtual bool make_context() override;
 		virtual void swap_buffers() override;

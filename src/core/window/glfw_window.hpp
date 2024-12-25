@@ -22,7 +22,7 @@ namespace trimana::core {
 
 	class glfw_window final : public window {
 	public:
-		glfw_window(const std::string& title);
+		glfw_window(const std::string& title, const std::shared_ptr<glfw_service_api>& glfw_service_api);
 		~glfw_window();
 
 		virtual void* native_window() const override { return m_window; }
@@ -34,5 +34,6 @@ namespace trimana::core {
 		GLFWwindow* m_window{ nullptr };
 		window_properties m_properties{};
 		std::shared_ptr<context> m_context{ nullptr };
+		std::weak_ptr<glfw_service_api> m_glfw_service_api;
 	};
 }

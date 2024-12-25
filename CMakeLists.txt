@@ -85,6 +85,7 @@ set(
 
 
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/glfw_gl_context.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/sdl_gl_context.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_renderer.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_debug.hpp
 )
@@ -101,6 +102,7 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/renderer.cpp
 
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/glfw_gl_context.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/sdl_gl_context.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_renderer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_debug.cpp
 )

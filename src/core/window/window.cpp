@@ -3,6 +3,7 @@
 #include "exceptions.hpp"
 
 #include "opengl/glfw_gl_context.hpp"
+#include "opengl/sdl_gl_context.hpp"
 
 namespace trimana::core {
 
@@ -78,7 +79,7 @@ namespace trimana::core {
 
 		if (s_platform_service_api->api() == platform_service_apis::sdl_api) {
 			switch (api) {
-			case rendering_api::opengl: throw unimplemented_feature_exception("OpenGL API is not implemented yet"); return nullptr;
+			case rendering_api::opengl: return std::make_shared<sdl_gl_context>(native_window);
 			case rendering_api::vulkan: throw unimplemented_feature_exception("Vulkan API is not implemented yet"); return nullptr;
 			case rendering_api::directx: throw unimplemented_feature_exception("DirectX API is not implemented yet"); return nullptr;
 			default: return nullptr;

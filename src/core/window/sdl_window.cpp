@@ -1,5 +1,6 @@
 #include "sdl_window.hpp"
 #include "exceptions.hpp"
+#include "renderer.hpp"
 #include "log.hpp"
 
 namespace trimana::core {
@@ -57,5 +58,40 @@ namespace trimana::core {
 		}
 
 		m_properties.title = title;
+
+		if(renderer::api() == rendering_api::opengl){
+			SDL_GL_SetAttribute(SDL_GL_RED_SIZE, m_properties.red_color_bits);
+			SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, m_properties.green_color_bits);
+			SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, m_properties.blue_color_bits);
+			SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, m_properties.alpha_color_bits);
+			SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, m_properties.depth_color_bits);
+			SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, m_properties.stencil_color_bits);
+			SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+			SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
+			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, static_cast<uint32_t>(rendering_context_version::opengl_api_major_version));
+			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, static_cast<uint32_t>(rendering_context_version::opengl_api_minor_version));
+			SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+			SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG | SDL_GL_CONTEXT_DEBUG_FLAG);
+		}
+
+		SDL_WindowFlags window_flags = SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIGH_PIXEL_DENSITY;
+
+		if(renderer::api() == rendering_api::opengl){
+			window_flags |= SDL_WINDOW_OPENGL;
+		}
+		else if(renderer::api() == rendering_api::vulkan){
+			window_flags |= SDL_WINDOW_VULKAN;
+		}
+		else if(renderer::api() == rendering_api::directx){
+			// window_flags |= SDL_WINDOW_DIRECT3D; // SDL_WINDOW_DIRECT3D is not a valid SDL window flag
+		}
+
+		m_window = SDL_CreateWindow(m_properties.title.c_str(), m_properties.width, m_properties.height, window_flags);
+		if(m_window != nullptr){
+			TRIMANA_CORE_INFO("SDL window created successfully");
+		}
+		
+		throw api_response_exception("Failed to create SDL window");
+		SDL_Quit();
 	}
 }

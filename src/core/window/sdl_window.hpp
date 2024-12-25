@@ -20,7 +20,7 @@ namespace trimana::core {
 
 	class sdl_window final : public window {
 	public:
-		sdl_window(const std::string& title);
+		sdl_window(const std::string& title, platform_service_api* service_api);
 		virtual ~sdl_window();
 
 		virtual void* native_window() const override { return m_window; }

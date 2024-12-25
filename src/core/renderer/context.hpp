@@ -6,6 +6,11 @@
 
 namespace trimana::core {
 
+	enum class rendering_context_version {
+		opengl_api_major_version = 4,
+		opengl_api_minor_version = 6
+	};
+
 	class context {
 	public:
 		context() = default;

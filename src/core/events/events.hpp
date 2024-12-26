@@ -7,7 +7,6 @@
 
 namespace trimana::core
 {
-
 	enum class event_category
 	{
 		window = TRIMANA_BIT(0),

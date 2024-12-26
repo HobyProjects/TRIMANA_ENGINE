@@ -6,16 +6,18 @@
 #include "base.hpp"
 #include "renderer.hpp"
 
-namespace trimana::core {
-
-	enum class window_state {
-		fullscreen	= 0,		
-		minimized	= 1,		
-		maximized	= 2,		
-		normal		= 3			
+namespace trimana::core
+{
+	enum class window_state
+	{
+		fullscreen = 0,
+		minimized = 1,
+		maximized = 2,
+		normal = 3
 	};
 
-	struct window_properties {
+	struct window_properties
+	{
 		std::string title{ "" };                                      /**< The title of the window. */
 		uint32_t width{ 0 };                                          /**< Width of the window. */
 		uint32_t height{ 0 };                                         /**< Height of the window. */
@@ -40,13 +42,15 @@ namespace trimana::core {
 		bool is_active{ false };                                      /**< If the window is active or not. */
 	};
 
-	enum class platform_service_apis {
-		glfw_api	= TRIMANA_BIT(1),  /**< GLFW API bit flag. */
-		sdl_api		= TRIMANA_BIT(2),  /**< SDL API bit flag. */
-		win32_api	= TRIMANA_BIT(3)   /**< Win32 API bit flag. */
+	enum class platform_service_apis
+	{
+		glfw_api = TRIMANA_BIT(1),  /**< GLFW API bit flag. */
+		sdl_api = TRIMANA_BIT(2),  /**< SDL API bit flag. */
+		win32_api = TRIMANA_BIT(3)   /**< Win32 API bit flag. */
 	};
 
-	class platform_service_api {
+	class platform_service_api
+	{
 	public:
 		platform_service_api() = default;
 		virtual ~platform_service_api() = default;
@@ -56,12 +60,14 @@ namespace trimana::core {
 		virtual platform_service_apis api() = 0;
 	};
 
-	enum class rendering_context_version {
+	enum class rendering_context_version
+	{
 		opengl_api_major_version = 4,
 		opengl_api_minor_version = 6
 	};
 
-	class context {
+	class context
+	{
 	public:
 		context() = default;
 		virtual ~context() = default;
@@ -71,7 +77,8 @@ namespace trimana::core {
 		virtual void change_swap_interval(uint32_t interval) = 0;
 
 	public:
-		class context_builder {
+		class context_builder
+		{
 		private:
 			context_builder() = default;
 			~context_builder() = default;
@@ -81,7 +88,8 @@ namespace trimana::core {
 		};
 	};
 
-	class window {
+	class window
+	{
 	public:
 		window() = default;
 		virtual ~window() = default;
@@ -92,7 +100,8 @@ namespace trimana::core {
 		virtual std::shared_ptr<context> window_context() const = 0;
 
 	public:
-		class window_builder {
+		class window_builder
+		{
 		private:
 			window_builder() = default;
 			~window_builder() = default;

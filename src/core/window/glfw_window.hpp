@@ -5,9 +5,10 @@
 
 #include "window.hpp"
 
-namespace trimana::core {
-
-	class glfw_service_api final : public platform_service_api {
+namespace trimana::core
+{
+	class glfw_service_api final : public platform_service_api
+	{
 	public:
 		glfw_service_api() = default;
 		~glfw_service_api() = default;
@@ -20,7 +21,8 @@ namespace trimana::core {
 		bool m_initialized{ false };
 	};
 
-	class glfw_window final : public window {
+	class glfw_window final : public window
+	{
 	public:
 		glfw_window(const std::string& title, const std::shared_ptr<glfw_service_api>& glfw_service_api);
 		~glfw_window();

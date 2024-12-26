@@ -2,9 +2,10 @@
 
 #include "renderer.hpp"
 
-namespace trimana::core {
-
-	class gl_renderer {
+namespace trimana::core
+{
+	class gl_renderer
+	{
 	private:
 		gl_renderer() = default;
 		gl_renderer(const gl_renderer&) = delete;

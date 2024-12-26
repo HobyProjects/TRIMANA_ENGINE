@@ -5,9 +5,10 @@
 #include "keyboard_events.hpp"
 #include "mouse_events.hpp"
 
-namespace trimana::core {
-
-	class events_receiver {
+namespace trimana::core
+{
+	class events_receiver
+	{
 	public:
 		events_receiver() = default;
 		virtual ~events_receiver() = default;
@@ -15,7 +16,8 @@ namespace trimana::core {
 		virtual void poll_events() const = 0;
 
 	public:
-		class events_receiver_builder {
+		class events_receiver_builder
+		{
 		private:
 			events_receiver_builder() = default;
 			~events_receiver_builder() = default;

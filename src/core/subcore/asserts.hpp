@@ -19,10 +19,12 @@
  * @param[in] args Additional arguments for the error message.
  */
 template<typename T, typename... Args>
-void TRIMANA_ASSERT(T condition, Args&&... args) {
+void TRIMANA_ASSERT(T condition, Args&&... args)
+{
 	// Ensure the condition is of an integral type.
-	static_assert(std::is_integral<T>::value, "Condition must be of integral type");
-	if (!condition) {
+	static_assert( std::is_integral<T>::value, "Condition must be of integral type" );
+	if( !condition )
+	{
 		TRIMANA_CORE_ERROR("Assertion failed: {0}", std::forward<Args>(args)...);
 		TRIMANA_DEBUGBREAK();
 	}
@@ -31,7 +33,8 @@ void TRIMANA_ASSERT(T condition, Args&&... args) {
 #else
 
 template<typename T, typename... Args>
-inline void TRIMANA_ASSERT(T condition, Args&&... args) {
+inline void TRIMANA_ASSERT(T condition, Args&&... args)
+{
 	// Do nothing
 }
 

@@ -5,7 +5,6 @@
 
 namespace trimana::core
 {
-
 	class keyboard_keypress_event : public events
 	{
 	public:

@@ -5,13 +5,15 @@
 
 #include "base.hpp"
 
-namespace trimana::core {
+namespace trimana::core
+{
 	/**
 	 * @brief A class for managing the logging system.
 	 * This class initializes and manages the spdlog loggers for the core and client.
 	 * The loggers are thread-safe and can be accessed from any thread.
 	 */
-	class logger {
+	class logger
+	{
 	private:
 		/**
 		 * @brief Private constructor to prevent instantiation.

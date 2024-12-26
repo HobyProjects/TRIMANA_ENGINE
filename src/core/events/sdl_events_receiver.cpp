@@ -8,7 +8,6 @@ namespace trimana::core
 	static event_callback& const m_callback;
 	static std::shared_ptr<window>& const m_window;
 
-
 	sdl_events_receiver::sdl_events_receiver(const std::shared_ptr<window>& window, const event_callback& callback)
 	{
 		m_window = window;

@@ -4,7 +4,6 @@
 
 namespace trimana::core
 {
-
 	class window_close_event : public events
 	{
 	public:

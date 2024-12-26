@@ -7,9 +7,10 @@
 #include "base.hpp"
 #include "window.hpp"
 
-namespace trimana::core {
-
-	class glfw_gl_context final : public context {
+namespace trimana::core
+{
+	class glfw_gl_context final : public context
+	{
 	public:
 		glfw_gl_context(void* native_window) : m_native_window(native_window) {}
 		virtual ~glfw_gl_context() = default;

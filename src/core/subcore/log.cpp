@@ -3,8 +3,8 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/sinks/basic_file_sink.h>
 
-namespace trimana::core {
-
+namespace trimana::core
+{
 	/// A flag to indicate if the loggers have been initialized.
 	static std::once_flag s_Initialized;
 
@@ -37,12 +37,13 @@ namespace trimana::core {
 	/// name, the timestamp and the log message to the file specified
 	/// in the constructor. The file sink is configured to rotate the
 	/// log file every day at 2am.
-	static void init_loggers() {
+	static void init_loggers()
+	{
 		std::vector<spdlog::sink_ptr> log_sinks{};
 		log_sinks.emplace_back(std::make_shared<spdlog::sinks::stdout_color_sink_mt>());
 		log_sinks.emplace_back(std::make_shared<spdlog::sinks::stdout_color_sink_mt>("tromana.log", 2, 0));
-		log_sinks[0]->set_pattern("%^[%T] %n: %v%$");
-		log_sinks[1]->set_pattern("[%T][%l] %n: %v");
+		log_sinks [0]->set_pattern("%^[%T] %n: %v%$");
+		log_sinks [1]->set_pattern("[%T][%l] %n: %v");
 
 		s_CoreLogger = std::make_shared<spdlog::logger>("TRIMANA:CORE", std::begin(log_sinks), std::end(log_sinks));
 		spdlog::register_logger(s_CoreLogger);
@@ -55,12 +56,14 @@ namespace trimana::core {
 		s_ClientLogger->flush_on(spdlog::level::trace);
 	}
 
-	std::shared_ptr<spdlog::logger>& logger::get_core_logger() {
+	std::shared_ptr<spdlog::logger>& logger::get_core_logger()
+	{
 		std::call_once(s_Initialized, init_loggers);
 		return s_CoreLogger;
 	}
 
-	std::shared_ptr<spdlog::logger>& logger::get_client_logger() {
+	std::shared_ptr<spdlog::logger>& logger::get_client_logger()
+	{
 		std::call_once(s_Initialized, init_loggers);
 		return s_ClientLogger;
 	}

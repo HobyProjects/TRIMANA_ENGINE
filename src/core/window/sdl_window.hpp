@@ -3,9 +3,10 @@
 #include <SDL3/SDL.h>
 #include "window.hpp"
 
-namespace trimana::core {
-
-	class sdl_service_api final : public platform_service_api {
+namespace trimana::core
+{
+	class sdl_service_api final : public platform_service_api
+	{
 	public:
 		sdl_service_api() = default;
 		virtual ~sdl_service_api() = default;
@@ -18,7 +19,8 @@ namespace trimana::core {
 		bool m_initialized{ false };
 	};
 
-	class sdl_window final : public window {
+	class sdl_window final : public window
+	{
 	public:
 		sdl_window(const std::string& title, const std::shared_ptr<sdl_service_api>& sdl_api);
 		virtual ~sdl_window();

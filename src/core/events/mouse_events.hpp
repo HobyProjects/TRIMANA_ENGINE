@@ -3,9 +3,10 @@
 #include "events.hpp"
 #include "key_codes.hpp"
 
-namespace trimana::core {
-
-	class mouse_button_press_event : public events {
+namespace trimana::core
+{
+	class mouse_button_press_event : public events
+	{
 	public:
 		mouse_button_press_event(mouse_button button) : m_button(button) {}
 		virtual ~mouse_button_press_event() = default;
@@ -14,12 +15,13 @@ namespace trimana::core {
 		EVENT_CLASS_CATEGORY(event_category::mouse);
 
 		mouse_button button() const { return m_button; }
-	
+
 	private:
 		mouse_button m_button;
 	};
 
-	class mouse_button_release_event : public events {
+	class mouse_button_release_event : public events
+	{
 	public:
 		mouse_button_release_event(mouse_button button) : m_button(button) {}
 		virtual ~mouse_button_release_event() = default;
@@ -33,7 +35,8 @@ namespace trimana::core {
 		mouse_button m_button;
 	};
 
-	class mouse_wheel_event : public events {
+	class mouse_wheel_event : public events
+	{
 	public:
 		mouse_wheel_event(float x_offset, float y_offset) : m_x_offset(x_offset), m_y_offset(y_offset) {}
 		virtual ~mouse_wheel_event() = default;
@@ -48,7 +51,8 @@ namespace trimana::core {
 		float m_x_offset, m_y_offset;
 	};
 
-	class mouse_cursor_moved_event : public events {
+	class mouse_cursor_moved_event : public events
+	{
 	public:
 		mouse_cursor_moved_event(float x, float y) : m_x(x), m_y(y) {}
 		virtual ~mouse_cursor_moved_event() = default;
@@ -63,7 +67,8 @@ namespace trimana::core {
 		float m_x, m_y;
 	};
 
-	class mouse_cursor_enter_event : public events {
+	class mouse_cursor_enter_event : public events
+	{
 	public:
 		mouse_cursor_enter_event() = default;
 		virtual ~mouse_cursor_enter_event() = default;
@@ -72,7 +77,8 @@ namespace trimana::core {
 		EVENT_CLASS_CATEGORY(event_category::mouse);
 	};
 
-	class mouse_cursor_leave_event : public events {
+	class mouse_cursor_leave_event : public events
+	{
 	public:
 		mouse_cursor_leave_event() = default;
 		virtual ~mouse_cursor_leave_event() = default;

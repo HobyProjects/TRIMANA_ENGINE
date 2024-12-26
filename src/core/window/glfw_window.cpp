@@ -3,36 +3,44 @@
 #include "renderer.hpp"
 #include "log.hpp"
 
-namespace trimana::core {
-
-	bool glfw_service_api::init() {
-		if (!glfwInit()) {
+namespace trimana::core
+{
+	bool glfw_service_api::init()
+	{
+		if( !glfwInit() )
+		{
 			throw uninitialized_object_exception("Failed to initialize GLFW");
-			return (m_initialized = false);
+			return ( m_initialized = false );
 		}
 
 		TRIMANA_CORE_INFO("GLFW initialized successfully");
-		return (m_initialized = true);
+		return ( m_initialized = true );
 	}
 
-	void glfw_service_api::quit() {
-		if (m_initialized) {
+	void glfw_service_api::quit()
+	{
+		if( m_initialized )
+		{
 			glfwTerminate();
 			m_initialized = false;
 		}
 	}
 
-	glfw_window::glfw_window(const std::string& title, const std::shared_ptr<glfw_service_api>& glfw_service_api) {
-		if (glfw_service_api != nullptr) { 
-			m_glfw_service_api = glfw_service_api; 
+	glfw_window::glfw_window(const std::string& title, const std::shared_ptr<glfw_service_api>& glfw_service_api)
+	{
+		if( glfw_service_api != nullptr )
+		{
+			m_glfw_service_api = glfw_service_api;
 		}
-		else {
+		else
+		{
 			throw uninitialized_object_exception("An attempt to create a window, before initializing the service api");
 			return;
 		}
 
 		const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-		if (mode != nullptr) {
+		if( mode != nullptr )
+		{
 			m_properties.width = mode->width;
 			m_properties.height = mode->height;
 			m_properties.fixed_width = mode->width;
@@ -46,7 +54,8 @@ namespace trimana::core {
 			m_properties.refresh_rate = mode->refreshRate;
 
 		}
-		else {
+		else
+		{
 			TRIMANA_CORE_WARN("Failed to get video mode, using default values");
 			m_properties.width = 1280;
 			m_properties.height = 720;
@@ -63,17 +72,18 @@ namespace trimana::core {
 
 		m_properties.title = title;
 
-		if (renderer::api() == rendering_api::opengl) {
+		if( renderer::api() == rendering_api::opengl )
+		{
 			glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
-			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, static_cast<uint32_t>(rendering_context_version::opengl_api_major_version));
-			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, static_cast<uint32_t>(rendering_context_version::opengl_api_minor_version));
+			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, static_cast<uint32_t>( rendering_context_version::opengl_api_major_version ));
+			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, static_cast<uint32_t>( rendering_context_version::opengl_api_minor_version ));
 			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 			glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
 			glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE);
 
-#if defined(TRIMANA_DEBUG)
+			#if defined(TRIMANA_DEBUG)
 			glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
-#endif
+			#endif
 		}
 
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
@@ -86,18 +96,22 @@ namespace trimana::core {
 		glfwWindowHint(GLFW_STENCIL_BITS, m_properties.stencil_color_bits);
 
 		m_window = glfwCreateWindow(m_properties.width, m_properties.height, m_properties.title.c_str(), nullptr, nullptr);
-		if (m_window != nullptr) {
+		if( m_window != nullptr )
+		{
 			TRIMANA_CORE_INFO("GLFW window created successfully");
 			glfwSetWindowSizeLimits(m_window, m_properties.min_width, m_properties.min_height, GLFW_DONT_CARE, GLFW_DONT_CARE);
 			glfwGetFramebufferSize(m_window, &m_properties.framebuffer_width, &m_properties.framebuffer_height);
 
 			m_context = context::context_builder::create(m_window, renderer::api());
-			if (m_context != nullptr) {
+			if( m_context != nullptr )
+			{
 				m_context->make_context();
 			}
-			else {
+			else
+			{
 				throw api_response_exception("Failed to create context");
-				if (!m_glfw_service_api.expired()) {
+				if( !m_glfw_service_api.expired() )
+				{
 					auto service_api = m_glfw_service_api.lock();
 					service_api->quit();
 				}
@@ -110,26 +124,32 @@ namespace trimana::core {
 			m_properties.is_focused = glfwGetWindowAttrib(m_window, GLFW_FOCUSED);
 			m_properties.is_vsync_enabled = true;
 		}
-		else {
+		else
+		{
 
 			throw api_response_exception("Failed to create GLFW window");
-			if (!m_glfw_service_api.expired()) {
+			if( !m_glfw_service_api.expired() )
+			{
 				auto service_api = m_glfw_service_api.lock();
 				service_api->quit();
 			}
 		}
 	}
 
-	glfw_window::~glfw_window() {
-		if (m_window != nullptr) {
+	glfw_window::~glfw_window()
+	{
+		if( m_window != nullptr )
+		{
 			glfwDestroyWindow(m_window);
 			m_window = nullptr;
 		}
 	}
 
-	void glfw_window::swap_buffers() const {
-		if (m_window != nullptr) {
-			if (m_properties.is_vsync_enabled)
+	void glfw_window::swap_buffers() const
+	{
+		if( m_window != nullptr )
+		{
+			if( m_properties.is_vsync_enabled )
 				m_context->swap_buffers();
 		}
 	}

@@ -8,12 +8,13 @@
 #include "base.hpp"
 #include "log.hpp"
 
-namespace trimana::core {
-
+namespace trimana::core
+{
 	/**
 	 * @brief Base class for exceptions in the core module.
 	 */
-	class exception {
+	class exception
+	{
 	public:
 		/**
 		 * @brief Constructs an exception with the specified message and source location.
@@ -43,7 +44,8 @@ namespace trimana::core {
 	/**
 	 * @brief Exception class for uninitialized objects.
 	 */
-	class uninitialized_object_exception : public exception {
+	class uninitialized_object_exception : public exception
+	{
 	public:
 		/**
 		 * @brief Constructs an uninitialized exception with the specified message and current source location.
@@ -68,7 +70,8 @@ namespace trimana::core {
 		 * @brief Gets a string representation of the exception.
 		 * @return The exception message.
 		 */
-		void what() const noexcept override {
+		void what() const noexcept override
+		{
 			TRIMANA_CRITICAL("Uninitialized object exception: {0} (in file:{1} | at line: {2})", m_message, m_location.file_name(), m_location.line());
 			TRIMANA_DEBUGBREAK();
 		}
@@ -77,7 +80,8 @@ namespace trimana::core {
 	/**
 	 * @brief Exception class for not implemented functionality.
 	 */
-	class unimplemented_feature_exception : public exception {
+	class unimplemented_feature_exception : public exception
+	{
 	public:
 		/**
 		 * @brief Constructs a not implemented exception with the specified message and current source location.
@@ -101,7 +105,8 @@ namespace trimana::core {
 		 * @brief Gets a string representation of the exception.
 		 * @return The exception message.
 		 */
-		void what() const noexcept override {
+		void what() const noexcept override
+		{
 			TRIMANA_CRITICAL("Unimplemented feature exception: {0} (in file:{1} | at line: {2})", m_message, m_location.file_name(), m_location.line());
 			TRIMANA_DEBUGBREAK();
 		}
@@ -110,7 +115,8 @@ namespace trimana::core {
 	/**
 	 * @brief Exception class for API failures.
 	 */
-	class api_response_exception : public exception {
+	class api_response_exception : public exception
+	{
 	public:
 		/**
 		 * @brief Constructs an API failure exception with the specified message and current source location.
@@ -134,16 +140,18 @@ namespace trimana::core {
 		 * @brief Gets a string representation of the exception.
 		 * @return The exception message.
 		 */
-		void what() const noexcept override {
+		void what() const noexcept override
+		{
 			TRIMANA_CRITICAL("Api response exception : {0} (in file:{1} | at line: {2})", m_message, m_location.file_name(), m_location.line());
 			TRIMANA_DEBUGBREAK();
 		}
-	};	
+	};
 
 	/**
 	 * @brief Exception class for null pointers.
 	 */
-	class null_pointer_exception : public exception {
+	class null_pointer_exception : public exception
+	{
 	public:
 		/**
 		 * @brief Constructs a null pointer exception with the specified message and current source location.
@@ -167,7 +175,8 @@ namespace trimana::core {
 		 * @brief Gets a string representation of the exception.
 		 * @return The exception message.
 		 */
-		void what() const noexcept override {
+		void what() const noexcept override
+		{
 			TRIMANA_CRITICAL("Null pointer exception : {0} (in file:{1} | at line: {2})", m_message, m_location.file_name(), m_location.line());
 			TRIMANA_DEBUGBREAK();
 		}

@@ -5,60 +5,78 @@
 #include "opengl/glfw_gl_context.hpp"
 #include "opengl/sdl_gl_context.hpp"
 
-namespace trimana::core {
-
+namespace trimana::core
+{
 	static std::once_flag s_platform_service_api_flag;
 	static std::shared_ptr<platform_service_api> s_platform_service_api = nullptr;
 
-	static platform_service_apis service_api() {
-#ifdef TRIMANA_PLATFORM_WINDOWS
+	static platform_service_apis service_api()
+	{
+		#ifdef TRIMANA_PLATFORM_WINDOWS
+
 		//return platform_service_apis::win32_api; // [TODO]: Implement Win32 API
 		return platform_service_apis::glfw_api;
-#elif defined(TRIMANA_PLATFORM_LINUX)
+
+		#elif defined(TRIMANA_PLATFORM_LINUX)
+
 		return platform_service_apis::sdl_api;
-#else
+
+		#else
+
 		return platform_service_apis::glfw_api;
-#endif
+
+		#endif
 	}
 
-	std::shared_ptr<window> trimana::core::window::window_builder::create(const std::string& title) {
-		switch (service_api()) {
-		case platform_service_apis::glfw_api:				return std::make_shared<glfw_window>(title, s_platform_service_api);
-		case platform_service_apis::sdl_api:				return std::make_shared<sdl_window>(title, s_platform_service_api);
-		case platform_service_apis::win32_api:				throw unimplemented_feature_exception("Win32 API is not implemented yet"); return nullptr;
-		default:											return nullptr;
+	std::shared_ptr<window> trimana::core::window::window_builder::create(const std::string& title)
+	{
+		switch( service_api() )
+		{
+			case platform_service_apis::glfw_api:				return std::make_shared<glfw_window>(title, s_platform_service_api);
+			case platform_service_apis::sdl_api:				return std::make_shared<sdl_window>(title, s_platform_service_api);
+			case platform_service_apis::win32_api:				throw unimplemented_feature_exception("Win32 API is not implemented yet"); return nullptr;
+			default:											return nullptr;
 		};
 	}
 
 	const std::shared_ptr<platform_service_api>& window::window_builder::get_platform_service_api()
 	{
-		std::call_once(s_platform_service_api_flag, []() {
-			switch (service_api()) {
-			case platform_service_apis::glfw_api: {
-				s_platform_service_api = std::make_shared<glfw_service_api>();
-				if (!s_platform_service_api->init()) {
-					throw uninitialized_object_exception("Failed to initialize the platform service API : GLFW");
+		std::call_once(s_platform_service_api_flag, []()
+		{
+			switch( service_api() )
+			{
+				case platform_service_apis::glfw_api:
+				{
+					s_platform_service_api = std::make_shared<glfw_service_api>();
+					if( !s_platform_service_api->init() )
+					{
+						throw uninitialized_object_exception("Failed to initialize the platform service API : GLFW");
+					}
+					break;
 				}
-				break;
-			}
-			case platform_service_apis::sdl_api: {
-				s_platform_service_api = std::make_shared<sdl_service_api>();
-				if (!s_platform_service_api->init()) {
-					throw uninitialized_object_exception("Failed to initialize the platform service API : SDL");
+				case platform_service_apis::sdl_api:
+				{
+					s_platform_service_api = std::make_shared<sdl_service_api>();
+					if( !s_platform_service_api->init() )
+					{
+						throw uninitialized_object_exception("Failed to initialize the platform service API : SDL");
+					}
+					break;
 				}
-				break;
-			}
-			case platform_service_apis::win32_api: {
-				throw unimplemented_feature_exception("Win32 API is not implemented yet");
-				break;
-			}
-			default: {
-				s_platform_service_api = std::make_shared<glfw_service_api>();
-				if (!s_platform_service_api->init()) {
-					throw uninitialized_object_exception("Failed to initialize the platform service API : GLFW");
+				case platform_service_apis::win32_api:
+				{
+					throw unimplemented_feature_exception("Win32 API is not implemented yet");
+					break;
 				}
-				break;
-			}
+				default:
+				{
+					s_platform_service_api = std::make_shared<glfw_service_api>();
+					if( !s_platform_service_api->init() )
+					{
+						throw uninitialized_object_exception("Failed to initialize the platform service API : GLFW");
+					}
+					break;
+				}
 			};
 
 		});
@@ -68,25 +86,30 @@ namespace trimana::core {
 
 	std::shared_ptr<context> context::context_builder::create(void* native_window, rendering_api api)
 	{
-		if (s_platform_service_api->api() == platform_service_apis::glfw_api) {
-			switch (api) {
-			case rendering_api::opengl: return std::make_shared<glfw_gl_context>(native_window);
-			case rendering_api::vulkan: throw unimplemented_feature_exception("Vulkan API is not implemented yet"); return nullptr;
-			case rendering_api::directx: throw unimplemented_feature_exception("DirectX API is not implemented yet"); return nullptr;
-			default: return nullptr;
+		if( s_platform_service_api->api() == platform_service_apis::glfw_api )
+		{
+			switch( api )
+			{
+				case rendering_api::opengl: return std::make_shared<glfw_gl_context>(native_window);
+				case rendering_api::vulkan: throw unimplemented_feature_exception("Vulkan API is not implemented yet"); return nullptr;
+				case rendering_api::directx: throw unimplemented_feature_exception("DirectX API is not implemented yet"); return nullptr;
+				default: return nullptr;
 			}
 		}
 
-		if (s_platform_service_api->api() == platform_service_apis::sdl_api) {
-			switch (api) {
-			case rendering_api::opengl: return std::make_shared<sdl_gl_context>(native_window);
-			case rendering_api::vulkan: throw unimplemented_feature_exception("Vulkan API is not implemented yet"); return nullptr;
-			case rendering_api::directx: throw unimplemented_feature_exception("DirectX API is not implemented yet"); return nullptr;
-			default: return nullptr;
+		if( s_platform_service_api->api() == platform_service_apis::sdl_api )
+		{
+			switch( api )
+			{
+				case rendering_api::opengl: return std::make_shared<sdl_gl_context>(native_window);
+				case rendering_api::vulkan: throw unimplemented_feature_exception("Vulkan API is not implemented yet"); return nullptr;
+				case rendering_api::directx: throw unimplemented_feature_exception("DirectX API is not implemented yet"); return nullptr;
+				default: return nullptr;
 			}
 		}
 
-		if (s_platform_service_api->api() == platform_service_apis::win32_api) {
+		if( s_platform_service_api->api() == platform_service_apis::win32_api )
+		{
 			throw unimplemented_feature_exception("Win32 API is not implemented yet");
 			return nullptr;
 		}

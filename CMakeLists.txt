@@ -67,6 +67,7 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events
 )
 
 #Header Files
@@ -76,6 +77,7 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/exceptions.hpp 
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/log.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/base.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/key_codes.hpp
 
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/window.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/glfw_window.hpp
@@ -88,6 +90,11 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/sdl_gl_context.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_renderer.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_debug.hpp
+
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/events.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/window_events.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/keyboard_events.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/mouse_events.hpp
 )
 
 #Source Files

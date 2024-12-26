@@ -2,9 +2,11 @@
 
 #include "events.hpp"
 
-namespace trimana::core {
+namespace trimana::core
+{
 
-	class window_close_event : public events {
+	class window_close_event : public events
+	{
 	public:
 		window_close_event() = default;
 		virtual ~window_close_event() = default;
@@ -13,7 +15,8 @@ namespace trimana::core {
 		EVENT_CLASS_TYPE(event_type::window_close);
 	};
 
-	class window_resize_event : public events {
+	class window_resize_event : public events
+	{
 	public:
 		window_resize_event(uint32_t width, uint32_t height) : m_width(width), m_height(height) {}
 		virtual ~window_resize_event() = default;
@@ -29,7 +32,8 @@ namespace trimana::core {
 		uint32_t m_height{ 0 };
 	};
 
-	class window_move_event : public events {
+	class window_move_event : public events
+	{
 	public:
 		window_move_event(uint32_t x, uint32_t y) : m_x(x), m_y(y) {}
 		virtual ~window_move_event() = default;
@@ -45,7 +49,8 @@ namespace trimana::core {
 		uint32_t m_y{ 0 };
 	};
 
-	class window_focus_gain_event : public events {
+	class window_focus_gain_event : public events
+	{
 	public:
 		window_focus_gain_event() = default;
 		virtual ~window_focus_gain_event() = default;
@@ -54,7 +59,8 @@ namespace trimana::core {
 		EVENT_CLASS_TYPE(event_type::window_focus_gain);
 	};
 
-	class window_focus_lost_event : public events {
+	class window_focus_lost_event : public events
+	{
 	public:
 		window_focus_lost_event() = default;
 		virtual ~window_focus_lost_event() = default;
@@ -63,7 +69,8 @@ namespace trimana::core {
 		EVENT_CLASS_TYPE(event_type::window_focus_lost);
 	};
 
-	class window_pixel_size_change_event : public events {
+	class window_pixel_size_change_event : public events
+	{
 	public:
 		window_pixel_size_change_event(int32_t width, int32_t height) : m_width(width), m_height(height) {}
 		virtual ~window_pixel_size_change_event() = default;
@@ -78,7 +85,8 @@ namespace trimana::core {
 		int32_t m_height{ 0 };
 	};
 
-	class window_maximize_event : public events {
+	class window_maximize_event : public events
+	{
 	public:
 		window_maximize_event() = default;
 		virtual ~window_maximize_event() = default;
@@ -87,12 +95,23 @@ namespace trimana::core {
 		EVENT_CLASS_TYPE(event_type::window_maximize);
 	};
 
-	class window_minimize_event : public events {
+	class window_minimize_event : public events
+	{
 	public:
 		window_minimize_event() = default;
 		virtual ~window_minimize_event() = default;
 
 		EVENT_CLASS_CATEGORY(event_category::window);
 		EVENT_CLASS_TYPE(event_type::window_minimize);
+	};
+
+	class window_restore_event : public events
+	{
+	public:
+		window_restore_event() = default;
+		virtual ~window_restore_event() = default;
+
+		EVENT_CLASS_CATEGORY(event_category::window);
+		EVENT_CLASS_TYPE(event_type::window_restore);
 	};
 }

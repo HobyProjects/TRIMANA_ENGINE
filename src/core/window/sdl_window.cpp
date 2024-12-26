@@ -22,7 +22,7 @@ namespace trimana::core {
 		}
 	}
 
-	sdl_window::sdl_window(const std::string& title, const std::shared_ptr<sdl_service_api> sdl_api) {
+	sdl_window::sdl_window(const std::string& title, const std::shared_ptr<sdl_service_api>& sdl_api) {
 		if (sdl_api != nullptr) {
 			m_sdl_service_api = sdl_api;
 		}

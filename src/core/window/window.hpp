@@ -98,7 +98,7 @@ namespace trimana::core {
 			~window_builder() = default;
 
 		public:
-			static std::unique_ptr<window> create(const std::string& title);
+			static std::shared_ptr<window> create(const std::string& title);
 			static const std::shared_ptr<platform_service_api>& get_platform_service_api();
 		};
 	};

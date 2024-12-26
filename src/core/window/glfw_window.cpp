@@ -65,8 +65,8 @@ namespace trimana::core {
 
 		if (renderer::api() == rendering_api::opengl) {
 			glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
-			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, static_cast<uint32_t>(rendering_context_version::opengl_api_major_version));
+			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, static_cast<uint32_t>(rendering_context_version::opengl_api_minor_version));
 			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 			glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
 			glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE);
@@ -130,7 +130,7 @@ namespace trimana::core {
 	void glfw_window::swap_buffers() const {
 		if (m_window != nullptr) {
 			if (m_properties.is_vsync_enabled)
-				glfwSwapBuffers(m_window);
+				m_context->swap_buffers();
 		}
 	}
 }

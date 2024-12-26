@@ -95,7 +95,11 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/window_events.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/keyboard_events.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/mouse_events.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/events_receiver.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/glfw_events_receiver.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/sdl_events_receiver.hpp
 )
+
 
 #Source Files
 set(
@@ -112,6 +116,10 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/sdl_gl_context.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_renderer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_debug.cpp
+
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/events_receiver.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/glfw_events_receiver.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/sdl_events_receiver.cpp
 )
 
 

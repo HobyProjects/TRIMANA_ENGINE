@@ -4,21 +4,23 @@
 #include <glad/glad.h>
 
 #include "base.hpp"
-#include "window.hpp"
+#include "base_window.hpp"
 
-namespace trimana::core
+namespace TE::Core
 {
-	class sdl_gl_context final : public context
+	class SDL_GL_Context final : public IContext
 	{
-	public:
-		sdl_gl_context(void* native_window) : m_native_window(native_window) {}
-		virtual ~sdl_gl_context() = default;
+		public:
+			SDL_GL_Context() = default;
+			virtual ~SDL_GL_Context() = default;
 
-		virtual bool make_context() override;
-		virtual void swap_buffers() override;
-		virtual void change_swap_interval(uint32_t interval) override;
+			virtual bool MakeContext(Native window) override;
+			virtual Native GetContext() const override;
+			virtual void SwapBuffers() override;
+			virtual void SetInterval(uint32_t interval) override;
 
-	private:
-		void* m_native_window{ nullptr };
+		private:
+			static std::once_flag s_InitRendererAPI;
+			static void InitRendereringAPI();
 	};
 }

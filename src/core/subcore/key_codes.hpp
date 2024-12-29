@@ -2,9 +2,9 @@
 
 #include "memory"
 
-namespace trimana::core
+namespace TE::Core
 {
-	enum key : int32_t
+	enum KEY : int32_t
 	{
 		// Number keys
 		KEY_NUM_0 = 48,
@@ -74,39 +74,39 @@ namespace trimana::core
 		KEY_F25 = 314,
 
 		// Special keys
-		KEY_SEMICOLON = 59,
-		KEY_EQUAL = 61,
-		KEY_SPACE = 32,
-		KEY_ESCAPE = 256,
-		KEY_APOSTROPHE = 39,
-		KEY_COMMA = 44,
-		KEY_MINUS = 45,
-		KEY_PERIOD = 46,
-		KEY_SLASH = 47,
-		KEY_LEFT_BRACKET = 91,
-		KEY_BACKSLASH = 92,
-		KEY_RIGHT_BRACKET = 93,
-		KEY_GRAVE_ACCENT = 96,
-		KEY_WORLD_1 = 161,
-		KEY_WORLD_2 = 162,
-		KEY_ENTER = 257,
-		KEY_TAB = 258,
-		KEY_BACKSPACE = 259,
-		KEY_INSERT = 260,
-		KEY_DELETE = 261,
-		KEY_RIGHT = 262,
-		KEY_LEFT = 263,
-		KEY_DOWN = 264,
-		KEY_UP = 265,
-		KEY_PAGE_UP = 266,
-		KEY_PAGE_DOWN = 267,
-		KEY_HOME = 268,
-		KEY_END = 269,
-		KEY_CAPS_LOCK = 280,
-		KEY_SCROLL_LOCK = 281,
-		KEY_NUM_LOCK = 282,
-		KEY_PRINT_SCREEN = 283,
-		KEY_PAUSE = 284,
+		KEY_SEMICOLON 			= 59,
+		KEY_EQUAL 				= 61,
+		KEY_SPACE 				= 32,
+		KEY_ESCAPE 				= 256,
+		KEY_APOSTROPHE 			= 39,
+		KEY_COMMA 				= 44,
+		KEY_MINUS 				= 45,
+		KEY_PERIOD 				= 46,
+		KEY_SLASH 				= 47,
+		KEY_LEFT_BRACKET 		= 91,
+		KEY_BACKSLASH 			= 92,
+		KEY_RIGHT_BRACKET 		= 93,
+		KEY_GRAVE_ACCENT 		= 96,
+		KEY_WORLD_1 			= 161,
+		KEY_WORLD_2 			= 162,
+		KEY_ENTER 				= 257,
+		KEY_TAB 				= 258,
+		KEY_BACKSPACE 			= 259,
+		KEY_INSERT 				= 260,
+		KEY_DELETE 				= 261,
+		KEY_RIGHT 				= 262,
+		KEY_LEFT 				= 263,
+		KEY_DOWN 				= 264,
+		KEY_UP 					= 265,
+		KEY_PAGE_UP 			= 266,
+		KEY_PAGE_DOWN 			= 267,
+		KEY_HOME 				= 268,
+		KEY_END 				= 269,
+		KEY_CAPS_LOCK 			= 280,
+		KEY_SCROLL_LOCK 		= 281,
+		KEY_NUM_LOCK 			= 282,
+		KEY_PRINT_SCREEN 		= 283,
+		KEY_PAUSE 				= 284,
 
 		// Keypad keys
 		KEY_KP_0 = 320,
@@ -120,47 +120,47 @@ namespace trimana::core
 		KEY_KP_8 = 328,
 		KEY_KP_9 = 329,
 
-		KEY_KP_DECIMAL = 330,
-		KEY_KP_DIVIDE = 331,
-		KEY_KP_MULTIPLY = 332,
-		KEY_KP_SUBTRACT = 333,
-		KEY_KP_ADD = 334,
-		KEY_KP_ENTER = 335,
-		KEY_KP_EQUAL = 336,
+		KEY_KP_DECIMAL 		= 330,
+		KEY_KP_DIVIDE 		= 331,
+		KEY_KP_MULTIPLY 	= 332,
+		KEY_KP_SUBTRACT 	= 333,
+		KEY_KP_ADD 			= 334,
+		KEY_KP_ENTER 		= 335,
+		KEY_KP_EQUAL 		= 336,
 
 		// Modifier keys
-		KEY_LEFT_SHIFT = 340,
-		KEY_LEFT_CONTROL = 341,
-		KEY_LEFT_ALT = 342,
-		KEY_LEFT_SUPER = 343,
+		KEY_LEFT_SHIFT 		= 340,
+		KEY_LEFT_CONTROL 	= 341,
+		KEY_LEFT_ALT 		= 342,
+		KEY_LEFT_SUPER 		= 343,
 
-		KEY_RIGHT_SHIFT = 344,
-		KEY_RIGHT_CONTROL = 345,
-		KEY_RIGHT_ALT = 346,
-		KEY_RIGHT_SUPER = 347,
+		KEY_RIGHT_SHIFT 	= 344,
+		KEY_RIGHT_CONTROL 	= 345,
+		KEY_RIGHT_ALT 		= 346,
+		KEY_RIGHT_SUPER 	= 347,
 
 		// Other keys
-		KEY_MENU = 348,
-		KEY_UNKNOWN = 0
+		KEY_MENU 		= 348,
+		KEY_UNKNOWN 	= 0
 	};
 
-	enum key_state : int32_t
+	enum KEY_STATE : int32_t
 	{
-		KEY_PRESSED = 1,
-		KEY_RELEASED = 0,
-		KEY_REPEAT = 2
+		KEY_PRESSED 	= 1,
+		KEY_RELEASED 	= 0,
+		KEY_REPEAT 		= 2
 	};
 
-	enum mouse_button : int32_t
+	enum MOUSE_BUTTON : int32_t
 	{
-		MOUSE_BUTTON_LEFT = 0,
-		MOUSE_BUTTON_RIGHT = 1,
-		MOUSE_BUTTON_MIDDLE = 2
+		MOUSE_BUTTON_LEFT 	= 0,
+		MOUSE_BUTTON_RIGHT 	= 1,
+		MOUSE_BUTTON_MIDDLE	= 2
 	};
 
-	enum mouse_button_state : int32_t
+	enum MOUSE_BUTTON_STATE : int32_t
 	{
-		MOUSE_BUTTON_PRESSED = 1,
-		MOUSE_BUTTON_RELEASED = 0
+		MOUSE_BUTTON_PRESSED 	= 1,
+		MOUSE_BUTTON_RELEASED 	= 0
 	};
 }

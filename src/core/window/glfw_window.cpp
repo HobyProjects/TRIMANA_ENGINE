@@ -3,154 +3,131 @@
 #include "renderer.hpp"
 #include "log.hpp"
 
-namespace trimana::core
+namespace TE::Core
 {
-	bool glfw_service_api::init()
+	static bool s_Initialized{ false };
+
+	bool GLFW_API::Init()
 	{
 		if( !glfwInit() )
 		{
-			throw uninitialized_object_exception("Failed to initialize GLFW");
-			return ( m_initialized = false );
+			throw UninitializedObjectException("Failed to initialize GLFW");
+			return ( s_Initialized = false );
 		}
 
-		TRIMANA_CORE_INFO("GLFW initialized successfully");
-		return ( m_initialized = true );
+		TE_CORE_INFO("GLFW initialized successfully");
+		return ( s_Initialized = true );
 	}
 
-	void glfw_service_api::quit()
+	void GLFW_API::Quit()
 	{
-		if( m_initialized )
+		if( s_Initialized )
 		{
 			glfwTerminate();
-			m_initialized = false;
+			s_Initialized = false;
 		}
 	}
 
-	glfw_window::glfw_window(const std::string& title, const std::shared_ptr<glfw_service_api>& glfw_service_api)
-	{
-		if( glfw_service_api != nullptr )
-		{
-			m_glfw_service_api = glfw_service_api;
-		}
-		else
-		{
-			throw uninitialized_object_exception("An attempt to create a window, before initializing the service api");
-			return;
-		}
+	static GLFWwindow* s_Window{ nullptr };
+	static WindowProperties s_Properties{};
 
+	GLFW_Window::GLFW_Window(const std::string& title)
+	{
 		const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 		if( mode != nullptr )
 		{
-			m_properties.width = mode->width;
-			m_properties.height = mode->height;
-			m_properties.fixed_width = mode->width;
-			m_properties.fixed_height = mode->height;
-			m_properties.min_width = 1024;
-			m_properties.min_height = 720;
-			m_properties.red_color_bits = mode->redBits;
-			m_properties.green_color_bits = mode->greenBits;
-			m_properties.blue_color_bits = mode->blueBits;
-			m_properties.alpha_color_bits = 8;
-			m_properties.refresh_rate = mode->refreshRate;
+			s_Properties.Width = mode->width;
+			s_Properties.height = mode->height;
+			s_Properties.FixedWidth = mode->width;
+			s_Properties.FixedHeight = mode->height;
+			s_Properties.MinWidth = 1024;
+			s_Properties.MinHeight = 720;
+			s_Properties.ColorBits.RedBit = mode->redBits;
+			s_Properties.ColorBits.GreenBit = mode->greenBits;
+			s_Properties.ColorBits.BlueBit = mode->blueBits;
+			s_Properties.ColorBits.AlphaBit = 8;
+			s_Properties.ColorBits.DepthStencilBit = 8;
+			s_Properties.ColorBits.DepthBit = 24;
+			s_Properties.RefreshRate = mode->refreshRate;
 
 		}
 		else
 		{
-			TRIMANA_CORE_WARN("Failed to get video mode, using default values");
-			m_properties.width = 1280;
-			m_properties.height = 720;
-			m_properties.fixed_width = 0;
-			m_properties.fixed_height = 0;
-			m_properties.min_width = 1024;
-			m_properties.min_height = 720;
-			m_properties.red_color_bits = 8;
-			m_properties.green_color_bits = 8;
-			m_properties.blue_color_bits = 8;
-			m_properties.alpha_color_bits = 8;
-			m_properties.refresh_rate = 60;
+			TE_CORE_WARN("Failed to get video mode, using default values");
+			s_Properties.Width = 1280;
+			s_Properties.height = 720;
+			s_Properties.FixedWidth = 0;
+			s_Properties.FixedHeight = 0;
+			s_Properties.MinWidth = 1024;
+			s_Properties.MinHeight = 720;
+			s_Properties.ColorBits.RedBit = 8;
+			s_Properties.ColorBits.GreenBit = 8;
+			s_Properties.ColorBits.BlueBit = 8;
+			s_Properties.ColorBits.AlphaBit = 8;
+			s_Properties.ColorBits.DepthStencilBit = 8;
+			s_Properties.ColorBits.DepthBit = 24;
+			s_Properties.RefreshRate = 60;
 		}
 
-		m_properties.title = title;
+		s_Properties.Title = title;
 
-		if( renderer::api() == rendering_api::opengl )
+		if( Renderer::API() & RENDERER_API_OPENGL)
 		{
 			glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
-			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, static_cast<uint32_t>( rendering_context_version::opengl_api_major_version ));
-			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, static_cast<uint32_t>( rendering_context_version::opengl_api_minor_version ));
+			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, GL_MAJOR_VERSION);
+			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, GL_MINOR_VERSION);
 			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 			glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
 			glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE);
 
-			#if defined(TRIMANA_DEBUG)
-			glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+			#if defined(TE_DEBUG)
+				glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
 			#endif
 		}
 
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
-		glfwWindowHint(GLFW_RED_BITS, m_properties.red_color_bits);
-		glfwWindowHint(GLFW_GREEN_BITS, m_properties.green_color_bits);
-		glfwWindowHint(GLFW_BLUE_BITS, m_properties.blue_color_bits);
-		glfwWindowHint(GLFW_ALPHA_BITS, m_properties.alpha_color_bits);
-		glfwWindowHint(GLFW_REFRESH_RATE, m_properties.refresh_rate);
-		glfwWindowHint(GLFW_DEPTH_BITS, m_properties.depth_color_bits);
-		glfwWindowHint(GLFW_STENCIL_BITS, m_properties.stencil_color_bits);
+		glfwWindowHint(GLFW_RED_BITS, s_Properties.ColorBits.RedBit);
+		glfwWindowHint(GLFW_GREEN_BITS, s_Properties.ColorBits.GreenBit);
+		glfwWindowHint(GLFW_BLUE_BITS, s_Properties.ColorBits.BlueBit);
+		glfwWindowHint(GLFW_ALPHA_BITS, s_Properties.ColorBits.AlphaBit);
+		glfwWindowHint(GLFW_REFRESH_RATE, s_Properties.RefreshRate);
+		glfwWindowHint(GLFW_DEPTH_BITS, s_Properties.ColorBits.DepthBit);
+		glfwWindowHint(GLFW_STENCIL_BITS, s_Properties.ColorBits.DepthStencilBit);
 
-		m_window = glfwCreateWindow(m_properties.width, m_properties.height, m_properties.title.c_str(), nullptr, nullptr);
-		if( m_window != nullptr )
+		s_Window = glfwCreateWindow(s_Properties.Width, s_Properties.height, s_Properties.Title.c_str(), nullptr, nullptr);
+		if( s_Window != nullptr )
 		{
-			TRIMANA_CORE_INFO("GLFW window created successfully");
-			glfwSetWindowSizeLimits(m_window, m_properties.min_width, m_properties.min_height, GLFW_DONT_CARE, GLFW_DONT_CARE);
-			glfwGetFramebufferSize(m_window, &m_properties.framebuffer_width, &m_properties.framebuffer_height);
+			TE_CORE_INFO("GLFW window created successfully");
+			glfwSetWindowSizeLimits(s_Window, s_Properties.MinWidth, s_Properties.MinHeight, GLFW_DONT_CARE, GLFW_DONT_CARE);
+			glfwGetFramebufferSize(s_Window, &s_Properties.PixelWidth, &s_Properties.PixelHeight);
 
-			m_context = context::context_builder::create(m_window, renderer::api());
-			if( m_context != nullptr )
-			{
-				m_context->make_context();
-			}
-			else
-			{
-				throw api_response_exception("Failed to create context");
-				if( !m_glfw_service_api.expired() )
-				{
-					auto service_api = m_glfw_service_api.lock();
-					service_api->quit();
-				}
-
-				return;
-			}
-
-
-			m_properties.is_active = true;
-			m_properties.is_focused = glfwGetWindowAttrib(m_window, GLFW_FOCUSED);
-			m_properties.is_vsync_enabled = true;
+			s_Properties.IsActive = true;
+			s_Properties.IsFocused = glfwGetWindowAttrib(s_Window, GLFW_FOCUSED);
+			s_Properties.IsVSyncEnabled = true;
 		}
 		else
 		{
-
-			throw api_response_exception("Failed to create GLFW window");
-			if( !m_glfw_service_api.expired() )
-			{
-				auto service_api = m_glfw_service_api.lock();
-				service_api->quit();
-			}
+			throw BaseAPIException("Failed to create GLFW window");
+			return;
 		}
 	}
 
-	glfw_window::~glfw_window()
+	GLFW_Window::~GLFW_Window()
 	{
-		if( m_window != nullptr )
+		if( s_Window != nullptr )
 		{
-			glfwDestroyWindow(m_window);
-			m_window = nullptr;
+			glfwDestroyWindow(s_Window);
+			s_Window = nullptr;
 		}
 	}
 
-	void glfw_window::swap_buffers() const
+	Native GLFW_Window::Window() const
 	{
-		if( m_window != nullptr )
-		{
-			if( m_properties.is_vsync_enabled )
-				m_context->swap_buffers();
-		}
+		return s_Window;
+	}
+
+	WindowProperties& GLFW_Window::Properties()
+	{
+		return s_Properties;
 	}
 }

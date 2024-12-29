@@ -5,106 +5,28 @@
 
 #include "base.hpp"
 
-namespace trimana::core
+namespace TE::Core
 {
-	/**
-	 * @brief A class for managing the logging system.
-	 * This class initializes and manages the spdlog loggers for the core and client.
-	 * The loggers are thread-safe and can be accessed from any thread.
-	 */
-	class logger
+	class Logger
 	{
-	private:
-		/**
-		 * @brief Private constructor to prevent instantiation.
-		 */
-		logger() = default;
-		/**
-		 * @brief Private destructor to prevent instantiation.
-		 */
-		~logger() = default;
+		private:
+			Logger() = default;
+			~Logger() = default;
 
-	public:
-		/**
-		 * @brief Returns a reference to the core logger.
-		 * @return A shared pointer to the core logger.
-		 */
-		static std::shared_ptr<spdlog::logger>& get_core_logger();
-		/**
-		 * @brief Returns a reference to the client logger.
-		 * @return A shared pointer to the client logger.
-		 */
-		static std::shared_ptr<spdlog::logger>& get_client_logger();
+		public:
+			static std::shared_ptr<spdlog::logger>& CoreLogger();
+			static std::shared_ptr<spdlog::logger>& EngineLogger();
 	};
 }
 
-/**
- * @brief Macro for logging a message at the trace level for the core logger.
- * @details This macro logs a message at the trace level for the core logger.
- * @param[in] args The arguments to be passed to the logger.
- */
-template<typename... Args> void TRIMANA_CORE_TRACE(Args&&... args) { trimana::core::logger::get_core_logger()->trace(std::forward<Args>(args)...); }
+#define TE_CORE_TRACE(...) TE::Core::Logger::CoreLogger()->trace(__VA_ARGS__)
+#define TE_CORE_INFO(...) TE::Core::Logger::CoreLogger()->info(__VA_ARGS__)
+#define TE_CORE_WARN(...) TE::Core::Logger::CoreLogger()->warn(__VA_ARGS__)
+#define TE_CORE_ERROR(...) TE::Core::Logger::CoreLogger()->error(__VA_ARGS__)
+#define TE_CORE_CRITICAL(...) TE::Core::Logger::CoreLogger()->critical(__VA_ARGS__) 
 
-/**
- * @brief Macro for logging a message at the info level for the core logger.
- * @details This macro logs a message at the info level for the core logger.
- * @param[in] args The arguments to be passed to the logger.
- */
-template<typename... Args> void TRIMANA_CORE_INFO(Args&&... args) { trimana::core::logger::get_core_logger()->info(std::forward<Args>(args)...); }
-
-/**
- * @brief Macro for logging a message at the warn level for the core logger.
- * @details This macro logs a message at the warn level for the core logger.
- * @param[in] args The arguments to be passed to the logger.
- */
-template<typename... Args> void TRIMANA_CORE_WARN(Args&&... args) { trimana::core::logger::get_core_logger()->warn(std::forward<Args>(args)...); }
-
-/**
- * @brief Macro for logging a message at the error level for the core logger.
- * @details This macro logs a message at the error level for the core logger.
- * @param[in] args The arguments to be passed to the logger.
- */
-template<typename... Args> void TRIMANA_CORE_ERROR(Args&&... args) { trimana::core::logger::get_core_logger()->error(std::forward<Args>(args)...); }
-
-/**
- * @brief Macro for logging a message at the critical level for the core logger.
- * @details This macro logs a message at the critical level for the core logger.
- * @param[in] args The arguments to be passed to the logger.
- */
-template<typename... Args> void TRIMANA_CORE_CRITICAL(Args&&... args) { trimana::core::logger::get_core_logger()->critical(std::forward<Args>(args)...); }
-
-
-/**
- * @brief Macro for logging a message at the trace level for the client logger.
- * @details This macro logs a message at the trace level for the client logger.
- * @param[in] args The arguments to be passed to the logger.
- */
-template<typename... Args> void TRIMANA_TRACE(Args&&... args) { trimana::core::logger::get_client_logger()->trace(std::forward<Args>(args)...); }
-
-/**
- * @brief Macro for logging a message at the info level for the client logger.
- * @details This macro logs a message at the info level for the client logger.
- * @param[in] args The arguments to be passed to the logger.
- */
-template<typename... Args> void TRIMANA_INFO(Args&&... args) { trimana::core::logger::get_client_logger()->info(std::forward<Args>(args)...); }
-
-/**
- * @brief Macro for logging a message at the warn level for the client logger.
- * @details This macro logs a message at the warn level for the client logger.
- * @param[in] args The arguments to be passed to the logger.
- */
-template<typename... Args> void TRIMANA_WARN(Args&&... args) { trimana::core::logger::get_client_logger()->warn(std::forward<Args>(args)...); }
-
-/**
- * @brief Macro for logging a message at the error level for the client logger.
- * @details This macro logs a message at the error level for the client logger.
- * @param[in] args The arguments to be passed to the logger.
- */
-template<typename... Args> void TRIMANA_ERROR(Args&&... args) { trimana::core::logger::get_client_logger()->error(std::forward<Args>(args)...); }
-
-/**
- * @brief Macro for logging a message at the critical level for the client logger.
- * @details This macro logs a message at the critical level for the client logger.
- * @param[in] args The arguments to be passed to the logger.
- */
-template<typename... Args> void TRIMANA_CRITICAL(Args&&... args) { trimana::core::logger::get_client_logger()->critical(std::forward<Args>(args)...); }
+#define TE_TRACE(...) TE::Core::Logger::EngineLogger()->trace(__VA_ARGS__)
+#define TE_INFO(...) TE::Core::Logger::EngineLogger()->info(__VA_ARGS__)
+#define TE_WARN(...) TE::Core::Logger::EngineLogger()->warn(__VA_ARGS__)
+#define TE_ERROR(...) TE::Core::Logger::EngineLogger()->error(__VA_ARGS__)
+#define TE_CRITICAL(...) TE::Core::Logger::EngineLogger()->critical(__VA_ARGS__) 

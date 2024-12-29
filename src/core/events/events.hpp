@@ -1,87 +1,89 @@
 #pragma once
 
+#include <string_view>
 #include <functional>
 #include <type_traits>
 
 #include "base.hpp"
 
-namespace trimana::core
+namespace TE::Core
 {
-	enum class event_category
+	enum EVENT_CATEGORY : uint32_t
 	{
-		window = TRIMANA_BIT(0),
-		keyboard = TRIMANA_BIT(1),
-		mouse = TRIMANA_BIT(2),
-		unknown = TRIMANA_BIT(3)
+		EVENT_CATEGORY_WINDOW 		= TE_BIT(0),
+		EVENT_CATEGORY_KEYBOARD 	= TE_BIT(1),
+		EVENT_CATEGORY_MOUSE 		= TE_BIT(2),
+		EVENT_CATEGORY_UNKNOWN 		= TE_BIT(3)
 	};
 
-	enum class event_type
+	enum EVENT_TYPE : uint32_t
 	{
-		window_close = TRIMANA_BIT(0),
-		window_resize = TRIMANA_BIT(1),
-		window_move = TRIMANA_BIT(2),
-		window_focus_gain = TRIMANA_BIT(3),
-		window_focus_lost = TRIMANA_BIT(4),
-		window_pixel_size_change = TRIMANA_BIT(5),
-		window_maximize = TRIMANA_BIT(6),
-		window_minimize = TRIMANA_BIT(7),
-		window_restore = TRIMANA_BIT(8),
-		keyboard_key_press = TRIMANA_BIT(9),
-		keyboard_key_release = TRIMANA_BIT(10),
-		keyboard_key_repeat = TRIMANA_BIT(11),
-		keyboard_key_char = TRIMANA_BIT(12),
-		mouse_button_press = TRIMANA_BIT(13),
-		mouse_button_release = TRIMANA_BIT(14),
-		mouse_wheel = TRIMANA_BIT(15),
-		mouse_cursor_moved = TRIMANA_BIT(16),
-		mouse_cursor_enter = TRIMANA_BIT(17),
-		mouse_cursor_leave = TRIMANA_BIT(18)
+		EVENT_WINDOW_CLOSE 				= TE_BIT(0),
+		EVENT_WINDOW_RESIZE 			= TE_BIT(1),
+		EVENT_WINDOW_MOVED 				= TE_BIT(2),
+		EVENT_WINDOW_FOCUS_GAIN 		= TE_BIT(3),
+		EVENT_WINDOW_FOCUS_LOST 		= TE_BIT(4),
+		EVENT_WINDOW_PIXEL_SIZE_CHANGED = TE_BIT(5),
+		EVENT_WINDOW_MAXIMIZED 			= TE_BIT(6),
+		EVENT_WINDOW_MINIMIZED 			= TE_BIT(7),
+		EVENT_WINDOW_RESTORE 			= TE_BIT(8),
+
+		EVENT_KEYBOARD_KEYPRESS 		= TE_BIT(9),
+		EVENT_KEYBOARD_KEYRELEASE 		= TE_BIT(10),
+		EVENT_KEYBOARD_KEYREPEATE 		= TE_BIT(11),
+		EVENT_KEYBOARD_KEYCHAR 			= TE_BIT(12),
+
+		EVENT_MOUSE_BUTTON_DOWN 				= TE_BIT(13),
+		EVENT_MOUSE_BUTTON_UP 					= TE_BIT(14),
+		EVENT_MOUSE_WHEEL 						= TE_BIT(15),
+		EVENT_MOUSE_CURSOR_MOVED 				= TE_BIT(16),
+		EVENT_MOUSE_CURSOR_WINDOW_ENTER 		= TE_BIT(17),
+		EVENT_MOUSE_CURSOR_WINDOW_LEAVE 		= TE_BIT(18)
 	};
 
-	#define EVENT_CLASS_TYPE(type) static event_type get_static_type() { return type; } \
-		virtual event_type get_event_type() const override { return get_static_type(); } \
-		virtual const char* get_name() const override { return #type; }
+	#define EVENT_CLASS_TYPE(ty) static EVENT_TYPE StaticType() { return ty; } \
+		virtual EVENT_TYPE Type() const override { return StaticType(); } \
+		virtual std::string_view What() const override { return std::string_view(#ty); }
 
-	#define EVENT_CLASS_CATEGORY(category) virtual event_category get_category() const override { return category; }
+	#define EVENT_CLASS_CATEGORY(cat) virtual EVENT_CATEGORY Category() const override { return cat; }
 
-	class events
+	class Events
 	{
-	public:
-		events() = default;
-		virtual ~events() = default;
+		public:
+			Events() = default;
+			virtual ~Events() = default;
 
-		virtual event_type get_event_type() const = 0;
-		virtual const char* get_name() const = 0;
-		virtual event_category get_category() const = 0;
+			virtual EVENT_TYPE Type() const = 0;
+			virtual std::string_view What() const = 0;
+			virtual EVENT_CATEGORY Category() const = 0;
 
-		bool is_in_category(event_category category) const
-		{
-			return static_cast<bool>( get_category() == category );
-		}
-	};
-
-	class events_handler
-	{
-	public:
-		events_handler(events& event) : m_event(event) {}
-		~events_handler() = default;
-
-		template<typename T>
-		bool dispatch(const std::function<bool(T&)>& func)
-		{
-			if( m_event.get_event_type() == T::get_static_type() )
+			bool InCategory(EVENT_CATEGORY cat) const
 			{
-				func(static_cast<T&>( m_event ));
-				return true;
+				return static_cast<bool>( Category() & cat );
 			}
-			return false;
-		}
-
-	private:
-		events& m_event;
 	};
 
-	using event_callback = std::function<void(events&)>;
-}
+	class EventsHandler
+	{
+		public:
+			EventsHandler(Events& event) : m_Event(event) {}
+			~EventsHandler() = default;
 
-#define TRIMANA_EVENT_CALLBACK(CALLBACK_FN) [this](auto&&... args) -> decltype(auto) { return this->CALLBACK_FN(std::forward<decltype(args)>(args)...); }
+			template<typename T>
+			bool Dispatch(const std::function<bool(T&)>& func)
+			{
+				if( m_Event.Type() == T::StaticType() )
+				{
+					func(static_cast<T&>( m_Event ));
+					return true;
+				}
+
+				return false;
+			}
+
+		private:
+			Events& m_Event;
+	};
+
+	using EventCallBack = std::function<void(Events&)>;
+}

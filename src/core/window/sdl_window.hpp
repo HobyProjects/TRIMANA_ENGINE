@@ -1,38 +1,28 @@
 #pragma once
 
 #include <SDL3/SDL.h>
-#include "window.hpp"
+#include "base_window.hpp"
 
-namespace trimana::core
+namespace TE::Core
 {
-	class sdl_service_api final : public platform_service_api
+	class SDL_API final : public BaseAPI
 	{
-	public:
-		sdl_service_api() = default;
-		virtual ~sdl_service_api() = default;
+		public:
+			SDL_API() = default;
+			virtual ~SDL_API() = default;
 
-		virtual bool init() override;
-		virtual void quit() override;
-		virtual platform_service_apis api() override { return platform_service_apis::sdl_api; }
-
-	private:
-		bool m_initialized{ false };
+			virtual bool Init() override;
+			virtual void Quit() override;
+			virtual BASE_APIS API() override { return API_SDL; }
 	};
 
-	class sdl_window final : public window
+	class _SDL_Window final : public IWindow
 	{
-	public:
-		sdl_window(const std::string& title, const std::shared_ptr<sdl_service_api>& sdl_api);
-		virtual ~sdl_window();
+		public:
+			_SDL_Window(const std::string& title);
+			virtual ~_SDL_Window();
 
-		virtual void* native_window() const override { return m_window; }
-		virtual window_properties* properties() override { return &m_properties; }
-		virtual void swap_buffers() const override;
-
-	private:
-		SDL_Window* m_window{ nullptr };
-		window_properties m_properties{};
-		std::shared_ptr<context> m_context{ nullptr };
-		std::weak_ptr<sdl_service_api> m_sdl_service_api;
+			virtual Native Window() const override;
+			virtual WindowProperties& Properties() override;
 	};
 }

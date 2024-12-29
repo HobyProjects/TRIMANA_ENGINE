@@ -3,87 +3,87 @@
 #include "events.hpp"
 #include "key_codes.hpp"
 
-namespace trimana::core
+namespace TE::Core
 {
-	class mouse_button_press_event : public events
+	class Event_Mouse_ButtonDown : public Events
 	{
-	public:
-		mouse_button_press_event(mouse_button button) : m_button(button) {}
-		virtual ~mouse_button_press_event() = default;
+		public:
+			Event_Mouse_ButtonDown(MOUSE_BUTTON button) : m_Button(button) {}
+			virtual ~Event_Mouse_ButtonDown() = default;
 
-		EVENT_CLASS_TYPE(event_type::mouse_button_press);
-		EVENT_CLASS_CATEGORY(event_category::mouse);
+			EVENT_CLASS_TYPE(EVENT_MOUSE_BUTTON_DOWN);
+			EVENT_CLASS_CATEGORY(EVENT_CATEGORY_MOUSE);
 
-		mouse_button button() const { return m_button; }
+			MOUSE_BUTTON Button() const { return m_Button; }
 
-	private:
-		mouse_button m_button;
+		private:
+			MOUSE_BUTTON m_Button{ TE_KEY_UNKNOWN };
 	};
 
-	class mouse_button_release_event : public events
+	class Event_Mouse_ButtonUp : public Events
 	{
-	public:
-		mouse_button_release_event(mouse_button button) : m_button(button) {}
-		virtual ~mouse_button_release_event() = default;
+		public:
+			Event_Mouse_ButtonUp(MOUSE_BUTTON button) : m_Button(button) {}
+			virtual ~Event_Mouse_ButtonUp() = default;
 
-		EVENT_CLASS_TYPE(event_type::mouse_button_release);
-		EVENT_CLASS_CATEGORY(event_category::mouse);
+			EVENT_CLASS_TYPE(EVENT_MOUSE_BUTTON_UP);
+			EVENT_CLASS_CATEGORY(EVENT_CATEGORY_MOUSE);
 
-		mouse_button button() const { return m_button; }
+			MOUSE_BUTTON Button() const { return m_Button; }
 
-	private:
-		mouse_button m_button;
+		private:
+			MOUSE_BUTTON m_Button{ TE_KEY_UNKNOWN };
 	};
 
-	class mouse_wheel_event : public events
+	class Event_Mouse_WheelScroll : public Events
 	{
-	public:
-		mouse_wheel_event(float x_offset, float y_offset) : m_x_offset(x_offset), m_y_offset(y_offset) {}
-		virtual ~mouse_wheel_event() = default;
+		public:
+			Event_Mouse_WheelScroll(float offsetX, float offsetY) : m_OffsetX(offsetX), m_OffsetY(offsetY) {}
+			virtual ~Event_Mouse_WheelScroll() = default;
 
-		EVENT_CLASS_TYPE(event_type::mouse_wheel);
-		EVENT_CLASS_CATEGORY(event_category::mouse);
+			EVENT_CLASS_TYPE(EVENT_MOUSE_WHEEL);
+			EVENT_CLASS_CATEGORY(EVENT_CATEGORY_MOUSE);
 
-		float x_offset() const { return m_x_offset; }
-		float y_offset() const { return m_y_offset; }
+			float OffsetX() const { return m_OffsetX; }
+			float OffsetY() const { return m_OffsetY; }
 
-	private:
-		float m_x_offset, m_y_offset;
+		private:
+			float m_OffsetX{ 0.0f }, m_OffsetY{ 0.0f };
 	};
 
-	class mouse_cursor_moved_event : public events
+	class Event_Mouse_CursorMove : public Events
 	{
-	public:
-		mouse_cursor_moved_event(float x, float y) : m_x(x), m_y(y) {}
-		virtual ~mouse_cursor_moved_event() = default;
+		public:
+			Event_Mouse_CursorMove(float x, float y) : m_X(x), m_Y(y) {}
+			virtual ~Event_Mouse_CursorMove() = default;
 
-		EVENT_CLASS_TYPE(event_type::mouse_cursor_moved);
-		EVENT_CLASS_CATEGORY(event_category::mouse);
+			EVENT_CLASS_TYPE(EVENT_MOUSE_CURSOR_MOVED);
+			EVENT_CLASS_CATEGORY(EVENT_CATEGORY_MOUSE);
 
-		float x() const { return m_x; }
-		float y() const { return m_y; }
+			float GetX() const { return m_X; }
+			float GetY() const { return m_Y; }
 
-	private:
-		float m_x, m_y;
+		private:
+			float m_X{ 0.0f }, m_Y{ 0.0f };
 	};
 
-	class mouse_cursor_enter_event : public events
+	class Event_Mouse_CursorWindowEnter : public Events
 	{
-	public:
-		mouse_cursor_enter_event() = default;
-		virtual ~mouse_cursor_enter_event() = default;
+		public:
+			Event_Mouse_CursorWindowEnter() = default;
+			virtual ~Event_Mouse_CursorWindowEnter() = default;
 
-		EVENT_CLASS_TYPE(event_type::mouse_cursor_enter);
-		EVENT_CLASS_CATEGORY(event_category::mouse);
+			EVENT_CLASS_TYPE(EVENT_MOUSE_CURSOR_WINDOW_ENTER);
+			EVENT_CLASS_CATEGORY(EVENT_CATEGORY_MOUSE);
 	};
 
-	class mouse_cursor_leave_event : public events
+	class Event_Mouse_CursorWindowLeave : public Events
 	{
-	public:
-		mouse_cursor_leave_event() = default;
-		virtual ~mouse_cursor_leave_event() = default;
+		public:
+			Event_Mouse_CursorWindowLeave() = default;
+			virtual ~Event_Mouse_CursorWindowLeave() = default;
 
-		EVENT_CLASS_TYPE(event_type::mouse_cursor_leave);
-		EVENT_CLASS_CATEGORY(event_category::mouse);
+			EVENT_CLASS_TYPE(EVENT_MOUSE_CURSOR_WINDOW_LEAVE);
+			EVENT_CLASS_CATEGORY(EVENT_CATEGORY_MOUSE);
 	};
 }

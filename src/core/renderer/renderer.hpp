@@ -3,30 +3,30 @@
 #include <glm/glm.hpp>
 #include "base.hpp"
 
-namespace trimana::core
+namespace TE::Core
 {
-	enum class rendering_api
+	enum RENDERING_API
 	{
-		opengl = TRIMANA_BIT(0),
-		vulkan = TRIMANA_BIT(1),
-		directx = TRIMANA_BIT(2)
+		RENDERER_API_OPENGL 	= TE_BIT(0),
+		RENDERER_API_VULKAN 	= TE_BIT(1),
+		RENDERER_API_DIRECTX 	= TE_BIT(2)
 	};
 
-	class renderer
+	class Renderer
 	{
-	private:
-		renderer() = default;
-		renderer(const renderer&) = delete;
-		renderer& operator=(const renderer&) = delete;
-		~renderer() = default;
+		private:
+			Renderer() = default;
+			Renderer(const Renderer&) = delete;
+			Renderer& operator=(const Renderer&) = delete;
+			~Renderer() = default;
 
-	public:
-		static void init();
-		static void quit();
-		static rendering_api api();
-		static void change_api(rendering_api api);
-		static void clear();
-		static void clear_color(const glm::vec4& color);
-		static void set_viewport(int32_t x, int32_t y, int32_t width, int32_t height);
+		public:
+			static void Init();
+			static void Quit();
+			static RENDERING_API API();
+			static void ChangeAPI(RENDERING_API api);
+			static void Clear();
+			static void ClearColor(const glm::vec4& color);
+			static void SetViewport(int32_t x, int32_t y, int32_t width, int32_t height);
 	};
 }

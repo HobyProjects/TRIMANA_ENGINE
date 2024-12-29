@@ -3,23 +3,26 @@
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
+#include <memory>
 
 #include "base.hpp"
-#include "window.hpp"
+#include "base_window.hpp"
 
-namespace trimana::core
+namespace TE::Core
 {
-	class glfw_gl_context final : public context
+	class GLFW_GL_Context final : public IContext
 	{
-	public:
-		glfw_gl_context(void* native_window) : m_native_window(native_window) {}
-		virtual ~glfw_gl_context() = default;
+		public:
+			GLFW_GL_Context() = default;
+			virtual ~GLFW_GL_Context() = default;
 
-		virtual bool make_context() override;
-		virtual void swap_buffers() override;
-		virtual void change_swap_interval(uint32_t interval) override;
+			virtual bool MakeContext(Native window) override;
+			virtual Native GetContext() const override;
+			virtual void SwapBuffers() override;
+			virtual void SetInterval(uint32_t interval) override;
 
-	private:
-		void* m_native_window{ nullptr };
+		private:
+			static std::once_flag s_InitRendererAPI;
+			static void InitRendereringAPI();
 	};
 }

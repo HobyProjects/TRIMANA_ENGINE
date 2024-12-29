@@ -3,39 +3,28 @@
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
-#include "window.hpp"
+#include "base_window.hpp"
 
-namespace trimana::core
+namespace TE::Core
 {
-	class glfw_service_api final : public platform_service_api
+	class GLFW_API final : public BaseAPI
 	{
-	public:
-		glfw_service_api() = default;
-		~glfw_service_api() = default;
+		public:
+			GLFW_API() = default;
+			~GLFW_API() = default;
 
-		virtual bool init() override;
-		virtual void quit() override;
-		virtual platform_service_apis api() override { return platform_service_apis::glfw_api; }
-
-	private:
-		bool m_initialized{ false };
+			virtual bool Init() override;
+			virtual void Quit() override;
+			virtual BASE_APIS API() override { return API_GLFW; }
 	};
 
-	class glfw_window final : public window
+	class GLFW_Window final : public IWindow
 	{
-	public:
-		glfw_window(const std::string& title, const std::shared_ptr<glfw_service_api>& glfw_service_api);
-		~glfw_window();
+		public:
+			GLFW_Window(const std::string& title);
+			virtual ~GLFW_Window();
 
-		virtual void* native_window() const override { return m_window; }
-		virtual window_properties* properties() override { return &m_properties; }
-		virtual void swap_buffers() const override;
-		virtual std::shared_ptr<context> window_context() const override { return m_context; }
-
-	private:
-		GLFWwindow* m_window{ nullptr };
-		window_properties m_properties{};
-		std::shared_ptr<context> m_context{ nullptr };
-		std::weak_ptr<glfw_service_api> m_glfw_service_api;
+			virtual Native Window() const override;
+			virtual WindowProperties& Properties() override;
 	};
 }

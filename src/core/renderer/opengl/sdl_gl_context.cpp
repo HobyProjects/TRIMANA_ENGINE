@@ -1,36 +1,46 @@
 #include "sdl_gl_context.hpp"
 #include "exceptions.hpp"
 
-namespace trimana::core
+namespace TE::Core
 {
-	bool sdl_gl_context::make_context()
+	static Native s_Window{ nullptr };
+	std::once_flag SDL_GL_Context::s_InitRendererAPI;
+
+	void SDL_GL_Context::InitRendereringAPI()
 	{
-		if( !m_native_window )
-			throw null_pointer_exception("window is null");
-
-		GLenum status = gladLoadGLLoader((GLADloadproc) SDL_GL_GetProcAddress);
-		if( status == GL_FALSE )
+		if( !gladLoadGLLoader((GLADloadproc) SDL_GL_GetProcAddress) )
 		{
-			throw uninitialized_object_exception("Failed to initialize GLAD");
-			return false;
+			throw UninitializedObjectException("Failed to initialize GLAD");
 		}
+	}
 
-		SDL_GL_MakeCurrent((SDL_Window*) m_native_window, SDL_GL_CreateContext((SDL_Window*) m_native_window));
+	bool SDL_GL_Context::MakeContext(Native window)
+	{
+		if( !window )
+			throw NullPointerException("window is null");
+
+		s_Window = window;
+		SDL_GL_MakeCurrent((SDL_Window*) s_Window, SDL_GL_CreateContext((SDL_Window*) s_Window));
 		SDL_GL_SetSwapInterval(1);
+
+
+
+		TE_CORE_INFO("GLAD successfully initialized");
 		return false;
 	}
 
-	void sdl_gl_context::swap_buffers()
+	Native SDL_GL_Context::GetContext() const
 	{
-		if( !m_native_window )
-			throw null_pointer_exception("window is null");
-		SDL_GL_SwapWindow((SDL_Window*) m_native_window);
+		return SDL_GL_GetCurrentContext();
 	}
 
-	void sdl_gl_context::change_swap_interval(uint32_t interval)
+	void SDL_GL_Context::SwapBuffers()
 	{
-		if( !m_native_window )
-			throw null_pointer_exception("window is null");
+		SDL_GL_SwapWindow((SDL_Window*) s_Window);
+	}
+
+	void SDL_GL_Context::SetInterval(uint32_t interval)
+	{
 		SDL_GL_SetSwapInterval(interval);
 	}
 }

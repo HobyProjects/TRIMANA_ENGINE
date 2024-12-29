@@ -36,15 +36,15 @@ find_package(glm REQUIRED)
 # Platform Specific Configuration
 ###############################################################################
 if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
-    add_compile_definitions(TRIMANA_PLATFORM_WINDOWS)
+    add_compile_definitions(TE_PLATFORM_WINDOWS)
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-    add_compile_definitions(TRIMANA_PLATFORM_LINUX)
+    add_compile_definitions(TE_PLATFORM_LINUX)
 endif()
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    add_compile_definitions(TRIMANA_DEBUG)
+    add_compile_definitions(TE_DEBUG)
 else()
-    add_compile_definitions(TRIMANA_RELEASE)
+    add_compile_definitions(TE_RELEASE)
 endif()
 
 
@@ -78,26 +78,19 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/log.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/base.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/key_codes.hpp
-
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/window.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/base_window.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/glfw_window.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/sdl_window.hpp
-
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/window.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/renderer.hpp
-
-
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/glfw_gl_context.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/sdl_gl_context.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_renderer.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_debug.hpp
-
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/events.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/window_events.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/keyboard_events.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/mouse_events.hpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/events_receiver.hpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/glfw_events_receiver.hpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/sdl_events_receiver.hpp
 )
 
 
@@ -105,24 +98,42 @@ set(
 set(
     TRIMANA_CORE_SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/log.cpp
-
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/window.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/glfw_window.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/sdl_window.cpp
-
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/window.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/renderer.cpp
-
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/glfw_gl_context.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/sdl_gl_context.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_renderer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_debug.cpp
-
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/events_receiver.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/glfw_events_receiver.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/sdl_events_receiver.cpp
 )
 
 
 add_library(TrimanaEngineCore STATIC ${TRIMANA_CORE_HEADERS} ${TRIMANA_CORE_SOURCES})
 target_include_directories(TrimanaEngineCore PUBLIC ${TRIMANA_CORE_INCLUDE_DIRS})
 target_link_libraries(TrimanaEngineCore PUBLIC glfw spdlog::spdlog SDL3::SDL3 glad::glad glm::glm)
+
+
+###############################################################################
+# TrimanaEngine - Application
+###############################################################################
+
+set(
+    TRIMANA_APP_INCLUDE_DIRS
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint
+)
+
+set(
+    TRIMANA_APP_HEADERS
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint/application.hpp
+)
+
+set(
+    TRIMANA_APP_SOURCES
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint/application.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint/main.cpp
+)
+
+add_executable(TrimanaEngine ${TRIMANA_CORE_HEADERS} ${TRIMANA_APP_HEADERS} ${TRIMANA_APP_SOURCES})
+target_include_directories(TrimanaEngine PUBLIC ${TRIMANA_CORE_INCLUDE_DIRS} ${TRIMANA_APP_INCLUDE_DIRS})
+target_link_libraries(TrimanaEngine PUBLIC TrimanaEngineCore)

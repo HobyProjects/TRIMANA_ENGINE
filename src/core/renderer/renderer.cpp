@@ -2,150 +2,150 @@
 #include "renderer.hpp"
 #include "exceptions.hpp"
 
-namespace trimana::core
+namespace TE::Core
 {
-	static rendering_api s_api = rendering_api::opengl;
+	static RENDERING_API s_API = RENDERER_API_OPENGL;
 
-	void renderer::init()
+	void Renderer::Init()
 	{
-		switch( s_api )
+		switch( s_API )
 		{
-			case rendering_api::opengl:
+			case RENDERER_API_OPENGL:
 			{
-				gl_renderer::init();
+				OpenGL_Renderer::Init();
 				break;
 			}
-			case rendering_api::vulkan:
+			case RENDERER_API_VULKAN:
 			{
-				throw unimplemented_feature_exception("Vulkan renderer is not implemented yet");
+				throw UnimplementedFeatureException("Vulkan renderer is not implemented yet");
 				break;
 			}
-			case rendering_api::directx:
+			case RENDERER_API_DIRECTX:
 			{
-				throw unimplemented_feature_exception("DirectX renderer is not implemented yet");
+				throw UnimplementedFeatureException("DirectX renderer is not implemented yet");
 				break;
 			}
 			default:
 			{
-				gl_renderer::init();
+				OpenGL_Renderer::Init();
 				break;
 			}
 		};
 	}
 
-	void renderer::quit()
+	void Renderer::Quit()
 	{
-		switch( s_api )
+		switch( s_API )
 		{
-			case rendering_api::opengl:
+			case RENDERER_API_OPENGL:
 			{
-				gl_renderer::quit();
+				OpenGL_Renderer::Quit();
 				break;
 			}
-			case rendering_api::vulkan:
+			case RENDERER_API_VULKAN:
 			{
-				throw unimplemented_feature_exception("Vulkan renderer is not implemented yet");
+				throw UnimplementedFeatureException("Vulkan renderer is not implemented yet");
 				break;
 			}
-			case rendering_api::directx:
+			case RENDERER_API_DIRECTX:
 			{
-				throw unimplemented_feature_exception("DirectX renderer is not implemented yet");
+				throw UnimplementedFeatureException("DirectX renderer is not implemented yet");
 				break;
 			}
 			default:
 			{
-				gl_renderer::quit();
+				OpenGL_Renderer::Quit();
 				break;
 			}
 		};
 	}
 
-	rendering_api renderer::api()
+	RENDERING_API Renderer::API()
 	{
-		return s_api;
+		return s_API;
 	}
 
-	void renderer::change_api(rendering_api api)
+	void Renderer::ChangeAPI(RENDERING_API api)
 	{
 		//[TODO]: Need to think about how to handle this
 	}
 
-	void renderer::clear()
+	void Renderer::Clear()
 	{
-		switch( s_api )
+		switch( s_API )
 		{
-			case rendering_api::opengl:
+			case RENDERER_API_OPENGL:
 			{
-				gl_renderer::clear();
+				OpenGL_Renderer::Clear();
 				break;
 			}
-			case rendering_api::vulkan:
+			case RENDERER_API_VULKAN:
 			{
-				throw unimplemented_feature_exception("Vulkan renderer is not implemented yet");
+				throw UnimplementedFeatureException("Vulkan renderer is not implemented yet");
 				break;
 			}
-			case rendering_api::directx:
+			case RENDERER_API_DIRECTX:
 			{
-				throw unimplemented_feature_exception("DirectX renderer is not implemented yet");
+				throw UnimplementedFeatureException("DirectX renderer is not implemented yet");
 				break;
 			}
 			default:
 			{
-				gl_renderer::clear();
+				OpenGL_Renderer::Clear();
 				break;
 			}
 		};
 	}
 
-	void renderer::clear_color(const glm::vec4& color)
+	void Renderer::ClearColor(const glm::vec4& color)
 	{
-		switch( s_api )
+		switch( s_API )
 		{
-			case rendering_api::opengl:
+			case RENDERER_API_OPENGL:
 			{
-				gl_renderer::clear_color(color);
+				OpenGL_Renderer::ClearColor(color);
 				break;
 			}
-			case rendering_api::vulkan:
+			case RENDERER_API_VULKAN:
 			{
-				throw unimplemented_feature_exception("Vulkan renderer is not implemented yet");
+				throw UnimplementedFeatureException("Vulkan renderer is not implemented yet");
 				break;
 			}
-			case rendering_api::directx:
+			case RENDERER_API_DIRECTX:
 			{
-				throw unimplemented_feature_exception("DirectX renderer is not implemented yet");
+				throw UnimplementedFeatureException("DirectX renderer is not implemented yet");
 				break;
 			}
 			default:
 			{
-				gl_renderer::clear_color(color);
+				OpenGL_Renderer::ClearColor(color);
 				break;
 			}
 		};
 	}
 
-	void renderer::set_viewport(int32_t x, int32_t y, int32_t width, int32_t height)
+	void Renderer::SetViewport(int32_t x, int32_t y, int32_t width, int32_t height)
 	{
-		switch( s_api )
+		switch( s_API )
 		{
-			case rendering_api::opengl:
+			case RENDERER_API_OPENGL:
 			{
-				gl_renderer::set_viewport(x, y, width, height);
+				OpenGL_Renderer::SetViewport(x, y, width, height);
 				break;
 			}
-			case rendering_api::vulkan:
+			case RENDERER_API_VULKAN:
 			{
-				throw unimplemented_feature_exception("Vulkan renderer is not implemented yet");
+				throw UnimplementedFeatureException("Vulkan renderer is not implemented yet");
 				break;
 			}
-			case rendering_api::directx:
+			case RENDERER_API_DIRECTX:
 			{
-				throw unimplemented_feature_exception("DirectX renderer is not implemented yet");
+				throw UnimplementedFeatureException("DirectX renderer is not implemented yet");
 				break;
 			}
 			default:
 			{
-				gl_renderer::set_viewport(x, y, width, height);
+				OpenGL_Renderer::SetViewport(x, y, width, height);
 				break;
 			}
 		};

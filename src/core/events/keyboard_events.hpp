@@ -3,75 +3,76 @@
 #include "events.hpp"
 #include "key_codes.hpp"
 
-namespace trimana::core
+namespace TE::Core
 {
-	class keyboard_keypress_event : public events
+	class Event_Keyboard_KeyPress : public Events
 	{
-	public:
-		keyboard_keypress_event(key key_code) : key_code(key_code) {}
-		virtual ~keyboard_keypress_event() = default;
+		public:
+			Event_Keyboard_KeyPress(KEY keyCode) : m_KeyCode(keyCode) {}
+			virtual ~Event_Keyboard_KeyPress() = default;
 
-		EVENT_CLASS_TYPE(event_type::keyboard_key_press);
-		EVENT_CLASS_CATEGORY(event_category::keyboard);
+			EVENT_CLASS_TYPE(EVENT_KEYBOARD_KEYPRESS);
+			EVENT_CLASS_CATEGORY(EVENT_CATEGORY_KEYBOARD);
 
-		key keycode() const { return key_code; }
-	private:
-		key key_code;
+			KEY KeyCode() const { return m_KeyCode; }
+
+		private:
+			KEY m_KeyCode{ TE_KEY_UNKNOWN };
 	};
 
-	class keyboard_keyrelease_event : public events
+	class Event_Keyboard_KeyRelease : public Events
 	{
-	public:
-		keyboard_keyrelease_event(key key_code) : key_code(key_code) {}
-		virtual ~keyboard_keyrelease_event() = default;
+		public:
+			Event_Keyboard_KeyRelease(KEY keyCode) : m_KeyCode(keyCode) {}
+			virtual ~Event_Keyboard_KeyRelease() = default;
 
-		EVENT_CLASS_TYPE(event_type::keyboard_key_release);
-		EVENT_CLASS_CATEGORY(event_category::keyboard);
+			EVENT_CLASS_TYPE(EVENT_KEYBOARD_KEYRELEASE);
+			EVENT_CLASS_CATEGORY(EVENT_CATEGORY_KEYBOARD);
+			KEY KeyCode() const { return m_KeyCode; }
 
-		key keycode() const { return key_code; }
-	private:
-		key key_code;
+		private:
+			KEY m_KeyCode{ TE_KEY_UNKNOWN };
 	};
 
-	class keyboard_keyrepeat_event : public events
+	class Event_Keyboard_KeyRepeate : public Events
 	{
-	public:
-		keyboard_keyrepeat_event(key key_code) : key_code(key_code) {}
-		virtual ~keyboard_keyrepeat_event() = default;
+		public:
+			Event_Keyboard_KeyRepeate(KEY keyCode) : m_KeyCode(keyCode) {}
+			virtual ~Event_Keyboard_KeyRepeate() = default;
 
-		EVENT_CLASS_TYPE(event_type::keyboard_key_repeat);
-		EVENT_CLASS_CATEGORY(event_category::keyboard);
+			EVENT_CLASS_TYPE(EVENT_KEYBOARD_KEYREPEATE);
+			EVENT_CLASS_CATEGORY(EVENT_CATEGORY_KEYBOARD);
+			KEY KeyCode() const { return m_KeyCode; }
 
-		key keycode() const { return key_code; }
-	private:
-		key key_code;
+		private:
+			KEY m_KeyCode{ TE_KEY_UNKNOWN };
 	};
 
-	class keyboard_keychar_event : public events
+	class Event_Keyboard_KeyChar : public Events
 	{
-	public:
-		keyboard_keychar_event(uint32_t character) : character(character) {}
-		virtual ~keyboard_keychar_event() = default;
+		public:
+			Event_Keyboard_KeyChar(uint32_t character) : m_Character(character) {}
+			virtual ~Event_Keyboard_KeyChar() = default;
 
-		EVENT_CLASS_TYPE(event_type::keyboard_key_char);
-		EVENT_CLASS_CATEGORY(event_category::keyboard);
+			EVENT_CLASS_TYPE(EVENT_KEYBOARD_KEYCHAR);
+			EVENT_CLASS_CATEGORY(EVENT_CATEGORY_KEYBOARD);
+			uint32_t CodePoint() const { return m_Character; }
 
-		uint32_t codepoint() const { return character; }
-	private:
-		uint32_t character;
+		private:
+			uint32_t m_Character{ 0 };
 	};
 
-	class keyboard_textinput_event : public events
+	class Event_Keyboard_TextInput : public Events
 	{
-	public:
-		keyboard_textinput_event(const char* text) : m_text(text) {}
-		virtual ~keyboard_textinput_event() = default;
+		public:
+			Event_Keyboard_TextInput(const char* text) : m_Text(text) {}
+			virtual ~Event_Keyboard_TextInput() = default;
 
-		EVENT_CLASS_TYPE(event_type::keyboard_key_char);
-		EVENT_CLASS_CATEGORY(event_category::keyboard);
+			EVENT_CLASS_TYPE(EVENT_KEYBOARD_KEYCHAR);
+			EVENT_CLASS_CATEGORY(EVENT_CATEGORY_KEYBOARD);
+			const char* Text() const { return m_Text; }
 
-		const char* text() const { return m_text; }
-	private:
-		const char* m_text;
+		private:
+			const char* m_Text{ nullptr };
 	};
 }

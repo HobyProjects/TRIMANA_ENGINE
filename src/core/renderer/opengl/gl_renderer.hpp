@@ -2,22 +2,22 @@
 
 #include "renderer.hpp"
 
-namespace trimana::core
+namespace TE::Core
 {
-	class gl_renderer
+	class OpenGL_Renderer
 	{
-	private:
-		gl_renderer() = default;
-		gl_renderer(const gl_renderer&) = delete;
-		gl_renderer& operator=(const gl_renderer&) = delete;
-		~gl_renderer() = default;
+		private:
+			OpenGL_Renderer() = default;
+			OpenGL_Renderer(const OpenGL_Renderer&) = delete;
+			OpenGL_Renderer& operator=(const OpenGL_Renderer&) = delete;
+			~OpenGL_Renderer() = default;
 
-	public:
-		static void init();
-		static void quit();
-		static rendering_api api() { return rendering_api::opengl; }
-		static void clear();
-		static void clear_color(const glm::vec4& color);
-		static void set_viewport(int32_t x, int32_t y, int32_t width, int32_t height);
+		public:
+			static void Init();
+			static void Quit();
+			static RENDERING_API API() { return RENDERER_API_OPENGL; }
+			static void Clear();
+			static void ClearColor(const glm::vec4& color);
+			static void SetViewport(int32_t x, int32_t y, int32_t width, int32_t height);
 	};
 }

@@ -113,7 +113,7 @@ namespace TE::Core
 
 		if( Renderer::API() & RENDERER_API_DIRECTX )
 		{
-			// window_flags |= SDL_WINDOW_DIRECT3D; // SDL_WINDOW_DIRECT3D is not a valid SDL window flag
+			
 		}
 
 		s_Window = SDL_CreateWindow(s_Properties.Title.c_str(), s_Properties.MinWidth, s_Properties.MinHeight, window_flags);
@@ -150,6 +150,11 @@ namespace TE::Core
 		}
 	}
 
+	bool SDL3_Window::IsActive() const
+	{
+		return s_Properties.IsActive;
+	}
+
 	Native SDL3_Window::Window() const
 	{
 		return s_Window;
@@ -178,13 +183,13 @@ namespace TE::Core
 		{
 			case SDL_EVENT_WINDOW_CLOSE_REQUESTED:
 			{
-				Event_Window_Close windowCloseEvent;
+				EventWindowClose windowCloseEvent;
 				s_CallbackFunc(s_Properties.Handle, windowCloseEvent);
 				break;
 			}
 			case SDL_EVENT_WINDOW_RESIZED:
 			{
-				Event_Window_Resize windowResizedEvent(s_Event.window.data1, s_Event.window.data2);
+				EventWindowResize windowResizedEvent(s_Event.window.data1, s_Event.window.data2);
 				s_Properties.Width = s_Event.window.data1;
 				s_Properties.height = s_Event.window.data2;
 				s_CallbackFunc(s_Properties.Handle, windowResizedEvent);
@@ -192,42 +197,42 @@ namespace TE::Core
 			}
 			case SDL_EVENT_WINDOW_MINIMIZED:
 			{
-				Event_Window_Minimize windowMinimizedEvent;
+				EventWindowMinimize windowMinimizedEvent;
 				s_Properties.WindowState = WINDOW_MINIMIZED;
 				s_CallbackFunc(s_Properties.Handle, windowMinimizedEvent);
 				break;
 			}
 			case SDL_EVENT_WINDOW_MAXIMIZED:
 			{
-				Event_Window_Maximaize windowMaximizedEvent;
+				EventWindowMaximaize windowMaximizedEvent;
 				s_Properties.WindowState = WINDOW_MAXIMIZED;
 				s_CallbackFunc(s_Properties.Handle, windowMaximizedEvent);
 				break;
 			}
 			case SDL_EVENT_WINDOW_RESTORED:
 			{
-				Event_Window_Restore windowRestoredEvent;
+				EventWindowRestore windowRestoredEvent;
 				s_Properties.WindowState = WINDOW_NORMAL;
 				s_CallbackFunc(s_Properties.Handle, windowRestoredEvent);
 				break;
 			}
 			case SDL_EVENT_WINDOW_FOCUS_GAINED:
 			{
-				Event_Window_FocusGain windowFocusGainedEvent;
+				EventWindowFocusGain windowFocusGainedEvent;
 				s_Properties.IsFocused = true;
 				s_CallbackFunc(s_Properties.Handle, windowFocusGainedEvent);
 				break;
 			}
 			case SDL_EVENT_WINDOW_FOCUS_LOST:
 			{
-				Event_Window_FocusLost windowFocusLostEvent;
+				EventWindowFocusLost windowFocusLostEvent;
 				s_Properties.IsFocused = false;
 				s_CallbackFunc(s_Properties.Handle, windowFocusLostEvent);
 				break;
 			}
 			case SDL_EVENT_WINDOW_MOVED:
 			{
-				Event_Window_Move windowMovedEvent(s_Event.window.data1, s_Event.window.data2);
+				EventWindowPosChange windowMovedEvent(s_Event.window.data1, s_Event.window.data2);
 				s_Properties.PosX = s_Event.window.data1;
 				s_Properties.PosY = s_Event.window.data2;
 				s_CallbackFunc(s_Properties.Handle, windowMovedEvent);
@@ -235,7 +240,7 @@ namespace TE::Core
 			}
 			case SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED:
 			{
-				Event_Window_PixelSizeChange windowPixelSizeChangedEvent(s_Event.window.data1, s_Event.window.data2);
+				EventWindowPixelSizeChange windowPixelSizeChangedEvent(s_Event.window.data1, s_Event.window.data2);
 				s_Properties.PixelWidth = s_Event.window.data1;
 				s_Properties.PixelHeight = s_Event.window.data2;
 				s_CallbackFunc(s_Properties.Handle, windowPixelSizeChangedEvent);
@@ -245,57 +250,59 @@ namespace TE::Core
 			{
 				if( s_Event.key.down )
 				{
-					Event_Keyboard_KeyPress keyPress(static_cast<KEY>( s_Event.key.key ));
+					EventKeyboardKeyPress keyPress(static_cast<KEY>( s_Event.key.key ));
 					s_CallbackFunc(s_Properties.Handle, keyPress);
 					break;
 				}
 
 				if( s_Event.key.repeat )
 				{
-					Event_Keyboard_KeyRepeate keyRepeate(static_cast<KEY>( s_Event.key.key ));
+					EventKeyboardKeyRepeate keyRepeate(static_cast<KEY>( s_Event.key.key ));
 					s_CallbackFunc(s_Properties.Handle, keyRepeate);
 					break;
 				}
+
+				break;
 			}
 			case SDL_EVENT_KEY_UP:
 			{
-				Event_Keyboard_KeyRelease keyRelease(static_cast<KEY>( s_Event.key.key ));
+				EventKeyboardKeyRelease keyRelease(static_cast<KEY>( s_Event.key.key ));
 				s_CallbackFunc(s_Properties.Handle, keyRelease);
 				break;
 			}
 			case SDL_EVENT_MOUSE_BUTTON_DOWN:
 			{
-				Event_Mouse_ButtonDown mouseButtonPress(static_cast<MOUSE_BUTTON>( s_Event.button.button ));
+				EventMouseButtonDown mouseButtonPress(static_cast<MOUSE_BUTTON>( s_Event.button.button ));
 				s_CallbackFunc(s_Properties.Handle, mouseButtonPress);
 				break;
 			}
 			case SDL_EVENT_MOUSE_BUTTON_UP:
 			{
-				Event_Mouse_ButtonUp mouseButtonRelease(static_cast<MOUSE_BUTTON>( s_Event.button.button ));
+				EventMouseButtonUp mouseButtonRelease(static_cast<MOUSE_BUTTON>( s_Event.button.button ));
 				s_CallbackFunc(s_Properties.Handle, mouseButtonRelease);
 				break;
 			}
 			case SDL_EVENT_MOUSE_MOTION:
 			{
-				Event_Mouse_CursorMove mouseMove(s_Event.motion.x, s_Event.motion.y);
+				EventMouseCursorMove mouseMove(s_Event.motion.x, s_Event.motion.y);
 				s_CallbackFunc(s_Properties.Handle, mouseMove);
 				break;
 			}
 			case SDL_EVENT_MOUSE_WHEEL:
 			{
-				Event_Mouse_WheelScroll mouseScroll(s_Event.wheel.x, s_Event.wheel.y);
+				EventMouseWheelScroll mouseScroll(s_Event.wheel.x, s_Event.wheel.y);
 				s_CallbackFunc(s_Properties.Handle, mouseScroll);
 				break;
 			}
 			case SDL_EVENT_WINDOW_MOUSE_ENTER:
 			{
-				Event_Mouse_CursorWindowEnter mouseEnter;
+				EventMouseCursorWindowEnter mouseEnter;
 				s_CallbackFunc(s_Properties.Handle, mouseEnter);
 				break;
 			}
 			case SDL_EVENT_WINDOW_MOUSE_LEAVE:
 			{
-				Event_Mouse_CursorWindowLeave mouseLeave;
+				EventMouseCursorWindowLeave mouseLeave;
 				s_CallbackFunc(s_Properties.Handle, mouseLeave);
 				break;
 			}
@@ -303,6 +310,15 @@ namespace TE::Core
 			{
 				break;
 			}
+		}
+	}
+
+	void SDL3_Window::SwapBuffers()
+	{
+		if( !s_Context.expired() )
+		{
+			auto context = s_Context.lock();
+			context->SwapBuffers(s_Window);
 		}
 	}
 }

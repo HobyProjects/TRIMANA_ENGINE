@@ -22,11 +22,12 @@ namespace TE::Core
 			SDL3_Window(const std::string& title, const std::shared_ptr<IContext>& context);
 			virtual ~SDL3_Window();
 
+			virtual bool IsActive() const override;
 			virtual Native Window() const override;
 			virtual WindowProperties& Properties() override;
 			virtual WindowHandle GetWindowHandle() override;
-
-			virtual void SetEventsCallbackFunc(const std::function<void(WindowHandle, Events&)>&) override;
 			virtual void PollEvents() override;
+			virtual void SwapBuffers() override;
+			virtual void SetEventsCallbackFunc(const std::function<void(WindowHandle, Events&)>&) override;
 	};
 }

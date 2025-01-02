@@ -89,6 +89,8 @@ namespace TE::Core
 			uint32_t m_Handle;
 			bool m_IsHandled{ false };
 	};
+
+#define EVENT_CALLBACK(fn) [this](auto&&... args) -> decltype(auto) { return this->fn(std::forward<decltype(args)>(args)...); }
+
 }
 
-#define TRIMANA_EVENT_CALLBACK(fn) [this](auto&&... args) -> decltype(auto) { return this->fn(std::forward<decltype(args)>(args)...); }

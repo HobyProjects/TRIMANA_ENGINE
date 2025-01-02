@@ -5,11 +5,11 @@
 
 namespace TE::Core
 {
-	class Event_Mouse_ButtonDown : public Events
+	class EventMouseButtonDown : public Events
 	{
 		public:
-			Event_Mouse_ButtonDown(MOUSE_BUTTON button) : m_Button(button) {}
-			virtual ~Event_Mouse_ButtonDown() = default;
+			EventMouseButtonDown(MOUSE_BUTTON button) : m_Button(button) {}
+			virtual ~EventMouseButtonDown() = default;
 
 			EVENT_CLASS_TYPE(EVENT_MOUSE_BUTTON_DOWN);
 			EVENT_CLASS_CATEGORY(EVENT_CATEGORY_MOUSE);
@@ -20,11 +20,11 @@ namespace TE::Core
 			MOUSE_BUTTON m_Button{ KEY_UNKNOWN };
 	};
 
-	class Event_Mouse_ButtonUp : public Events
+	class EventMouseButtonUp : public Events
 	{
 		public:
-			Event_Mouse_ButtonUp(MOUSE_BUTTON button) : m_Button(button) {}
-			virtual ~Event_Mouse_ButtonUp() = default;
+			EventMouseButtonUp(MOUSE_BUTTON button) : m_Button(button) {}
+			virtual ~EventMouseButtonUp() = default;
 
 			EVENT_CLASS_TYPE(EVENT_MOUSE_BUTTON_UP);
 			EVENT_CLASS_CATEGORY(EVENT_CATEGORY_MOUSE);
@@ -35,11 +35,11 @@ namespace TE::Core
 			MOUSE_BUTTON m_Button{ KEY_UNKNOWN };
 	};
 
-	class Event_Mouse_WheelScroll : public Events
+	class EventMouseWheelScroll : public Events
 	{
 		public:
-			Event_Mouse_WheelScroll(float offsetX, float offsetY) : m_OffsetX(offsetX), m_OffsetY(offsetY) {}
-			virtual ~Event_Mouse_WheelScroll() = default;
+			EventMouseWheelScroll(float offsetX, float offsetY) : m_OffsetX(offsetX), m_OffsetY(offsetY) {}
+			virtual ~EventMouseWheelScroll() = default;
 
 			EVENT_CLASS_TYPE(EVENT_MOUSE_WHEEL);
 			EVENT_CLASS_CATEGORY(EVENT_CATEGORY_MOUSE);
@@ -51,11 +51,11 @@ namespace TE::Core
 			float m_OffsetX{ 0.0f }, m_OffsetY{ 0.0f };
 	};
 
-	class Event_Mouse_CursorMove : public Events
+	class EventMouseCursorMove : public Events
 	{
 		public:
-			Event_Mouse_CursorMove(float x, float y) : m_X(x), m_Y(y) {}
-			virtual ~Event_Mouse_CursorMove() = default;
+			EventMouseCursorMove(float x, float y) : m_X(x), m_Y(y) {}
+			virtual ~EventMouseCursorMove() = default;
 
 			EVENT_CLASS_TYPE(EVENT_MOUSE_CURSOR_MOVED);
 			EVENT_CLASS_CATEGORY(EVENT_CATEGORY_MOUSE);
@@ -67,21 +67,21 @@ namespace TE::Core
 			float m_X{ 0.0f }, m_Y{ 0.0f };
 	};
 
-	class Event_Mouse_CursorWindowEnter : public Events
+	class EventMouseCursorWindowEnter : public Events
 	{
 		public:
-			Event_Mouse_CursorWindowEnter() = default;
-			virtual ~Event_Mouse_CursorWindowEnter() = default;
+			EventMouseCursorWindowEnter() = default;
+			virtual ~EventMouseCursorWindowEnter() = default;
 
 			EVENT_CLASS_TYPE(EVENT_MOUSE_CURSOR_WINDOW_ENTER);
 			EVENT_CLASS_CATEGORY(EVENT_CATEGORY_MOUSE);
 	};
 
-	class Event_Mouse_CursorWindowLeave : public Events
+	class EventMouseCursorWindowLeave : public Events
 	{
 		public:
-			Event_Mouse_CursorWindowLeave() = default;
-			virtual ~Event_Mouse_CursorWindowLeave() = default;
+			EventMouseCursorWindowLeave() = default;
+			virtual ~EventMouseCursorWindowLeave() = default;
 
 			EVENT_CLASS_TYPE(EVENT_MOUSE_CURSOR_WINDOW_LEAVE);
 			EVENT_CLASS_CATEGORY(EVENT_CATEGORY_MOUSE);

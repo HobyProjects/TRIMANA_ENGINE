@@ -15,7 +15,7 @@ namespace TE::App
 			void OnEvent(TE::Core::WindowHandle handle, TE::Core::Events& e);
 
 		private:
-			bool OnWindowClose(TE::Core::WindowHandle handle, TE::Core::Event_Window_Close& e);
+			bool OnWindowClose(TE::Core::WindowHandle handle, TE::Core::EventWindowClose& e);
 
 		private:
 			TE::Core::IWindow* m_window{ nullptr };

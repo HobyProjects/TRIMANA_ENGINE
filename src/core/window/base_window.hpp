@@ -93,11 +93,12 @@ namespace TE::Core
 			IWindow() = default;
 			virtual ~IWindow() = default;
 
+			virtual bool IsActive() const = 0;
 			virtual Native Window() const = 0;
 			virtual WindowProperties& Properties() = 0;
 			virtual WindowHandle GetWindowHandle() = 0;
-
-			virtual void SetEventsCallbackFunc(const std::function<void(WindowHandle, Events&)>&) = 0;
 			virtual void PollEvents() = 0;
+			virtual void SwapBuffers() = 0;
+			virtual void SetEventsCallbackFunc(const std::function<void(WindowHandle, Events&)>&) = 0;
 	};
 }

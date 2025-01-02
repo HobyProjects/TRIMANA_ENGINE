@@ -138,6 +138,11 @@ namespace TE::Core
 		}
 	}
 
+	bool GLFW3_Window::IsActive() const
+	{
+		return s_Properties.IsActive;
+	}
+
 	Native GLFW3_Window::Window() const
 	{
 		return s_Window;
@@ -157,13 +162,13 @@ namespace TE::Core
 	{
 		glfwSetWindowCloseCallback(s_Window, [](GLFWwindow* window)
 		{
-			Event_Window_Close windowCloseEvent;
+			EventWindowClose windowCloseEvent;
 			s_CallbackFunc(s_Properties.Handle, windowCloseEvent);
 		});
 
 		glfwSetWindowSizeCallback(s_Window, [](GLFWwindow* window, int width, int height)
 		{
-			Event_Window_Resize windowResizeEvent(width, height);
+			EventWindowResize windowResizeEvent(width, height);
 			s_Properties.Width = width;
 			s_Properties.height = height;
 			s_CallbackFunc(s_Properties.Handle, windowResizeEvent);
@@ -173,13 +178,13 @@ namespace TE::Core
 		{
 			if( focused )
 			{
-				Event_Window_FocusGain windowFocusEvent;
+				EventWindowFocusGain windowFocusEvent;
 				s_Properties.IsFocused = true;
 				s_CallbackFunc(s_Properties.Handle, windowFocusEvent);
 			}
 			else
 			{
-				Event_Window_FocusLost windowLostFocusEvent;
+				EventWindowFocusLost windowLostFocusEvent;
 				s_Properties.IsFocused = false;
 				s_CallbackFunc(s_Properties.Handle, windowLostFocusEvent);
 			}
@@ -189,7 +194,7 @@ namespace TE::Core
 		{
 			if( iconified )
 			{
-				Event_Window_Minimize windowMinimizeEvent;
+				EventWindowMinimize windowMinimizeEvent;
 				s_Properties.WindowState = WINDOW_MINIMIZED;
 				s_CallbackFunc(s_Properties.Handle, windowMinimizeEvent);
 			}
@@ -199,7 +204,7 @@ namespace TE::Core
 		{
 			if( maximized )
 			{
-				Event_Window_Maximaize windowMaximizeEvent;
+				EventWindowMaximaize windowMaximizeEvent;
 				s_Properties.WindowState = WINDOW_MAXIMIZED;
 				s_CallbackFunc(s_Properties.Handle, windowMaximizeEvent);
 			}
@@ -208,7 +213,7 @@ namespace TE::Core
 
 		glfwSetWindowPosCallback(s_Window, [](GLFWwindow* window, int x, int y)
 		{
-			Event_Window_Move windowMoveEvent(x, y);
+			EventWindowPosChange windowMoveEvent(x, y);
 			s_Properties.PosX = x;
 			s_Properties.PosY = y;
 			s_CallbackFunc(s_Properties.Handle, windowMoveEvent);
@@ -216,7 +221,7 @@ namespace TE::Core
 
 		glfwSetFramebufferSizeCallback(s_Window, [](GLFWwindow* window, int width, int height)
 		{
-			Event_Window_PixelSizeChange windowPixelSizeEvent(width, height);
+			EventWindowPixelSizeChange windowPixelSizeEvent(width, height);
 			s_Properties.PixelWidth = width;
 			s_Properties.PixelHeight = height;
 			s_CallbackFunc(s_Properties.Handle, windowPixelSizeEvent);
@@ -228,19 +233,19 @@ namespace TE::Core
 			{
 				case GLFW_PRESS:
 				{
-					Event_Keyboard_KeyPress keyPressEvent(static_cast<KEY>(key));
+					EventKeyboardKeyPress keyPressEvent(static_cast<KEY>(key));
 					s_CallbackFunc(s_Properties.Handle, keyPressEvent);
 					break;
 				}
 				case GLFW_RELEASE:
 				{
-					Event_Keyboard_KeyRelease keyReleaseEvent(static_cast<KEY>(key));
+					EventKeyboardKeyRelease keyReleaseEvent(static_cast<KEY>(key));
 					s_CallbackFunc(s_Properties.Handle, keyReleaseEvent);
 					break;
 				}
 				case GLFW_REPEAT:
 				{
-					Event_Keyboard_KeyRepeate keyPressEvent(static_cast<KEY>(key));
+					EventKeyboardKeyRepeate keyPressEvent(static_cast<KEY>(key));
 					s_CallbackFunc(s_Properties.Handle, keyPressEvent);
 					break;
 				}
@@ -250,7 +255,7 @@ namespace TE::Core
 
 		glfwSetCharCallback(s_Window, [](GLFWwindow* window, unsigned int codepoint)
 		{
-			Event_Keyboard_KeyChar charInputEvent(codepoint);
+			EventKeyboardKeyChar charInputEvent(codepoint);
 			s_CallbackFunc(s_Properties.Handle, charInputEvent);
 		});
 
@@ -260,13 +265,13 @@ namespace TE::Core
 			{
 				case GLFW_PRESS:
 				{
-					Event_Mouse_ButtonDown buttonPressEvent(static_cast<MOUSE_BUTTON>( button ));
+					EventMouseButtonDown buttonPressEvent(static_cast<MOUSE_BUTTON>( button ));
 					s_CallbackFunc(s_Properties.Handle, buttonPressEvent);
 					break;
 				}
 				case GLFW_RELEASE:
 				{
-					Event_Mouse_ButtonUp buttonReleaseEvent(static_cast<MOUSE_BUTTON>( button ));
+					EventMouseButtonUp buttonReleaseEvent(static_cast<MOUSE_BUTTON>( button ));
 					s_CallbackFunc(s_Properties.Handle, buttonReleaseEvent);
 					break;
 				}
@@ -275,13 +280,13 @@ namespace TE::Core
 
 		glfwSetCursorPosCallback(s_Window, [](GLFWwindow* window, double x, double y)
 		{
-			Event_Mouse_CursorMove mouseMoveEvent(x, y);
+			EventMouseCursorMove mouseMoveEvent(x, y);
 			s_CallbackFunc(s_Properties.Handle, mouseMoveEvent);
 		});
 
 		glfwSetScrollCallback(s_Window, [](GLFWwindow* window, double x, double y)
 		{
-			Event_Mouse_WheelScroll mouseScrollEvent(x, y);
+			EventMouseWheelScroll mouseScrollEvent(x, y);
 			s_CallbackFunc(s_Properties.Handle, mouseScrollEvent);
 		});
 
@@ -289,12 +294,12 @@ namespace TE::Core
 		{
 			if( entered )
 			{
-				Event_Mouse_CursorWindowEnter mouseEnterEvent;
+				EventMouseCursorWindowEnter mouseEnterEvent;
 				s_CallbackFunc(s_Properties.Handle, mouseEnterEvent);
 			}
 			else
 			{
-				Event_Mouse_CursorWindowLeave mouseLeaveEvent;
+				EventMouseCursorWindowLeave mouseLeaveEvent;
 				s_CallbackFunc(s_Properties.Handle, mouseLeaveEvent);
 			}
 		});
@@ -310,5 +315,14 @@ namespace TE::Core
 	void GLFW3_Window::PollEvents()
 	{
 		glfwWaitEvents();
+	}
+
+	void GLFW3_Window::SwapBuffers()
+	{
+		if( !s_Context.expired() )
+		{
+			auto context = s_Context.lock();
+			context->SwapBuffers(s_Window);
+		}
 	}
 }

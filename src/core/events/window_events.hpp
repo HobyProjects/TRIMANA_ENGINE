@@ -4,21 +4,21 @@
 
 namespace TE::Core
 {
-	class Event_Window_Close : public Events
+	class EventWindowClose : public Events
 	{
 		public:
-			Event_Window_Close() = default;
-			virtual ~Event_Window_Close() = default;
+			EventWindowClose() = default;
+			virtual ~EventWindowClose() = default;
 
 			EVENT_CLASS_CATEGORY(EVENT_CATEGORY_WINDOW);
 			EVENT_CLASS_TYPE(EVENT_WINDOW_CLOSE);
 	};
 
-	class Event_Window_Resize : public Events
+	class EventWindowResize : public Events
 	{
 		public:
-			Event_Window_Resize(uint32_t width, uint32_t height) : m_Width(width), m_Height(height) {}
-			virtual ~Event_Window_Resize() = default;
+			EventWindowResize(uint32_t width, uint32_t height) : m_Width(width), m_Height(height) {}
+			virtual ~EventWindowResize() = default;
 
 			EVENT_CLASS_CATEGORY(EVENT_CATEGORY_WINDOW);
 			EVENT_CLASS_TYPE(EVENT_WINDOW_RESIZE);
@@ -31,11 +31,11 @@ namespace TE::Core
 			uint32_t m_Height{ 0 };
 	};
 
-	class Event_Window_Move : public Events
+	class EventWindowPosChange : public Events
 	{
 		public:
-			Event_Window_Move(uint32_t x, uint32_t y) : m_X(x), m_Y(y) {}
-			virtual ~Event_Window_Move() = default;
+			EventWindowPosChange(uint32_t x, uint32_t y) : m_X(x), m_Y(y) {}
+			virtual ~EventWindowPosChange() = default;
 
 			EVENT_CLASS_CATEGORY(EVENT_CATEGORY_WINDOW);
 			EVENT_CLASS_TYPE(EVENT_WINDOW_MOVED);
@@ -48,31 +48,31 @@ namespace TE::Core
 			uint32_t m_Y{ 0 };
 	};
 
-	class Event_Window_FocusGain : public Events
+	class EventWindowFocusGain : public Events
 	{
 		public:
-			Event_Window_FocusGain() = default;
-			virtual ~Event_Window_FocusGain() = default;
+			EventWindowFocusGain() = default;
+			virtual ~EventWindowFocusGain() = default;
 
 			EVENT_CLASS_CATEGORY(EVENT_CATEGORY_WINDOW);
 			EVENT_CLASS_TYPE(EVENT_WINDOW_FOCUS_GAIN);
 	};
 
-	class Event_Window_FocusLost : public Events
+	class EventWindowFocusLost : public Events
 	{
 		public:
-			Event_Window_FocusLost() = default;
-			virtual ~Event_Window_FocusLost() = default;
+			EventWindowFocusLost() = default;
+			virtual ~EventWindowFocusLost() = default;
 
 			EVENT_CLASS_CATEGORY(EVENT_CATEGORY_WINDOW);
 			EVENT_CLASS_TYPE(EVENT_WINDOW_FOCUS_LOST);
 	};
 
-	class Event_Window_PixelSizeChange : public Events
+	class EventWindowPixelSizeChange : public Events
 	{
 		public:
-			Event_Window_PixelSizeChange(int32_t width, int32_t height) : m_Width(width), m_Height(height) {}
-			virtual ~Event_Window_PixelSizeChange() = default;
+			EventWindowPixelSizeChange(int32_t width, int32_t height) : m_Width(width), m_Height(height) {}
+			virtual ~EventWindowPixelSizeChange() = default;
 
 			EVENT_CLASS_CATEGORY(EVENT_CATEGORY_WINDOW);
 			EVENT_CLASS_TYPE(EVENT_WINDOW_PIXEL_SIZE_CHANGED);
@@ -85,31 +85,31 @@ namespace TE::Core
 			int32_t m_Height{ 0 };
 	};
 
-	class Event_Window_Maximaize : public Events
+	class EventWindowMaximaize : public Events
 	{
 		public:
-			Event_Window_Maximaize() = default;
-			virtual ~Event_Window_Maximaize() = default;
+			EventWindowMaximaize() = default;
+			virtual ~EventWindowMaximaize() = default;
 
 			EVENT_CLASS_CATEGORY(EVENT_CATEGORY_WINDOW);
 			EVENT_CLASS_TYPE(EVENT_WINDOW_MAXIMIZED);
 	};
 
-	class Event_Window_Minimize : public Events
+	class EventWindowMinimize : public Events
 	{
 		public:
-			Event_Window_Minimize() = default;
-			virtual ~Event_Window_Minimize() = default;
+			EventWindowMinimize() = default;
+			virtual ~EventWindowMinimize() = default;
 
 			EVENT_CLASS_CATEGORY(EVENT_CATEGORY_WINDOW);
 			EVENT_CLASS_TYPE(EVENT_WINDOW_MINIMIZED);
 	};
 
-	class Event_Window_Restore : public Events
+	class EventWindowRestore : public Events
 	{
 		public:
-			Event_Window_Restore() = default;
-			virtual ~Event_Window_Restore() = default;
+			EventWindowRestore() = default;
+			virtual ~EventWindowRestore() = default;
 
 			EVENT_CLASS_CATEGORY(EVENT_CATEGORY_WINDOW);
 			EVENT_CLASS_TYPE(EVENT_WINDOW_RESTORE);

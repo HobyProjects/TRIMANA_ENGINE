@@ -5,11 +5,11 @@
 
 namespace TE::Core
 {
-	class Event_Keyboard_KeyPress : public Events
+	class EventKeyboardKeyPress : public Events
 	{
 		public:
-			Event_Keyboard_KeyPress(KEY keyCode) : m_KeyCode(keyCode) {}
-			virtual ~Event_Keyboard_KeyPress() = default;
+			EventKeyboardKeyPress(KEY keyCode) : m_KeyCode(keyCode) {}
+			virtual ~EventKeyboardKeyPress() = default;
 
 			EVENT_CLASS_TYPE(EVENT_KEYBOARD_KEYPRESS);
 			EVENT_CLASS_CATEGORY(EVENT_CATEGORY_KEYBOARD);
@@ -20,11 +20,11 @@ namespace TE::Core
 			KEY m_KeyCode{ KEY_UNKNOWN };
 	};
 
-	class Event_Keyboard_KeyRelease : public Events
+	class EventKeyboardKeyRelease : public Events
 	{
 		public:
-			Event_Keyboard_KeyRelease(KEY keyCode) : m_KeyCode(keyCode) {}
-			virtual ~Event_Keyboard_KeyRelease() = default;
+			EventKeyboardKeyRelease(KEY keyCode) : m_KeyCode(keyCode) {}
+			virtual ~EventKeyboardKeyRelease() = default;
 
 			EVENT_CLASS_TYPE(EVENT_KEYBOARD_KEYRELEASE);
 			EVENT_CLASS_CATEGORY(EVENT_CATEGORY_KEYBOARD);
@@ -34,11 +34,11 @@ namespace TE::Core
 			KEY m_KeyCode{ KEY_UNKNOWN };
 	};
 
-	class Event_Keyboard_KeyRepeate : public Events
+	class EventKeyboardKeyRepeate : public Events
 	{
 		public:
-			Event_Keyboard_KeyRepeate(KEY keyCode) : m_KeyCode(keyCode) {}
-			virtual ~Event_Keyboard_KeyRepeate() = default;
+			EventKeyboardKeyRepeate(KEY keyCode) : m_KeyCode(keyCode) {}
+			virtual ~EventKeyboardKeyRepeate() = default;
 
 			EVENT_CLASS_TYPE(EVENT_KEYBOARD_KEYREPEATE);
 			EVENT_CLASS_CATEGORY(EVENT_CATEGORY_KEYBOARD);
@@ -48,11 +48,11 @@ namespace TE::Core
 			KEY m_KeyCode{ KEY_UNKNOWN };
 	};
 
-	class Event_Keyboard_KeyChar : public Events
+	class EventKeyboardKeyChar : public Events
 	{
 		public:
-			Event_Keyboard_KeyChar(uint32_t character) : m_Character(character) {}
-			virtual ~Event_Keyboard_KeyChar() = default;
+			EventKeyboardKeyChar(uint32_t character) : m_Character(character) {}
+			virtual ~EventKeyboardKeyChar() = default;
 
 			EVENT_CLASS_TYPE(EVENT_KEYBOARD_KEYCHAR);
 			EVENT_CLASS_CATEGORY(EVENT_CATEGORY_KEYBOARD);
@@ -62,11 +62,11 @@ namespace TE::Core
 			uint32_t m_Character{ 0 };
 	};
 
-	class Event_Keyboard_TextInput : public Events
+	class EventKeyboardTextInput : public Events
 	{
 		public:
-			Event_Keyboard_TextInput(const char* text) : m_Text(text) {}
-			virtual ~Event_Keyboard_TextInput() = default;
+			EventKeyboardTextInput(const char* text) : m_Text(text) {}
+			virtual ~EventKeyboardTextInput() = default;
 
 			EVENT_CLASS_TYPE(EVENT_KEYBOARD_KEYCHAR);
 			EVENT_CLASS_CATEGORY(EVENT_CATEGORY_KEYBOARD);

@@ -40,7 +40,7 @@ namespace TE::Core
 		#endif
 	}
 
-	static void InitBaseAPI()
+	static void InitializeBaseAPI()
 	{
 		switch( GetPlatformBaseAPI() )
 		{
@@ -76,8 +76,8 @@ namespace TE::Core
 	*		      WINDOW HANDLING			      *
 	***********************************************/
 
-	static std::shared_ptr<IContext> s_Context;
-	static std::unordered_map<WindowHandle, IWindow*> s_WindowPool;
+	static std::shared_ptr<IContext> s_Context{};
+	static std::unordered_map<WindowHandle, IWindow*> s_WindowPool{};
 
 	static WindowHandle GetUniqueHandle()
 	{
@@ -85,7 +85,7 @@ namespace TE::Core
 		return s_Handle++;
 	}
 
-	static void InitContext()
+	static void CreateContextObject()
 	{
 		switch( GetPlatformBaseAPI() )
 		{
@@ -157,8 +157,8 @@ namespace TE::Core
 
 	bool Core::Init()
 	{
-		InitBaseAPI();
-		InitContext();
+		InitializeBaseAPI();
+		CreateContextObject();
 
 		s_CoreInitialized = true;
 		return s_CoreInitialized;
@@ -169,29 +169,18 @@ namespace TE::Core
 		if( !s_CoreInitialized )
 			throw UninitializedObjectException("Core is not initialized");
 
-		if( HasActiveWindow() )
+		for( auto& [_, window] : s_WindowPool )
 		{
-			for( auto& [_, window] : s_WindowPool )
-			{
-				if( window->Properties().IsActive )
-					DestroyWindow(window);
-			}
+			if( window != nullptr || window->Properties().IsActive )
+				TE_CORE_WARN("Window with handle {0} is still active, destroying it", window->GetWindowHandle());
+
+			delete window;
+			window = nullptr;
 		}
 
 		s_BaseAPI->Quit();
 		s_BaseAPI = nullptr;
 		s_Context = nullptr;
-	}
-
-	bool Core::HasActiveWindow()
-	{
-		for( auto& [_, window] : s_WindowPool )
-		{
-			if( window->Properties().IsActive )
-				return true;
-		}
-
-		return false;
 	}
 
 	IWindow* Core::CreateWindow(const std::string& title)
@@ -247,44 +236,4 @@ namespace TE::Core
 		window = nullptr;
 	}
 
-	std::shared_ptr<IContext> Core::GetContext()
-	{
-		if( !s_CoreInitialized )
-			throw UninitializedObjectException("Core is not initialized");
-
-		return s_Context;
-	}
-
-	void Core::SwapBuffers()
-	{
-		if( !s_CoreInitialized )
-			throw UninitializedObjectException("Core is not initialized");
-
-		if( !s_Context )
-			throw UninitializedObjectException("Context is not initialized");
-
-		for( auto& [_, window] : s_WindowPool )
-		{
-			if( !window->Properties().IsFocused )
-				s_Context->SwapBuffers(window->Window());
-		}
-	}
-
-	void Core::SetEventsCallbackFunc(const std::function<void(WindowHandle, Events&)>& callback)
-	{
-		for( auto& [_, window] : s_WindowPool )
-			window->SetEventsCallbackFunc(callback);
-	}
-
-	void Core::PollEvents()
-	{
-		if( !s_CoreInitialized )
-			throw UninitializedObjectException("Core is not initialized");
-
-		for( auto& [_, window] : s_WindowPool )
-		{
-			if( !window->Properties().IsFocused )
-				window->PollEvents();
-		}
-	}
 }

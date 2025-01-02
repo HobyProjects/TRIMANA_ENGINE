@@ -13,16 +13,14 @@ namespace TE::Core
 	class GLFW_GL_Context final : public IContext
 	{
 		public:
-			GLFW_GL_Context() = default;
+			GLFW_GL_Context();
 			virtual ~GLFW_GL_Context() = default;
 
-			virtual bool MakeContext(Native window) override;
-			virtual Native GetContext() const override;
-			virtual void SwapBuffers() override;
-			virtual void SetInterval(uint32_t interval) override;
+			virtual void Attach(Native window) override;
+			virtual void Detach() override;
 
-		private:
-			static std::once_flag s_InitRendererAPI;
-			static void InitRendereringAPI();
+			virtual Native GetContext() const override;
+			virtual void SwapBuffers(Native window) override;
+			virtual void SetInterval(uint32_t interval) override;
 	};
 }

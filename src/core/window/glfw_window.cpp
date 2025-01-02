@@ -1,13 +1,20 @@
 #include "glfw_window.hpp"
+
+#include "log.hpp"
 #include "exceptions.hpp"
 #include "renderer.hpp"
-#include "log.hpp"
+#include "keycodes.hpp"
+
+#include "window_events.hpp"
+#include "keyboard_events.hpp"
+#include "mouse_events.hpp"
 
 namespace TE::Core
 {
 	static bool s_Initialized{ false };
+	static std::function<void(WindowHandle, Events&)> s_CallbackFunc{ nullptr };
 
-	bool GLFW_API::Init()
+	bool GLFW3_API::Init()
 	{
 		if( !glfwInit() )
 		{
@@ -19,7 +26,7 @@ namespace TE::Core
 		return ( s_Initialized = true );
 	}
 
-	void GLFW_API::Quit()
+	void GLFW3_API::Quit()
 	{
 		if( s_Initialized )
 		{
@@ -28,11 +35,15 @@ namespace TE::Core
 		}
 	}
 
+	/////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	static GLFWwindow* s_Window{ nullptr };
 	static WindowProperties s_Properties{};
+	static std::weak_ptr<IContext> s_Context;
 
-	GLFW_Window::GLFW_Window(const std::string& title)
+	GLFW3_Window::GLFW3_Window(const std::string& title, const std::shared_ptr<IContext> context)
 	{
+		s_Context = context;
 		const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 		if( mode != nullptr )
 		{
@@ -74,8 +85,8 @@ namespace TE::Core
 		if( Renderer::API() & RENDERER_API_OPENGL)
 		{
 			glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
-			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, GL_MAJOR_VERSION);
-			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, GL_MINOR_VERSION);
+			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, RENDERER_GL_MAJOR_VERSION);
+			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, RENDERER_GL_MINOR_VERSION);
 			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 			glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
 			glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE);
@@ -101,6 +112,12 @@ namespace TE::Core
 			glfwSetWindowSizeLimits(s_Window, s_Properties.MinWidth, s_Properties.MinHeight, GLFW_DONT_CARE, GLFW_DONT_CARE);
 			glfwGetFramebufferSize(s_Window, &s_Properties.PixelWidth, &s_Properties.PixelHeight);
 
+			if( !s_Context.expired() )
+			{
+				auto context = s_Context.lock();
+				context->Attach(s_Window);
+			}
+
 			s_Properties.IsActive = true;
 			s_Properties.IsFocused = glfwGetWindowAttrib(s_Window, GLFW_FOCUSED);
 			s_Properties.IsVSyncEnabled = true;
@@ -112,7 +129,7 @@ namespace TE::Core
 		}
 	}
 
-	GLFW_Window::~GLFW_Window()
+	GLFW3_Window::~GLFW3_Window()
 	{
 		if( s_Window != nullptr )
 		{
@@ -121,13 +138,177 @@ namespace TE::Core
 		}
 	}
 
-	Native GLFW_Window::Window() const
+	Native GLFW3_Window::Window() const
 	{
 		return s_Window;
 	}
 
-	WindowProperties& GLFW_Window::Properties()
+	WindowProperties& GLFW3_Window::Properties()
 	{
 		return s_Properties;
+	}
+
+	WindowHandle GLFW3_Window::GetWindowHandle()
+	{
+		return s_Properties.Handle;
+	}
+
+	static void glfwSetEventsCallbacks()
+	{
+		glfwSetWindowCloseCallback(s_Window, [](GLFWwindow* window)
+		{
+			Event_Window_Close windowCloseEvent;
+			s_CallbackFunc(s_Properties.Handle, windowCloseEvent);
+		});
+
+		glfwSetWindowSizeCallback(s_Window, [](GLFWwindow* window, int width, int height)
+		{
+			Event_Window_Resize windowResizeEvent(width, height);
+			s_Properties.Width = width;
+			s_Properties.height = height;
+			s_CallbackFunc(s_Properties.Handle, windowResizeEvent);
+		});
+
+		glfwSetWindowFocusCallback(s_Window, [](GLFWwindow* window, int focused)
+		{
+			if( focused )
+			{
+				Event_Window_FocusGain windowFocusEvent;
+				s_Properties.IsFocused = true;
+				s_CallbackFunc(s_Properties.Handle, windowFocusEvent);
+			}
+			else
+			{
+				Event_Window_FocusLost windowLostFocusEvent;
+				s_Properties.IsFocused = false;
+				s_CallbackFunc(s_Properties.Handle, windowLostFocusEvent);
+			}
+		});
+
+		glfwSetWindowIconifyCallback(s_Window, [](GLFWwindow* window, int iconified)
+		{
+			if( iconified )
+			{
+				Event_Window_Minimize windowMinimizeEvent;
+				s_Properties.WindowState = WINDOW_MINIMIZED;
+				s_CallbackFunc(s_Properties.Handle, windowMinimizeEvent);
+			}
+		});
+
+		glfwSetWindowMaximizeCallback(s_Window, [](GLFWwindow* window, int maximized)
+		{
+			if( maximized )
+			{
+				Event_Window_Maximaize windowMaximizeEvent;
+				s_Properties.WindowState = WINDOW_MAXIMIZED;
+				s_CallbackFunc(s_Properties.Handle, windowMaximizeEvent);
+			}
+
+		});
+
+		glfwSetWindowPosCallback(s_Window, [](GLFWwindow* window, int x, int y)
+		{
+			Event_Window_Move windowMoveEvent(x, y);
+			s_Properties.PosX = x;
+			s_Properties.PosY = y;
+			s_CallbackFunc(s_Properties.Handle, windowMoveEvent);
+		});
+
+		glfwSetFramebufferSizeCallback(s_Window, [](GLFWwindow* window, int width, int height)
+		{
+			Event_Window_PixelSizeChange windowPixelSizeEvent(width, height);
+			s_Properties.PixelWidth = width;
+			s_Properties.PixelHeight = height;
+			s_CallbackFunc(s_Properties.Handle, windowPixelSizeEvent);
+		});
+
+		glfwSetKeyCallback(s_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
+		{
+			switch( action )
+			{
+				case GLFW_PRESS:
+				{
+					Event_Keyboard_KeyPress keyPressEvent(static_cast<KEY>(key));
+					s_CallbackFunc(s_Properties.Handle, keyPressEvent);
+					break;
+				}
+				case GLFW_RELEASE:
+				{
+					Event_Keyboard_KeyRelease keyReleaseEvent(static_cast<KEY>(key));
+					s_CallbackFunc(s_Properties.Handle, keyReleaseEvent);
+					break;
+				}
+				case GLFW_REPEAT:
+				{
+					Event_Keyboard_KeyRepeate keyPressEvent(static_cast<KEY>(key));
+					s_CallbackFunc(s_Properties.Handle, keyPressEvent);
+					break;
+				}
+			}
+
+		});
+
+		glfwSetCharCallback(s_Window, [](GLFWwindow* window, unsigned int codepoint)
+		{
+			Event_Keyboard_KeyChar charInputEvent(codepoint);
+			s_CallbackFunc(s_Properties.Handle, charInputEvent);
+		});
+
+		glfwSetMouseButtonCallback(s_Window, [](GLFWwindow* window, int button, int action, int mods)
+		{
+			switch( action )
+			{
+				case GLFW_PRESS:
+				{
+					Event_Mouse_ButtonDown buttonPressEvent(static_cast<MOUSE_BUTTON>( button ));
+					s_CallbackFunc(s_Properties.Handle, buttonPressEvent);
+					break;
+				}
+				case GLFW_RELEASE:
+				{
+					Event_Mouse_ButtonUp buttonReleaseEvent(static_cast<MOUSE_BUTTON>( button ));
+					s_CallbackFunc(s_Properties.Handle, buttonReleaseEvent);
+					break;
+				}
+			}
+		});
+
+		glfwSetCursorPosCallback(s_Window, [](GLFWwindow* window, double x, double y)
+		{
+			Event_Mouse_CursorMove mouseMoveEvent(x, y);
+			s_CallbackFunc(s_Properties.Handle, mouseMoveEvent);
+		});
+
+		glfwSetScrollCallback(s_Window, [](GLFWwindow* window, double x, double y)
+		{
+			Event_Mouse_WheelScroll mouseScrollEvent(x, y);
+			s_CallbackFunc(s_Properties.Handle, mouseScrollEvent);
+		});
+
+		glfwSetCursorEnterCallback(s_Window, [](GLFWwindow* window, int entered)
+		{
+			if( entered )
+			{
+				Event_Mouse_CursorWindowEnter mouseEnterEvent;
+				s_CallbackFunc(s_Properties.Handle, mouseEnterEvent);
+			}
+			else
+			{
+				Event_Mouse_CursorWindowLeave mouseLeaveEvent;
+				s_CallbackFunc(s_Properties.Handle, mouseLeaveEvent);
+			}
+		});
+	}
+
+
+	void GLFW3_Window::SetEventsCallbackFunc(const std::function<void(WindowHandle, Events&)>& callbackFunc)
+	{
+		s_CallbackFunc = callbackFunc;
+		glfwSetEventsCallbacks();
+	}
+
+	void GLFW3_Window::PollEvents()
+	{
+		glfwWaitEvents();
 	}
 }

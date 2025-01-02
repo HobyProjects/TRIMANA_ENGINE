@@ -77,7 +77,7 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/exceptions.hpp 
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/log.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/base.hpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/key_codes.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/keycodes.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/base_window.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/glfw_window.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/sdl_window.hpp

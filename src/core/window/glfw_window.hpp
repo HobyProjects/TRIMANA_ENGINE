@@ -7,24 +7,28 @@
 
 namespace TE::Core
 {
-	class GLFW_API final : public BaseAPI
+	class GLFW3_API final : public BaseAPI
 	{
 		public:
-			GLFW_API() = default;
-			~GLFW_API() = default;
+			GLFW3_API() = default;
+			~GLFW3_API() = default;
 
 			virtual bool Init() override;
 			virtual void Quit() override;
 			virtual BASE_APIS API() override { return API_GLFW; }
 	};
 
-	class GLFW_Window final : public IWindow
+	class GLFW3_Window final : public IWindow
 	{
 		public:
-			GLFW_Window(const std::string& title);
-			virtual ~GLFW_Window();
+			GLFW3_Window(const std::string& title, const std::shared_ptr<IContext> context);
+			virtual ~GLFW3_Window();
 
 			virtual Native Window() const override;
 			virtual WindowProperties& Properties() override;
+			virtual WindowHandle GetWindowHandle() override;
+
+			virtual void SetEventsCallbackFunc(const std::function<void(WindowHandle, Events&)>&) override;
+			virtual void PollEvents() override;
 	};
 }

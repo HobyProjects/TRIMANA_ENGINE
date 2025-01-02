@@ -5,24 +5,28 @@
 
 namespace TE::Core
 {
-	class SDL_API final : public BaseAPI
+	class SDL3_API final : public BaseAPI
 	{
 		public:
-			SDL_API() = default;
-			virtual ~SDL_API() = default;
+			SDL3_API() = default;
+			virtual ~SDL3_API() = default;
 
 			virtual bool Init() override;
 			virtual void Quit() override;
 			virtual BASE_APIS API() override { return API_SDL; }
 	};
 
-	class _SDL_Window final : public IWindow
+	class SDL3_Window final : public IWindow
 	{
 		public:
-			_SDL_Window(const std::string& title);
-			virtual ~_SDL_Window();
+			SDL3_Window(const std::string& title, const std::shared_ptr<IContext>& context);
+			virtual ~SDL3_Window();
 
 			virtual Native Window() const override;
 			virtual WindowProperties& Properties() override;
+			virtual WindowHandle GetWindowHandle() override;
+
+			virtual void SetEventsCallbackFunc(const std::function<void(WindowHandle, Events&)>&) override;
+			virtual void PollEvents() override;
 	};
 }

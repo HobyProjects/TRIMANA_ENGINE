@@ -1,7 +1,7 @@
 #pragma once
 
 #include "events.hpp"
-#include "key_codes.hpp"
+#include "keycodes.hpp"
 
 namespace TE::Core
 {
@@ -17,7 +17,7 @@ namespace TE::Core
 			MOUSE_BUTTON Button() const { return m_Button; }
 
 		private:
-			MOUSE_BUTTON m_Button{ TE_KEY_UNKNOWN };
+			MOUSE_BUTTON m_Button{ KEY_UNKNOWN };
 	};
 
 	class Event_Mouse_ButtonUp : public Events
@@ -32,7 +32,7 @@ namespace TE::Core
 			MOUSE_BUTTON Button() const { return m_Button; }
 
 		private:
-			MOUSE_BUTTON m_Button{ TE_KEY_UNKNOWN };
+			MOUSE_BUTTON m_Button{ KEY_UNKNOWN };
 	};
 
 	class Event_Mouse_WheelScroll : public Events

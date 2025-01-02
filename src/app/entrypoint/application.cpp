@@ -3,51 +3,56 @@
 #include "exceptions.hpp"
 #include "log.hpp"
 
-namespace TE::app
+namespace TE::App
 {
-	application::application()
+	Application::Application()
 	{
 		try
 		{
-			m_window = TE::Core::create_window("Trimana Engine");
-			m_events_receiver = TE::Core::create_event_receiver(m_window, TRIMANA_EVENT_CALLBACK(on_events));
-			TE::Core::Renderer::Init();
+			TE::Core::Core::Init();
+			m_window = TE::Core::Core::CreateWindow("Trimana Engine");
+			m_window2 = TE::Core::Core::CreateWindow("Trimana Engine 2");
+			TE::Core::Core::SetEventsCallbackFunc(TRIMANA_EVENT_CALLBACK(OnEvent));
 		}
-		catch( TE::Core::exception& e )
+		catch( TE::Core::Exception& e )
 		{
-			e.what();
+			e.What();
 		}
 	}
 
-	application::~application()
+	Application::~Application()
 	{
-		TE::Core::Renderer::Quit();
-		m_window->base()->quit();
+		TE::Core::Core::DestroyWindow(m_window);
+		TE::Core::Core::DestroyWindow(m_window2);
+		TE::Core::Core::Quit();
 	}
 
-	void application::run() const
+	void Application::Run() const
 	{
-		while( m_window->properties()->is_active )
+		while( TE::Core::Core::HasActiveWindow() )
 		{
-			m_events_receiver->poll_events();
+			TE::Core::Core::PollEvents();
 
 			TE::Core::Renderer::Clear();
-			TE::Core::Renderer::ClearColor({ 1.0f, 0.0f, 0.0f, 0.0f });
+			TE::Core::Renderer::ClearColor({1.0f, 0.0f, 0.0f, 0.0f});
 
-			m_window->swap_buffers();
+			TE::Core::Core::SwapBuffers();
 		}
 	}
 
-	void application::on_events(TE::Core::Events& e)
+	void Application::OnEvent(TE::Core::WindowHandle handle, TE::Core::Events& e)
 	{
-		TE::Core::EventsHandler handler(e);
-		handler.dispatch<TE::Core::window_close_event>(TRIMANA_EVENT_CALLBACK(on_window_close));
+		TE::Core::EventsHandler handler(handle, e);
+		handler.Dispatch<TE::Core::WindowHandle, TE::Core::Event_Window_Close>(TRIMANA_EVENT_CALLBACK(OnWindowClose));
 	}
 
-	bool application::on_window_close(TE::Core::window_close_event& e)
+	bool Application::OnWindowClose(TE::Core::WindowHandle handle, TE::Core::Event_Window_Close& e)
 	{
-		if( m_window->properties()->is_active )
-			m_window->properties()->is_active = false;
+		if( handle == m_window->GetWindowHandle() )
+			m_window->Properties().IsActive = false;
+
+		if( handle == m_window2->GetWindowHandle() )
+			m_window2->Properties().IsActive = false;
 
 		return true;
 	}

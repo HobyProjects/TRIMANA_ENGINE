@@ -69,8 +69,8 @@ namespace TE::Core
 
 	enum CONTEXT_VERSION : uint32_t
 	{
-		GL_MAJOR_VERSION = 4,
-		GL_MINOR_VERSION = 6
+		RENDERER_GL_MAJOR_VERSION = 4,
+		RENDERER_GL_MINOR_VERSION = 6
 	};
 
 	class IContext
@@ -79,9 +79,11 @@ namespace TE::Core
 			IContext() = default;
 			virtual ~IContext() = default;
 
-			virtual bool MakeContext(Native) = 0;
+			virtual void Attach(Native) = 0;
+			virtual void Detach() = 0;
+
 			virtual Native GetContext() const = 0;
-			virtual void SwapBuffers() = 0;
+			virtual void SwapBuffers(Native) = 0;
 			virtual void SetInterval(uint32_t) = 0;
 	};
 
@@ -93,5 +95,9 @@ namespace TE::Core
 
 			virtual Native Window() const = 0;
 			virtual WindowProperties& Properties() = 0;
+			virtual WindowHandle GetWindowHandle() = 0;
+
+			virtual void SetEventsCallbackFunc(const std::function<void(WindowHandle, Events&)>&) = 0;
+			virtual void PollEvents() = 0;
 	};
 }

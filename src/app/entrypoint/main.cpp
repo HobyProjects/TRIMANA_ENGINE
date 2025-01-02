@@ -3,8 +3,8 @@
 
 int main(int argc, char** argv)
 {
-	TE::app::application* app = new TE::app::application();
-	app->run();
+	TE::App::Application* app = new TE::App::Application();
+	app->Run();
 	delete app;
 
 

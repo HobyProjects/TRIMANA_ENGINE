@@ -1,7 +1,7 @@
 #pragma once
 
 #include "events.hpp"
-#include "key_codes.hpp"
+#include "keycodes.hpp"
 
 namespace TE::Core
 {
@@ -17,7 +17,7 @@ namespace TE::Core
 			KEY KeyCode() const { return m_KeyCode; }
 
 		private:
-			KEY m_KeyCode{ TE_KEY_UNKNOWN };
+			KEY m_KeyCode{ KEY_UNKNOWN };
 	};
 
 	class Event_Keyboard_KeyRelease : public Events
@@ -31,7 +31,7 @@ namespace TE::Core
 			KEY KeyCode() const { return m_KeyCode; }
 
 		private:
-			KEY m_KeyCode{ TE_KEY_UNKNOWN };
+			KEY m_KeyCode{ KEY_UNKNOWN };
 	};
 
 	class Event_Keyboard_KeyRepeate : public Events
@@ -45,7 +45,7 @@ namespace TE::Core
 			KEY KeyCode() const { return m_KeyCode; }
 
 		private:
-			KEY m_KeyCode{ TE_KEY_UNKNOWN };
+			KEY m_KeyCode{ KEY_UNKNOWN };
 	};
 
 	class Event_Keyboard_KeyChar : public Events

@@ -1,24 +1,24 @@
 #pragma once
 
 #include "window.hpp"
-#include "events_receiver.hpp"
+#include "window_events.hpp"
 
-namespace TE::app
+namespace TE::App
 {
-	class application
+	class Application
 	{
 		public:
-			application();
-			~application();
+			Application();
+			~Application();
 
-			void run() const;
-			void on_events(TE::Core::Events& e);
-
-		private:
-			bool on_window_close(TE::Core::window_close_event& e);
+			void Run() const;
+			void OnEvent(TE::Core::WindowHandle handle, TE::Core::Events& e);
 
 		private:
-			std::shared_ptr<TE::Core::base_window> m_window{ nullptr };
-			std::shared_ptr<TE::Core::events_receiver> m_events_receiver{ nullptr };
+			bool OnWindowClose(TE::Core::WindowHandle handle, TE::Core::Event_Window_Close& e);
+
+		private:
+			TE::Core::IWindow* m_window{ nullptr };
+			TE::Core::IWindow* m_window2{ nullptr };
 	};
 }

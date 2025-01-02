@@ -155,13 +155,11 @@ namespace TE::Core
 		};
 	}
 
-	bool Core::Init()
+	void Core::Init()
 	{
 		InitializeBaseAPI();
 		CreateContextObject();
-
 		s_CoreInitialized = true;
-		return s_CoreInitialized;
 	}
 
 	void Core::Quit()
@@ -183,12 +181,12 @@ namespace TE::Core
 		s_Context = nullptr;
 	}
 
-	IWindow* Core::CreateWindow(const std::string& title)
+	Window Core::CreateWindow(const std::string& title)
 	{
 		if( !s_CoreInitialized )
 			throw UninitializedObjectException("Core is not initialized");
 
-		IWindow* window = nullptr;
+		Window window = nullptr;
 
 		switch( GetPlatformBaseAPI() )
 		{
@@ -221,7 +219,7 @@ namespace TE::Core
 		return window;
 	}
 
-	void Core::DestroyWindow(IWindow* window)
+	void Core::DestroyWindow(Window window)
 	{
 		if( !s_CoreInitialized )
 			throw UninitializedObjectException("Core is not initialized");

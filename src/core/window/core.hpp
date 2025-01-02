@@ -5,6 +5,8 @@
 
 namespace TE::Core
 {
+	using Window = IWindow*;
+
 	class Core
 	{
 		private:
@@ -14,10 +16,10 @@ namespace TE::Core
 			~Core() = default;
 
 		public:
-			static bool Init();
+			static void Init();
 			static void Quit();
 
-			static IWindow* CreateWindow(const std::string& title);
-			static void DestroyWindow(IWindow* window);
+			static Window CreateWindow(const std::string& title);
+			static void DestroyWindow(Window window);
 	};
 }

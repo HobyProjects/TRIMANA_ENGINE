@@ -1,7 +1,4 @@
-#include "gl_renderer.hpp"
-#include "gl_debug.hpp"
-
-#include <glad/glad.h>
+#include "core_pch.hpp"
 
 namespace TE::Core
 {

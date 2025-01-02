@@ -1,5 +1,4 @@
-#include "sdl_gl_context.hpp"
-#include "exceptions.hpp"
+#include "core_pch.hpp"
 
 namespace TE::Core
 {

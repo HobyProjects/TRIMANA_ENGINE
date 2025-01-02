@@ -1,6 +1,4 @@
-#include "opengl/gl_renderer.hpp"
-#include "renderer.hpp"
-#include "exceptions.hpp"
+#include "core_pch.hpp"
 
 namespace TE::Core
 {

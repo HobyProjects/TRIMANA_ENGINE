@@ -1,5 +1,4 @@
-#include "gl_debug.hpp"
-#include "asserts.hpp"
+#include "core_pch.hpp"
 
 namespace TE::Core
 {

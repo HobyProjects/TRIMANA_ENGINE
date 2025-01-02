@@ -1,16 +1,5 @@
-#include <mutex>
-#include <unordered_map>
-
-#include "window.hpp"
-#include "exceptions.hpp"
-#include "renderer.hpp"
-
-#include "opengl/glfw_gl_context.hpp"
-#include "opengl/sdl_gl_context.hpp"
-
-#include "glfw_window.hpp"
-#include "sdl_window.hpp"
-
+#include "core_pch.hpp"
+#include "core.hpp"
 
 namespace TE::Core
 {

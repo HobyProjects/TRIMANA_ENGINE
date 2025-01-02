@@ -1,7 +1,6 @@
 #pragma once
 
-#include "window.hpp"
-#include "window_events.hpp"
+#include "trimana_core.hpp"
 
 namespace TE::App
 {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "events.hpp"
+#include <string>
 #include "base_window.hpp"
 
 namespace TE::Core

@@ -1,13 +1,4 @@
-#include "glfw_window.hpp"
-
-#include "log.hpp"
-#include "exceptions.hpp"
-#include "renderer.hpp"
-#include "keycodes.hpp"
-
-#include "window_events.hpp"
-#include "keyboard_events.hpp"
-#include "mouse_events.hpp"
+#include "core_pch.hpp"
 
 namespace TE::Core
 {

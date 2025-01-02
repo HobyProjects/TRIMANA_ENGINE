@@ -64,6 +64,7 @@ endif()
 #Include Directories
 set(
     TRIMANA_CORE_INCLUDE_DIRS
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer
@@ -73,6 +74,7 @@ set(
 #Header Files
 set(
     TRIMANA_CORE_HEADERS
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/trimana_core.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/asserts.hpp 
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/exceptions.hpp 
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/log.hpp
@@ -110,6 +112,7 @@ set(
 
 
 add_library(TrimanaEngineCore STATIC ${TRIMANA_CORE_HEADERS} ${TRIMANA_CORE_SOURCES})
+target_precompile_headers(TrimanaEngineCore PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/core_pch.hpp)
 target_include_directories(TrimanaEngineCore PUBLIC ${TRIMANA_CORE_INCLUDE_DIRS})
 target_link_libraries(TrimanaEngineCore PUBLIC glfw spdlog::spdlog SDL3::SDL3 glad::glad glm::glm)
 

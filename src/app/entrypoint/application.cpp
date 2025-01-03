@@ -1,7 +1,4 @@
 #include "application.hpp"
-#include "renderer.hpp"
-#include "exceptions.hpp"
-#include "log.hpp"
 
 namespace TE::App
 {

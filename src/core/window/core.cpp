@@ -1,5 +1,4 @@
 #include "core_pch.hpp"
-#include "core.hpp"
 
 namespace TE::Core
 {
@@ -221,6 +220,14 @@ namespace TE::Core
 
 		delete window;
 		window = nullptr;
+	}
+
+	std::shared_ptr<IContext> Core::GetContext()
+	{
+		if( !s_CoreInitialized )
+			throw UninitializedObjectException("Core is not initialized");
+
+		return s_Context;
 	}
 
 }

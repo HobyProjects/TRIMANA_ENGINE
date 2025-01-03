@@ -40,12 +40,14 @@
 
 //renderer
 #include "renderer.hpp"
+#include "buffers.hpp"
 
 //renderer - opengl
 #include "opengl/glfw_gl_context.hpp"
 #include "opengl/sdl_gl_context.hpp"
 #include "opengl/gl_debug.hpp"
 #include "opengl/gl_renderer.hpp"
+#include "opengl/gl_buffers.hpp"
 
 // events
 #include "events.hpp"

@@ -80,15 +80,24 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/log.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/base.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/keycodes.hpp
+
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/base_window.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/glfw_window.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/sdl_window.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/core.hpp
+
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/renderer.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/buffers.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/vertex_array.hpp
+
+
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/glfw_gl_context.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/sdl_gl_context.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_renderer.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_debug.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_buffers.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_vertex_array.hpp
+
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/events.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/window_events.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/keyboard_events.hpp
@@ -100,14 +109,21 @@ set(
 set(
     TRIMANA_CORE_SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/log.cpp
+
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/glfw_window.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/sdl_window.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/core.cpp
+
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/renderer.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/buffers.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/vertex_array.cpp
+
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/glfw_gl_context.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/sdl_gl_context.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_renderer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_debug.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_buffers.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_vertex_array.cpp
 )
 
 

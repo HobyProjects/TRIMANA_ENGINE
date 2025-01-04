@@ -227,11 +227,11 @@ if __name__ == "__main__":
 #============================================================================================================================================
 
     EXTERNAL_LIBRARIES = [
-        PreCompileLibraries("glfw", "glfw", "build/config/glfw", "build/packages/glfw", ""),
-        PreCompileLibraries("spdlog", "spdlog", "build/config/spdlog", "build/packages/spdlog", ""),
-        PreCompileLibraries("SDL", "SDL", "build/config/SDL", "build/packages/SDL", ""),
+        PreCompileLibraries("glfw", "glfw", "build/config/glfw", "build/packages/glfw", "-DGLFW_BUILD_EXAMPLES=OFF -DGLFW_BUILD_TESTS=OFF -DGLFW_BUILD_DOCS=OFF"),
+        PreCompileLibraries("spdlog", "spdlog", "build/config/spdlog", "build/packages/spdlog", "-DSPDLOG_BUILD_EXAMPLES=OFF"),
+        PreCompileLibraries("SDL", "SDL", "build/config/SDL", "build/packages/SDL", "-DSDL_TEST_LIBRARY=OFF -DSDL_TESTS=OFF -DSDL_EXAMPLES=OFF -DSDL_STATIC=ON"),
         PreCompileLibraries("glad", "glad", "build/config/glad", "build/packages/glad", ""),
-        PreCompileLibraries("glm", "glm", "build/config/glm", "build/packages/glm", ""),
+        PreCompileLibraries("glm", "glm", "build/config/glm", "build/packages/glm", "-DGLM_BUILD_TESTS=OFF"),
         #PreCompileLibraries("imgui", "lib/imgui_docking", "lib/build/config/imgui", "lib/build/packages/imgui", ""),
         #PreCompileLibraries("stb", "lib/stb_image", "lib/build/config/stb", "lib/build/packages/stb", ""),
         #PreCompileLibraries("entt", "lib/entt", "lib/build/config/entt", "lib/build/packages/entt", ""),

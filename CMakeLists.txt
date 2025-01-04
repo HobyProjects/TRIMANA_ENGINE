@@ -17,6 +17,7 @@ set(CMAKE_C_EXTENSIONS OFF)
 
 
 
+
 ###############################################################################
 # Dependencies
 ###############################################################################
@@ -130,7 +131,7 @@ set(
 add_library(TrimanaEngineCore STATIC ${TRIMANA_CORE_HEADERS} ${TRIMANA_CORE_SOURCES})
 target_precompile_headers(TrimanaEngineCore PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/core_pch.hpp)
 target_include_directories(TrimanaEngineCore PUBLIC ${TRIMANA_CORE_INCLUDE_DIRS})
-target_link_libraries(TrimanaEngineCore PUBLIC glfw spdlog::spdlog SDL3::SDL3 glad::glad glm::glm)
+target_link_libraries(TrimanaEngineCore PUBLIC glfw spdlog::spdlog SDL3::SDL3-static glad::glad glm::glm-header-only)
 
 
 ###############################################################################

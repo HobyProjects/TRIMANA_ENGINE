@@ -64,6 +64,20 @@ namespace TE::Core
 			}
 	};
 
+	class RenderingAPIException : public Exception
+	{
+	public:
+		RenderingAPIException(const std::string_view& message) : Exception(message, std::source_location::current()) {};
+		RenderingAPIException(const std::string_view& message, const std::source_location location) : Exception(message, location) {};
+		virtual ~RenderingAPIException() = default;
+
+		void What() const noexcept override
+		{
+			TE_CRITICAL("Rendering API exception : {0} (in file:{1} | at line: {2})", m_Message, m_SourceLocation.file_name(), m_SourceLocation.line());
+			TE_DEBUGBREAK();
+		}
+	};
+
 	class NullPointerException : public Exception
 	{
 		public:
@@ -76,5 +90,33 @@ namespace TE::Core
 				TE_CRITICAL("Null pointer exception : {0} (in file:{1} | at line: {2})", m_Message, m_SourceLocation.file_name(), m_SourceLocation.line());
 				TE_DEBUGBREAK();
 			}
+	};
+
+	class InvalidParameterException : public Exception
+	{
+	public:
+		InvalidParameterException(const std::string_view& message) : Exception(message, std::source_location::current()) {};
+		InvalidParameterException(const std::string_view& message, const std::source_location location) : Exception(message, location) {};
+		virtual ~InvalidParameterException() = default;
+
+		void What() const noexcept override
+		{
+			TE_CRITICAL("Invalid parameter exception : {0} (in file:{1} | at line: {2})", m_Message, m_SourceLocation.file_name(), m_SourceLocation.line());
+			TE_DEBUGBREAK();
+		}
+	};
+
+	class IOStreamException : public Exception
+	{
+	public:
+		IOStreamException(const std::string_view& message) : Exception(message, std::source_location::current()) {};
+		IOStreamException(const std::string_view& message, const std::source_location location) : Exception(message, location) {};
+		virtual ~IOStreamException() = default;
+
+		void What() const noexcept override
+		{
+			TE_CRITICAL("IO stream exception : {0} (in file:{1} | at line: {2})", m_Message, m_SourceLocation.file_name(), m_SourceLocation.line());
+			TE_DEBUGBREAK();
+		}
 	};
 }

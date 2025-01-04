@@ -42,6 +42,7 @@
 #include "renderer.hpp"
 #include "buffers.hpp"
 #include "vertex_array.hpp"
+#include "shader.hpp"
 
 //renderer - opengl
 #include "opengl/glfw_gl_context.hpp"
@@ -50,6 +51,7 @@
 #include "opengl/gl_renderer.hpp"
 #include "opengl/gl_buffers.hpp"
 #include "opengl/gl_vertex_array.hpp"
+#include "opengl/gl_shader.hpp"
 
 // events
 #include "events.hpp"

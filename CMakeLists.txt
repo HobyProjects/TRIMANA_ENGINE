@@ -14,10 +14,6 @@ set(CMAKE_C_EXTENSIONS OFF)
 
 
 
-
-
-
-
 ###############################################################################
 # Dependencies
 ###############################################################################
@@ -26,11 +22,6 @@ find_package(spdlog REQUIRED)
 find_package(SDL3 REQUIRED)
 find_package(glad REQUIRED)
 find_package(glm REQUIRED)
-
-
-
-
-
 
 
 ###############################################################################
@@ -47,14 +38,6 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 else()
     add_compile_definitions(TE_RELEASE)
 endif()
-
-
-
-
-
-
-
-
 
 
 
@@ -90,6 +73,7 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/renderer.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/buffers.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/vertex_array.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/shader.hpp
 
 
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/glfw_gl_context.hpp
@@ -98,6 +82,7 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_debug.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_buffers.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_vertex_array.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_shader.hpp
 
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/events.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/window_events.hpp
@@ -118,6 +103,7 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/renderer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/buffers.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/vertex_array.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/shader.cpp
 
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/glfw_gl_context.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/sdl_gl_context.cpp
@@ -125,6 +111,7 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_debug.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_buffers.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_vertex_array.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_shader.cpp
 )
 
 

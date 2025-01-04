@@ -1,0 +1,15 @@
+#include "core_pch.hpp"
+
+namespace TE::Core
+{
+	std::shared_ptr<VertexArray> CreateVertexArray()
+	{
+		switch( Renderer::API() )
+		{
+			case RENDERER_API_OPENGL:		return std::make_shared<GL_VertexArray>();
+			case RENDERER_API_VULKAN:		throw UnimplementedFeatureException("Vulkan API is not yet supported"); return nullptr;
+			case RENDERER_API_DIRECTX:		throw UnimplementedFeatureException("DirectX API is not yet supported"); return nullptr;
+			default:						return nullptr;
+		};
+	}
+}

@@ -41,6 +41,7 @@
 //renderer
 #include "renderer.hpp"
 #include "buffers.hpp"
+#include "vertex_array.hpp"
 
 //renderer - opengl
 #include "opengl/glfw_gl_context.hpp"
@@ -48,6 +49,7 @@
 #include "opengl/gl_debug.hpp"
 #include "opengl/gl_renderer.hpp"
 #include "opengl/gl_buffers.hpp"
+#include "opengl/gl_vertex_array.hpp"
 
 // events
 #include "events.hpp"

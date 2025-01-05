@@ -104,7 +104,7 @@ namespace TE::Core
 
 		if( Renderer::API() & RENDERER_API_DIRECTX )
 		{
-			
+			//[TODO]: Need to find what is the enum flag for DirectX
 		}
 
 		s_Window = SDL_CreateWindow(s_Properties.Title.c_str(), s_Properties.MinWidth, s_Properties.MinHeight, window_flags);

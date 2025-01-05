@@ -222,7 +222,7 @@ namespace TE::Core
 		window = nullptr;
 	}
 
-	std::shared_ptr<IContext> Core::GetContext()
+	std::shared_ptr<Context> Core::GetContext()
 	{
 		if( !s_CoreInitialized )
 			throw UninitializedObjectException("Core is not initialized");

@@ -6,6 +6,7 @@
 namespace TE::Core
 {
 	using Window = IWindow*;
+	using Context = IContext;
 
 	class Core
 	{
@@ -21,6 +22,6 @@ namespace TE::Core
 
 			static Window CreateWindow(const std::string& title);
 			static void DestroyWindow(Window window);
-			static std::shared_ptr<IContext> GetContext();
+			static std::shared_ptr<Context> GetContext();
 	};
 }

@@ -15,8 +15,14 @@ namespace TE::App
 
 		private:
 			bool OnWindowClose(TE::Core::WindowHandle handle, TE::Core::EventWindowClose& e);
+			bool OnWindowResize(TE::Core::WindowHandle handle, TE::Core::EventWindowResize& e);
 
 		private:
 			TE::Core::Window m_window{ nullptr };
+
+			std::shared_ptr<TE::Core::ShaderProgram> m_Shader{ nullptr };
+			std::shared_ptr<TE::Core::VertexBuffer> m_VBO{ nullptr };
+			std::shared_ptr<TE::Core::IndexBuffer> m_IBO{ nullptr };
+			std::shared_ptr<TE::Core::VertexArray> m_VAO{ nullptr };
 	};
 }

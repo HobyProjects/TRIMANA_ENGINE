@@ -35,4 +35,9 @@ namespace TE::Core
 	{
 		glViewport(x, y, width, height);
 	}
+
+	void OpenGL_Renderer::Draw(uint32_t indicesCount)
+	{
+		glDrawElements(GL_TRIANGLES, indicesCount, GL_UNSIGNED_INT, NULL);
+	}
 }

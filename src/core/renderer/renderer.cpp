@@ -25,7 +25,6 @@ namespace TE::Core
 			}
 			default:
 			{
-				OpenGL_Renderer::Init();
 				break;
 			}
 		};
@@ -52,7 +51,6 @@ namespace TE::Core
 			}
 			default:
 			{
-				OpenGL_Renderer::Quit();
 				break;
 			}
 		};
@@ -89,7 +87,6 @@ namespace TE::Core
 			}
 			default:
 			{
-				OpenGL_Renderer::Clear();
 				break;
 			}
 		};
@@ -116,7 +113,6 @@ namespace TE::Core
 			}
 			default:
 			{
-				OpenGL_Renderer::ClearColor(color);
 				break;
 			}
 		};
@@ -143,7 +139,32 @@ namespace TE::Core
 			}
 			default:
 			{
-				OpenGL_Renderer::SetViewport(x, y, width, height);
+				break;
+			}
+		};
+	}
+
+	void Renderer::Draw(uint32_t indicesCount)
+	{
+		switch( s_API )
+		{
+			case RENDERER_API_OPENGL:
+			{
+				OpenGL_Renderer::Draw(indicesCount);
+				break;
+			}
+			case RENDERER_API_VULKAN:
+			{
+				throw UnimplementedFeatureException("Vulkan renderer is not implemented yet");
+				break;
+			}
+			case RENDERER_API_DIRECTX:
+			{
+				throw UnimplementedFeatureException("DirectX renderer is not implemented yet");
+				break;
+			}
+			default:
+			{
 				break;
 			}
 		};

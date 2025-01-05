@@ -7,6 +7,7 @@ namespace TE::Core
 	class GL_Shader : public IShader
 	{
 		public:
+			GL_Shader(const std::string& name, const std::string& vtxShader, const std::string& fragShader);
 			GL_Shader(const std::string& name, const std::filesystem::path& vertexPath, const std::filesystem::path& fragmentPath);
 			virtual ~GL_Shader();
 
@@ -32,8 +33,8 @@ namespace TE::Core
 			std::string ReadShaderFiles(const std::filesystem::path& filePath);
 
 		private:
-			ShaderProgramID m_ID;
-			std::string m_Name;
-			std::unordered_map<std::string, UniformLocation> m_UniformLocations;
+			ShaderProgramID m_ID{0};
+			std::string m_Name{};
+			std::unordered_map<std::string, UniformLocation> m_UniformLocations{};
 	};
 }

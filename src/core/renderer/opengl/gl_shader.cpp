@@ -44,6 +44,15 @@ namespace TE::Core
 		m_ID = programID;
 	}
 
+	GL_Shader::GL_Shader(const std::string& name, const std::string& vtxShader, const std::string& fragShader)
+	{
+		m_Name = name;
+		std::unordered_map<GLenum, std::string> shaders;
+		shaders [GL_VERTEX_SHADER] = vtxShader;
+		shaders [GL_FRAGMENT_SHADER] = fragShader;
+		CompileShaders(shaders);
+	}
+
 	GL_Shader::GL_Shader(const std::string& name, const std::filesystem::path& vertexPath, const std::filesystem::path& fragmentPath)
 	{
 		m_Name = name;

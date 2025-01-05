@@ -35,4 +35,5 @@ namespace TE::Core
 
 	using ShaderProgram = IShader;
 	std::shared_ptr<ShaderProgram> CreateShaderProgram(const std::string& name, const std::filesystem::path& vtxShader, const std::filesystem::path& fragShader);
+	std::shared_ptr<ShaderProgram> CreateShaderProgram(const std::string& name, const std::string& vtxShader, const std::string& fragShader);
 }

@@ -61,7 +61,6 @@ set(
     TRIMANA_CORE_HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/trimana_core.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/asserts.hpp 
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/exceptions.hpp 
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/log.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/base.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/keycodes.hpp

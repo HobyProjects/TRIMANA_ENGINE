@@ -35,7 +35,6 @@
 //SubCore
 #include "base.hpp"
 #include "asserts.hpp"
-#include "exceptions.hpp"
 #include "keycodes.hpp"
 #include "log.hpp"
 

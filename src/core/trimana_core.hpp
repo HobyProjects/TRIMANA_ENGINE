@@ -23,6 +23,7 @@
 #include <glad/glad.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/sinks/basic_file_sink.h>
+#include <stb/stb_image.h>
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
@@ -34,7 +35,6 @@
 //SubCore
 #include "base.hpp"
 #include "asserts.hpp"
-#include "exceptions.hpp"
 #include "keycodes.hpp"
 #include "log.hpp"
 
@@ -44,6 +44,7 @@
 #include "vertex_array.hpp"
 #include "shader.hpp"
 #include "frame_buffer.hpp"
+#include "texture.hpp"
 
 //renderer - opengl
 #include "opengl/glfw_gl_context.hpp"
@@ -54,6 +55,7 @@
 #include "opengl/gl_vertex_array.hpp"
 #include "opengl/gl_shader.hpp"
 #include "opengl/gl_frame_buffer.hpp"
+#include "opengl/gl_texture.hpp"
 
 // events
 #include "events.hpp"

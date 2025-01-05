@@ -15,12 +15,12 @@ namespace TE::Core
 			}
 			case RENDERER_API_VULKAN:
 			{
-				throw UnimplementedFeatureException("Vulkan renderer is not implemented yet");
+				TE_ASSERT(false, "Vulkan renderer is not implemented yet");
 				break;
 			}
 			case RENDERER_API_DIRECTX:
 			{
-				throw UnimplementedFeatureException("DirectX renderer is not implemented yet");
+				TE_ASSERT(false, "DirectX renderer is not implemented yet");
 				break;
 			}
 			default:
@@ -41,12 +41,12 @@ namespace TE::Core
 			}
 			case RENDERER_API_VULKAN:
 			{
-				throw UnimplementedFeatureException("Vulkan renderer is not implemented yet");
+				TE_ASSERT(false, "Vulkan renderer is not implemented yet");
 				break;
 			}
 			case RENDERER_API_DIRECTX:
 			{
-				throw UnimplementedFeatureException("DirectX renderer is not implemented yet");
+				TE_ASSERT(false, "DirectX renderer is not implemented yet");
 				break;
 			}
 			default:
@@ -77,12 +77,12 @@ namespace TE::Core
 			}
 			case RENDERER_API_VULKAN:
 			{
-				throw UnimplementedFeatureException("Vulkan renderer is not implemented yet");
+				TE_ASSERT(false, "Vulkan renderer is not implemented yet");
 				break;
 			}
 			case RENDERER_API_DIRECTX:
 			{
-				throw UnimplementedFeatureException("DirectX renderer is not implemented yet");
+				TE_ASSERT(false, "DirectX renderer is not implemented yet");
 				break;
 			}
 			default:
@@ -103,12 +103,12 @@ namespace TE::Core
 			}
 			case RENDERER_API_VULKAN:
 			{
-				throw UnimplementedFeatureException("Vulkan renderer is not implemented yet");
+				TE_ASSERT(false, "Vulkan renderer is not implemented yet");
 				break;
 			}
 			case RENDERER_API_DIRECTX:
 			{
-				throw UnimplementedFeatureException("DirectX renderer is not implemented yet");
+				TE_ASSERT(false, "DirectX renderer is not implemented yet");
 				break;
 			}
 			default:
@@ -129,12 +129,12 @@ namespace TE::Core
 			}
 			case RENDERER_API_VULKAN:
 			{
-				throw UnimplementedFeatureException("Vulkan renderer is not implemented yet");
+				TE_ASSERT(false, "Vulkan renderer is not implemented yet");
 				break;
 			}
 			case RENDERER_API_DIRECTX:
 			{
-				throw UnimplementedFeatureException("DirectX renderer is not implemented yet");
+				TE_ASSERT(false, "DirectX renderer is not implemented yet");
 				break;
 			}
 			default:
@@ -155,12 +155,12 @@ namespace TE::Core
 			}
 			case RENDERER_API_VULKAN:
 			{
-				throw UnimplementedFeatureException("Vulkan renderer is not implemented yet");
+				TE_ASSERT(false, "Vulkan renderer is not implemented yet");
 				break;
 			}
 			case RENDERER_API_DIRECTX:
 			{
-				throw UnimplementedFeatureException("DirectX renderer is not implemented yet");
+				TE_ASSERT(false, "DirectX renderer is not implemented yet");
 				break;
 			}
 			default:

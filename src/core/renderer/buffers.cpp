@@ -7,8 +7,8 @@ namespace TE::Core
 		switch( Renderer::API() )
 		{
 			case RENDERER_API_OPENGL: 				return std::make_shared<GL_VertexBuffer>(alloca_size);
-			case RENDERER_API_VULKAN: 				throw UnimplementedFeatureException("Vulkan API is not implemented yet."); return nullptr;
-			case RENDERER_API_DIRECTX: 				throw UnimplementedFeatureException("Direct3D API is not implemented yet."); return nullptr;
+			case RENDERER_API_VULKAN: 				TE_ASSERT(false, "Vulkan API is not implemented yet."); return nullptr;
+			case RENDERER_API_DIRECTX: 				TE_ASSERT(false, "Direct3D API is not implemented yet."); return nullptr;
 			default:								return nullptr;
 		};
 	}
@@ -18,8 +18,8 @@ namespace TE::Core
 		switch( Renderer::API() )
 		{
 			case RENDERER_API_OPENGL: 				return std::make_shared<GL_VertexBuffer>(data, size);
-			case RENDERER_API_VULKAN: 				throw UnimplementedFeatureException("Vulkan API is not implemented yet."); return nullptr;
-			case RENDERER_API_DIRECTX: 				throw UnimplementedFeatureException("Direct3D API is not implemented yet."); return nullptr;
+			case RENDERER_API_VULKAN: 				TE_ASSERT(false, "Vulkan API is not implemented yet."); return nullptr;
+			case RENDERER_API_DIRECTX: 				TE_ASSERT(false, "Direct3D API is not implemented yet."); return nullptr;
 			default:								return nullptr;
 		};
 	}
@@ -29,8 +29,8 @@ namespace TE::Core
 		switch( Renderer::API() )
 		{
 			case RENDERER_API_OPENGL: 				return std::make_shared<GL_IndexBuffer>(data, count);
-			case RENDERER_API_VULKAN: 				throw UnimplementedFeatureException("Vulkan API is not implemented yet."); return nullptr;
-			case RENDERER_API_DIRECTX: 				throw UnimplementedFeatureException("Direct3D API is not implemented yet."); return nullptr;
+			case RENDERER_API_VULKAN: 				TE_ASSERT(false, "Vulkan API is not implemented yet."); return nullptr;
+			case RENDERER_API_DIRECTX: 				TE_ASSERT(false, "Direct3D API is not implemented yet."); return nullptr;
 			default:								return nullptr;
 		};
 	}

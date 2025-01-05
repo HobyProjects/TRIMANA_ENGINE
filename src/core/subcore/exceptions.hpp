@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string_view>
 #include <source_location>
+#include <spdlog/fmt/fmt.h>
 
 #include "base.hpp"
 #include "log.hpp"
@@ -12,21 +13,23 @@ namespace TE::Core
 	class Exception
 	{
 		public:
-			Exception(const std::string_view& message, const std::source_location location) : m_Message(message), m_SourceLocation(location) {}
+			Exception(const std::string& message, const std::source_location location) 
+				: m_Message(message), m_SourceLocation(location) {}
 			virtual ~Exception() = default;
 
-			virtual void What() const noexcept {};
+			virtual void What() const noexcept {}
 
 		protected:
-			std::string_view m_Message{};    
+			std::string m_Message{};    
 			std::source_location m_SourceLocation{};  
 	};
 
 	class UninitializedObjectException : public Exception
 	{
 		public:
-			UninitializedObjectException(const std::string_view& message) : Exception(message, std::source_location::current()) {};
-			UninitializedObjectException(const std::string_view& message, const std::source_location location) : Exception(message, location) {};
+			template<typename... Args>
+			UninitializedObjectException(const std::string& message, const Args&&... args) 
+				: Exception(fmt::format(message, std::forward<Args>(args)...), std::source_location::current()) {};
 			virtual ~UninitializedObjectException() = default;
 
 			void What() const noexcept override
@@ -38,23 +41,25 @@ namespace TE::Core
 
 	class UnimplementedFeatureException : public Exception
 	{
-	public:
-		UnimplementedFeatureException(const std::string_view& message) : Exception(message, std::source_location::current()) {};
-		UnimplementedFeatureException(const std::string_view& message, const std::source_location location) : Exception(message, location) {};
-		virtual ~UnimplementedFeatureException() = default;
+		public:
+			template<typename... Args>
+			constexpr UnimplementedFeatureException(const std::string& message, const Args&&... args) 
+				: Exception(fmt::format(message, std::forward<Args>(args)...), std::source_location::current()) {};
+			virtual ~UnimplementedFeatureException() = default;
 
-		void What() const noexcept override
-		{
-			TE_CRITICAL("Unimplemented feature exception: {0} (in file:{1} | at line: {2})", m_Message, m_SourceLocation.file_name(), m_SourceLocation.line());
-			TE_DEBUGBREAK();
-		}
+			void What() const noexcept override
+			{
+				TE_CRITICAL("Unimplemented feature exception: {0} (in file:{1} | at line: {2})", m_Message, m_SourceLocation.file_name(), m_SourceLocation.line());
+				TE_DEBUGBREAK();
+			}
 	};
 
 	class BaseAPIException : public Exception
 	{
 		public:
-			BaseAPIException(const std::string_view& message) : Exception(message, std::source_location::current()) {};
-			BaseAPIException(const std::string_view& message, const std::source_location location) : Exception(message, location) {};
+			template<typename... Args>
+			constexpr BaseAPIException(const std::string& message, const Args&&... args)
+				: Exception(fmt::format(message, std::forward<Args>(args)...), std::source_location::current()) {};
 			virtual ~BaseAPIException() = default;
 
 			void What() const noexcept override
@@ -66,23 +71,25 @@ namespace TE::Core
 
 	class RenderingAPIException : public Exception
 	{
-	public:
-		RenderingAPIException(const std::string_view& message) : Exception(message, std::source_location::current()) {};
-		RenderingAPIException(const std::string_view& message, const std::source_location location) : Exception(message, location) {};
-		virtual ~RenderingAPIException() = default;
+		public:
+			template<typename... Args>
+			constexpr RenderingAPIException(const std::string& message, const Args&&... args)
+				: Exception(fmt::format(message, std::forward<Args>(args)...), std::source_location::current()) {};
+			virtual ~RenderingAPIException() = default;
 
-		void What() const noexcept override
-		{
-			TE_CRITICAL("Rendering API exception : {0} (in file:{1} | at line: {2})", m_Message, m_SourceLocation.file_name(), m_SourceLocation.line());
-			TE_DEBUGBREAK();
-		}
+			void What() const noexcept override
+			{
+				TE_CRITICAL("Rendering API exception : {0} (in file:{1} | at line: {2})", m_Message, m_SourceLocation.file_name(), m_SourceLocation.line());
+				TE_DEBUGBREAK();
+			}
 	};
 
 	class NullPointerException : public Exception
 	{
 		public:
-			NullPointerException(const std::string_view& message) : Exception(message, std::source_location::current()) {};
-			NullPointerException(const std::string_view& message, const std::source_location location) : Exception(message, location) {};
+			template<typename... Args>
+			constexpr NullPointerException(const std::string& message, const Args&&... args)
+				: Exception(fmt::format(message, std::forward<Args>(args)...), std::source_location::current()) {};
 			virtual ~NullPointerException() = default;
 
 			void What() const noexcept override
@@ -95,8 +102,9 @@ namespace TE::Core
 	class InvalidParameterException : public Exception
 	{
 	public:
-		InvalidParameterException(const std::string_view& message) : Exception(message, std::source_location::current()) {};
-		InvalidParameterException(const std::string_view& message, const std::source_location location) : Exception(message, location) {};
+		template<typename... Args>
+		constexpr InvalidParameterException(const std::string& message, const Args&&... args)
+			: Exception(fmt::format(message, std::forward<Args>(args)...), std::source_location::current()) {};
 		virtual ~InvalidParameterException() = default;
 
 		void What() const noexcept override
@@ -106,16 +114,17 @@ namespace TE::Core
 		}
 	};
 
-	class IOStreamException : public Exception
+	class IOException : public Exception
 	{
 	public:
-		IOStreamException(const std::string_view& message) : Exception(message, std::source_location::current()) {};
-		IOStreamException(const std::string_view& message, const std::source_location location) : Exception(message, location) {};
-		virtual ~IOStreamException() = default;
+		template<typename... Args>
+		constexpr IOException(const std::string& message, const Args&&... args)
+			: Exception(fmt::format(message, std::forward<Args>(args)...), std::source_location::current()) {};
+		virtual ~IOException() = default;
 
 		void What() const noexcept override
 		{
-			TE_CRITICAL("IO stream exception : {0} (in file:{1} | at line: {2})", m_Message, m_SourceLocation.file_name(), m_SourceLocation.line());
+			TE_CRITICAL("IO exception : {0} (in file:{1} | at line: {2})", m_Message, m_SourceLocation.file_name(), m_SourceLocation.line());
 			TE_DEBUGBREAK();
 		}
 	};

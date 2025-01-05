@@ -232,8 +232,8 @@ if __name__ == "__main__":
         PreCompileLibraries("SDL", "SDL", "build/config/SDL", "build/packages/SDL", "-DSDL_TEST_LIBRARY=OFF -DSDL_TESTS=OFF -DSDL_EXAMPLES=OFF -DSDL_STATIC=ON"),
         PreCompileLibraries("glad", "glad", "build/config/glad", "build/packages/glad", ""),
         PreCompileLibraries("glm", "glm", "build/config/glm", "build/packages/glm", "-DGLM_BUILD_TESTS=OFF"),
+        PreCompileLibraries("stb", "stb_image", "build/config/stb", "build/packages/stb", ""),
         #PreCompileLibraries("imgui", "lib/imgui_docking", "lib/build/config/imgui", "lib/build/packages/imgui", ""),
-        #PreCompileLibraries("stb", "lib/stb_image", "lib/build/config/stb", "lib/build/packages/stb", ""),
         #PreCompileLibraries("entt", "lib/entt", "lib/build/config/entt", "lib/build/packages/entt", ""),
     ]
 

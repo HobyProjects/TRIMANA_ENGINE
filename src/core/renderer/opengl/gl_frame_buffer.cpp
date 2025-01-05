@@ -76,7 +76,7 @@ namespace TE::Core
 
 		if( glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE )
 		{
-			TE_CORE_ERROR("Frame buffer is incomplete!");
+			TE_CORE_WARN("Incompleted frame buffer generated!!!!");
 		}
 	}
 }

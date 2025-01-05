@@ -15,7 +15,7 @@ namespace TE::Core
 			return result;
 		}
 
-		throw IOStreamException("Failed to read shader file: " + filePath.string());
+		throw IOException("Failed to read shader file: " + filePath.string());
 		return std::string("");
 	}
 

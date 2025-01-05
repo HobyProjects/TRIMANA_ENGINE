@@ -1,29 +1,22 @@
 #pragma once
 
+#include <source_location>
 #include <type_traits>
+
 #include "base.hpp"
 #include "log.hpp"
 
 #ifdef TE_ASSERTS_ENABLED
 
-template<typename T, typename... Args>
-void TE_ASSERT(T condition, Args&&... args)
-{
-	// Ensure the condition is of an integral type.
-	static_assert( std::is_integral<T>::value, "Condition must be of integral type" );
-	if( !condition )
-	{
-		TE_CORE_ERROR("Assertion failed: {0}", std::forward<Args>(args)...);
-		TE_DEBUGBREAK();
-	}
+#define TE_ASSERT(condition, ...) \
+if(!(condition)){ \
+TE_CORE_ERROR("Assert failed: {0}", fmt::format(__VA_ARGS__));\
+TE_CORE_WARN("Assert Info: FILE :- {0} | LINE :- {1}", std::source_location::current().file_name(), std::source_location::current().line());\
+TE_DEBUGBREAK();\
 }
 
 #else
 
-template<typename T, typename... Args>
-inline void TRIMANA_ASSERT(T condition, Args&&... args)
-{
-	// Do nothing
-}
+#define TE_ASEERT(condition, ...)
 
 #endif

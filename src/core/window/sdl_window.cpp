@@ -10,7 +10,8 @@ namespace TE::Core
 	{
 		if( !SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) )
 		{
-			throw UninitializedObjectException("Failed to initialize SDL");
+			const char* lastError = SDL_GetError();
+			TE_ASSERT(false, "Fail to initialize SDL | SDL Error: {0}", lastError);
 			return ( s_Initialized = false );
 		}
 
@@ -127,7 +128,8 @@ namespace TE::Core
 		}
 		else
 		{
-			throw BaseAPIException("Failed to create SDL window");
+			const char* lastError = SDL_GetError();
+			TE_ASSERT(false, "Fail to create SDL Window | SDL Error: {0}", lastError);
 			return;
 		}
 	}

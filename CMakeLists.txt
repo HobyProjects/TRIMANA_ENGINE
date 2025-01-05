@@ -22,6 +22,7 @@ find_package(spdlog REQUIRED)
 find_package(SDL3 REQUIRED)
 find_package(glad REQUIRED)
 find_package(glm REQUIRED)
+find_package(stb REQUIRED)
 
 
 ###############################################################################
@@ -75,6 +76,7 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/vertex_array.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/shader.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/frame_buffer.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/texture.hpp
 
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/glfw_gl_context.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/sdl_gl_context.hpp
@@ -84,6 +86,7 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_vertex_array.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_shader.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_frame_buffer.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_texture.hpp
 
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/events.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/window_events.hpp
@@ -106,6 +109,7 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/vertex_array.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/shader.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/frame_buffer.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/texture.cpp
 
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/glfw_gl_context.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/sdl_gl_context.cpp
@@ -115,13 +119,23 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_vertex_array.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_shader.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_frame_buffer.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_texture.cpp
 )
 
 
 add_library(TrimanaEngineCore STATIC ${TRIMANA_CORE_HEADERS} ${TRIMANA_CORE_SOURCES})
 target_precompile_headers(TrimanaEngineCore PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/core_pch.hpp)
 target_include_directories(TrimanaEngineCore PUBLIC ${TRIMANA_CORE_INCLUDE_DIRS})
-target_link_libraries(TrimanaEngineCore PUBLIC glfw spdlog::spdlog SDL3::SDL3-static glad::glad glm::glm-header-only)
+target_link_libraries(
+    TrimanaEngineCore 
+        PUBLIC 
+            glfw 
+            spdlog::spdlog 
+            SDL3::SDL3-static 
+            glad::glad 
+            glm::glm-header-only
+            stb::stb
+)
 
 
 ###############################################################################

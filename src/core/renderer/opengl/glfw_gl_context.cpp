@@ -9,20 +9,14 @@ namespace TE::Core
 
 	void GLFW_GL_Context::Attach(Native window)
 	{
-		if( !window )
-			throw NullPointerException("window is null");
-
+		TE_ASSERT(window, "The Native window is null");
 		glfwMakeContextCurrent((GLFWwindow*) window);
 		glfwSwapInterval(1);
 
 		static bool glad_initialized = false;
 		if( !glad_initialized )
 		{
-			if( !gladLoadGLLoader((GLADloadproc) glfwGetProcAddress) )
-			{
-				throw UninitializedObjectException("Failed to initialize GLAD");
-			}
-
+			TE_ASSERT(gladLoadGLLoader((GLADloadproc) glfwGetProcAddress), "Failed to load OpenGL!");
 			glad_initialized = true;
 			TE_CORE_INFO("GLAD successfully initialized");
 		}

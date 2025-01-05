@@ -9,7 +9,9 @@ namespace TE::Core
 	{
 		if( !glfwInit() )
 		{
-			throw UninitializedObjectException("Failed to initialize GLFW");
+			const char* lastError{ nullptr };
+			int32_t errorCode = glfwGetError(&lastError);
+			TE_ASSERT(false, "Failed to initialize GLFW | GLFW Error Code: {0} | GLFW Error: {1}", errorCode, lastError);
 			return ( s_Initialized = false );
 		}
 
@@ -115,7 +117,9 @@ namespace TE::Core
 		}
 		else
 		{
-			throw BaseAPIException("Failed to create GLFW window");
+			const char* lastError{ nullptr };
+			int32_t errorCode = glfwGetError(&lastError);
+			TE_ASSERT(s_Window, "Failed to create GLFW Window | GLFW Error Code:{0} | Error: {1}", errorCode, lastError);
 			return;
 		}
 	}

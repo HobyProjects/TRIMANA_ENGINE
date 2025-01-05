@@ -36,7 +36,7 @@ namespace TE::Core
 			{
 				s_BaseAPI = std::make_shared<GLFW3_API>();
 				if( !s_BaseAPI->Init() )
-					throw UninitializedObjectException("Failed to initialize the base API : GLFW");
+					TE_ASSERT(false, "Failed to initialize the base API -> GLFW");
 
 				break;
 			}
@@ -44,13 +44,13 @@ namespace TE::Core
 			{
 				s_BaseAPI = std::make_shared<SDL3_API>();
 				if( !s_BaseAPI->Init() )
-					throw UninitializedObjectException("Failed to initialize the base API : SDL");
+					TE_ASSERT(false, "Failed to initialize the base API -> SDL")
 
 				break;
 			}
 			case API_WIN32:
 			{
-				throw UnimplementedFeatureException("Win32 API is not implemented yet");
+				TE_ASSERT(false, "Win32 is not implemented yet!");
 				break;
 			}
 			default:
@@ -88,12 +88,12 @@ namespace TE::Core
 					}
 					case RENDERER_API_VULKAN:
 					{
-						throw UnimplementedFeatureException("Vulkan API is not implemented yet");
+						TE_ASSERT(false, "Vulkan API is not implemented yet!");
 						break;
 					}
 					case RENDERER_API_DIRECTX:
 					{
-						throw UnimplementedFeatureException("DirectX API is not implemented yet");
+						TE_ASSERT(false, "DirectX API is not implemented yet!");
 						break;
 					}
 					default:
@@ -115,12 +115,12 @@ namespace TE::Core
 					}
 					case RENDERER_API_VULKAN:
 					{
-						throw UnimplementedFeatureException("Vulkan API is not implemented yet");
+						TE_ASSERT(false, "Vulkan API is not implemented yet!");
 						break;
 					}
 					case RENDERER_API_DIRECTX:
 					{
-						throw UnimplementedFeatureException("DirectX API is not implemented yet");
+						TE_ASSERT(false, "DirectX API is not implemented yet!");
 						break;
 					}
 					default:
@@ -133,7 +133,7 @@ namespace TE::Core
 			}
 			case API_WIN32:
 			{
-				throw UnimplementedFeatureException("Win32 API is not implemented yet");
+				TE_ASSERT(false, "Win32 is not implemented yet!");
 				break;
 			}
 			default:
@@ -152,13 +152,12 @@ namespace TE::Core
 
 	void Core::Quit()
 	{
-		if( !s_CoreInitialized )
-			throw UninitializedObjectException("Core is not initialized");
+		TE_ASSERT(s_CoreInitialized, "Initialize the core before calling this method. Use TE::Core::Core::Init() method to initalize the core");
 
-		for( auto& [_, window] : s_WindowPool )
+		for( auto& [handle, window] : s_WindowPool )
 		{
 			if( window != nullptr || window->Properties().IsActive )
-				TE_CORE_WARN("Window with handle {0} is still active, destroying it", window->GetWindowHandle());
+				TE_CORE_WARN("Window with handle {0} is still active, destroying window...", handle);
 
 			delete window;
 			window = nullptr;
@@ -166,13 +165,11 @@ namespace TE::Core
 
 		s_BaseAPI->Quit();
 		s_BaseAPI = nullptr;
-		s_Context = nullptr;
 	}
 
 	Window Core::CreateWindow(const std::string& title)
 	{
-		if( !s_CoreInitialized )
-			throw UninitializedObjectException("Core is not initialized");
+		TE_ASSERT(s_CoreInitialized, "Initialize the core before calling this method. Use TE::Core::Core::Init() method to initalize the core");
 
 		Window window = nullptr;
 
@@ -190,7 +187,7 @@ namespace TE::Core
 			}
 			case API_WIN32:
 			{
-				throw UnimplementedFeatureException("Win32 API is not implemented yet");
+				TE_ASSERT(false, "Win32 API is not implemented yet");
 				break;
 			}
 			default:
@@ -199,8 +196,7 @@ namespace TE::Core
 			}
 		};
 
-		if( !window )
-			throw UninitializedObjectException("Failed to create window");
+		TE_ASSERT(window, "Unable to create the window");
 
 		window->Properties().Handle = GetUniqueHandle();
 		s_WindowPool [window->GetWindowHandle()] = window;
@@ -209,11 +205,8 @@ namespace TE::Core
 
 	void Core::DestroyWindow(Window window)
 	{
-		if( !s_CoreInitialized )
-			throw UninitializedObjectException("Core is not initialized");
-
-		if( !window )
-			throw UninitializedObjectException("Window is not initialized");
+		TE_ASSERT(s_CoreInitialized, "Initialize the core before calling this method. Use TE::Core::Core::Init() method to initalize the core");
+		TE_ASSERT(window, "This window is not valid, Unable to destroy it.");
 
 		WindowHandle handle = window->Properties().Handle;
 		s_WindowPool.erase(handle);
@@ -224,9 +217,7 @@ namespace TE::Core
 
 	std::shared_ptr<Context> Core::GetContext()
 	{
-		if( !s_CoreInitialized )
-			throw UninitializedObjectException("Core is not initialized");
-
+		TE_ASSERT(s_CoreInitialized, "Initialize the core before calling this method. Use TE::Core::Core::Init() method to initalize the core");
 		return s_Context;
 	}
 

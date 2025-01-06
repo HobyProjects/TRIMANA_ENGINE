@@ -24,5 +24,6 @@ namespace TE::App
 			std::shared_ptr<TE::Core::VertexBuffer> m_VBO{ nullptr };
 			std::shared_ptr<TE::Core::IndexBuffer> m_IBO{ nullptr };
 			std::shared_ptr<TE::Core::VertexArray> m_VAO{ nullptr };
+			std::shared_ptr<TE::Core::Texture2D> m_Texture{ nullptr };
 	};
 }

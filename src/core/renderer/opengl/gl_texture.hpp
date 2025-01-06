@@ -12,8 +12,9 @@ namespace TE::Core
 			GL_Texture(const std::filesystem::path& textureFile, bool Flip = true);
 			virtual ~GL_Texture();
 
-			virtual void Bind(uint32_t slot = 0) const override;
-			virtual void UnBind() const override;
+			virtual void Bind() const override;
+			virtual void Bind(uint32_t slot) const override;
+			virtual void Unbind() const override;
 
 			virtual TextureID GetID() const override;
 			virtual const TextureSpecification& GetSpecification() const override;

@@ -160,3 +160,13 @@ set(
 add_executable(TrimanaEngine ${TRIMANA_CORE_HEADERS} ${TRIMANA_APP_HEADERS} ${TRIMANA_APP_SOURCES})
 target_include_directories(TrimanaEngine PUBLIC ${TRIMANA_CORE_INCLUDE_DIRS} ${TRIMANA_APP_INCLUDE_DIRS})
 target_link_libraries(TrimanaEngine PUBLIC TrimanaEngineCore)
+
+add_custom_target(
+    copy_resource ALL
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${PROJECT_SOURCE_DIR}/res 
+    ${PROJECT_BINARY_DIR}/res 
+    COMMENT "Copying resources into the binary dir"
+)
+add_dependencies(TrimanaEngine copy_resource)
+

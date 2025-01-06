@@ -20,8 +20,9 @@ namespace TE::Core
 			ITexture() = default;
 			virtual ~ITexture() = default;
 
+			virtual void Bind() const = 0;
 			virtual void Bind(uint32_t slot) const = 0;
-			virtual void UnBind() const = 0;
+			virtual void Unbind() const = 0;
 
 			virtual TextureID GetID() const = 0;
 			virtual const TextureSpecification& GetSpecification() const = 0;

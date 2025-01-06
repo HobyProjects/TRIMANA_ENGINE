@@ -60,12 +60,17 @@ namespace TE::Core
 		glDeleteTextures(1, &m_TextureID);
 	}
 
+	void GL_Texture::Bind() const
+	{
+		glBindTexture(GL_TEXTURE_2D, m_TextureID);
+	}
+
 	void GL_Texture::Bind(uint32_t slot) const
 	{
 		glBindTextureUnit(slot, m_TextureID);
 	}
 
-	void GL_Texture::UnBind() const
+	void GL_Texture::Unbind() const
 	{
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}

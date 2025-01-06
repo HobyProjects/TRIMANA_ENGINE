@@ -1,33 +1,11 @@
 #include "application.hpp"
 
-std::string vertexSrc = R"(
-#version 450 core
-
-layout (location = 0) in vec3 aPos;
-
-void main()
-{
-	gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);
-}
-)";
-
-std::string fragSrc = R"(
-#version 450 core
-
-out vec4 FragColor;
-
-void main()
-{
-	FragColor = vec4(0.8f, 0.3f, 0.02f, 1.0f);
-}
-)";
-
-float vertices[] = 
-{
-	-0.5f, -0.5f, 0.0f,
-	 0.5f, -0.5f, 0.0f,
-	 0.5f,  0.5f, 0.0f,
-	-0.5f,  0.5f, 0.0f
+float vertices[] = {
+	// positions          // colors           // texture coords
+	-0.5f, -0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+	 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+	 0.5f,  0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+	-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left 
 };
 
 unsigned int indices[] = 
@@ -40,31 +18,30 @@ namespace TE::App
 {
 	Application::Application()
 	{
-		try
+		TE::Core::Core::Init();
+		m_window = TE::Core::Core::CreateWindow("Trimana Engine");
+		m_window->SetEventsCallbackFunc(EVENT_CALLBACK(OnEvent));
+
+		std::filesystem::path vertexShaderPath = "res/shaders/DefaultVertex.glsl";
+		std::filesystem::path fragmentShaderPath = "res/shaders/DefaultFrag.glsl";
+		std::filesystem::path textureFilePath = "res/textures/sasuke.jpg";
+
+		m_Shader = TE::Core::CreateShaderProgram("TestShaderProgram", vertexShaderPath, fragmentShaderPath);
+		m_VBO = TE::Core::CreateVertexBuffer(vertices, sizeof(vertices));
+		m_IBO = TE::Core::CreateIndexBuffer(indices, 6);
+		m_VAO = TE::Core::CreateVertexArray();
+		m_Texture = TE::Core::CreateTexture2D(textureFilePath);
+
+		TE::Core::BufferLayout bufferLayout
 		{
-			TE::Core::Core::Init();
-			m_window = TE::Core::Core::CreateWindow("Trimana Engine");
-			m_window->SetEventsCallbackFunc(EVENT_CALLBACK(OnEvent));
+			{"aPos", TE::Core::BUFFER_COMPO_XYZ, TE::Core::BUFFER_STRIDE_F3, false},
+			{"aColor", TE::Core::BUFFER_COMPO_RGB, TE::Core::BUFFER_STRIDE_F3, false},
+			{"aTexCoords", TE::Core::BUFFER_COMPO_UV, TE::Core::BUFFER_STRIDE_F2, false}
+		};
 
-			m_Shader = TE::Core::CreateShaderProgram("TestShaderProgram", vertexSrc, fragSrc);
-			m_VBO = TE::Core::CreateVertexBuffer(vertices, sizeof(vertices));
-			m_IBO = TE::Core::CreateIndexBuffer(indices, 6);
-			m_VAO = TE::Core::CreateVertexArray();
-
-			TE::Core::BufferLayout bufferLayout
-			{
-				{"aPos", TE::Core::BUFFER_COMPO_XYZ, TE::Core::BUFFER_STRIDE_F3, false}
-			};
-
-			m_VBO->SetLayout(bufferLayout);
-			m_VAO->EmplaceVtxBuffer(m_VBO);
-			m_VAO->EmplaceIdxBuffer(m_IBO);
-
-		}
-		catch( TE::Core::Exception& e )
-		{
-			e.What();
-		}
+		m_VBO->SetLayout(bufferLayout);
+		m_VAO->EmplaceVtxBuffer(m_VBO);
+		m_VAO->EmplaceIdxBuffer(m_IBO);
 	}
 
 	Application::~Application()
@@ -86,7 +63,9 @@ namespace TE::App
 			m_Shader->Bind();
 			m_VAO->Bind();
 
+			m_Texture->Bind();
 			TE::Core::Renderer::Draw(6);
+			m_Texture->Unbind();
 
 			m_VAO->Unbind();
 			m_Shader->Unbind();

@@ -34,9 +34,7 @@ namespace TE::Core
 
 	void GLFW_GL_Context::SwapBuffers(Native window)
 	{
-		if( !window )
-			throw NullPointerException("window is null");
-
+		TE_ASSERT(window, "The Native window is null");
 		glfwSwapBuffers((GLFWwindow*) window);
 	}
 

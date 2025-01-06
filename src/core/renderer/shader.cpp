@@ -18,8 +18,8 @@ namespace TE::Core
 		switch( Renderer::API() )
 		{
 			case RENDERER_API_OPENGL:			return std::make_shared<GL_Shader>(name, vtxShader, fragShader);
-			case RENDERER_API_VULKAN:			throw UnimplementedFeatureException("Vulkan is not yet supported."); return nullptr;
-			case RENDERER_API_DIRECTX:			throw UnimplementedFeatureException("DirectX 11 is not yet supported."); return nullptr;
+			case RENDERER_API_VULKAN:			TE_ASSERT(false, "Vulkan is not yet supported."); return nullptr;
+			case RENDERER_API_DIRECTX:			TE_ASSERT(false, "DirectX 11 is not yet supported."); return nullptr;
 			default:							return nullptr;
 		};
 	}

@@ -15,18 +15,14 @@ namespace TE::Core
 			return result;
 		}
 
-		throw IOException("Failed to read shader file: " + filePath.string());
+		TE_ASSERT(false, "Failed to read shader file: {0}", filePath.string());
 		return std::string("");
 	}
 
 	void GL_Shader::CompileShaders(const std::unordered_map<GLenum, std::string>& shaders)
 	{
 		ShaderProgramID programID = glCreateProgram();
-		if( !programID )
-		{
-			throw RenderingAPIException("Failed to create shader program");
-			return;
-		}
+		TE_ASSERT(programID, "Failed to create program for the shader");
 
 		for( auto& source : shaders )
 		{
@@ -94,7 +90,7 @@ namespace TE::Core
 			UniformLocation location = glGetUniformLocation(m_ID, uniformName.c_str());
 			if( location == -1 )
 			{
-				throw RenderingAPIException("Failed to get uniform location: " + uniformName);
+				TE_ASSERT(location, "Failed to get uniform location: {0}", uniformName);
 				return -1;
 			}
 			m_UniformLocations [uniformName] = location;

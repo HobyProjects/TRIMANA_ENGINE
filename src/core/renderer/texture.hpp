@@ -1,5 +1,6 @@
 #pragma once
 
+#include <filesystem>
 #include <memory>
 
 namespace TE::Core
@@ -25,4 +26,8 @@ namespace TE::Core
 			virtual TextureID GetID() const = 0;
 			virtual const TextureSpecification& GetSpecification() const = 0;
 	};
+
+	using Texture2D = ITexture;
+	std::shared_ptr<Texture2D> CreateTexture2D(uint32_t width, uint32_t height);
+	std::shared_ptr<Texture2D> CreateTexture2D(const std::filesystem::path& textureFile, bool flip = true);
 }

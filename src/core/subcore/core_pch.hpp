@@ -45,6 +45,9 @@
 #include "shader.hpp"
 #include "frame_buffer.hpp"
 #include "texture.hpp"
+#include "camera.hpp"
+#include "camera2d.hpp"
+#include "camera3d.hpp"
 
 //renderer - opengl
 #include "opengl/glfw_gl_context.hpp"

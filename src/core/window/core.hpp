@@ -20,6 +20,9 @@ namespace TE::Core
 			static void Init();
 			static void Quit();
 
+			static void InitRenderer();
+			static void QuitRenderer();
+
 			static Window CreateWindow(const std::string& title);
 			static void DestroyWindow(Window window);
 			static std::shared_ptr<Context> GetContext();

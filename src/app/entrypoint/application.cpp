@@ -7,11 +7,15 @@ namespace TE::App
 		TE::Core::Core::Init();
 		m_window = TE::Core::Core::CreateWindow("Trimana Engine");
 		m_window->SetEventsCallbackFunc(EVENT_CALLBACK(OnEvent));
+
+		//NOTE: Always init the renderer after creating the main window
+		TE::Core::Core::InitRenderer();
 	}
 
 	Application::~Application()
 	{
 		TE::Core::Core::DestroyWindow(m_window);
+		TE::Core::Core::QuitRenderer();
 		TE::Core::Core::Quit();
 	}
 

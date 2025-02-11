@@ -286,7 +286,7 @@ namespace TE::Core
 		for( uint32_t i = 0; i < MAX_TEXTURE_SLOTS; i++ )
 			samplers [i] = i;
 
-		if(s_API == RENDERER_API_OPENGL)
+		if(s_API & RENDERER_API_OPENGL)
 			glUniform1iv(texture_location, MAX_TEXTURE_SLOTS, samplers);
 
 		s_BatchData.QuadBufferPtr = s_BatchData.QuadBuffer;
@@ -303,7 +303,7 @@ namespace TE::Core
 		for( uint32_t i = 0; i < MAX_TEXTURE_SLOTS; i++ )
 			samplers [i] = i;
 
-		if(s_API == RENDERER_API_OPENGL)
+		if(s_API & RENDERER_API_OPENGL)
 			glUniform1iv(texture_location, MAX_TEXTURE_SLOTS, samplers);
 
 		s_BatchData.QuadBufferPtr = s_BatchData.QuadBuffer;
@@ -374,10 +374,10 @@ namespace TE::Core
 			}
 		}
 
-		if( texture_index == 0.0f )
+		if( texture_index <= 0.0f )
 		{
 			texture_index = static_cast<float>( s_BatchData.TextureSlotIndex );
-			s_BatchData.TextureSlots [s_BatchData.TextureSlotIndex] = texture;
+			s_BatchData.TextureSlots[s_BatchData.TextureSlotIndex] = texture;
 			s_BatchData.TextureSlotIndex++;
 		}
 

@@ -14,8 +14,8 @@ namespace TE::Core
 	{
 		#if defined(TE_PLATFORM_WINDOWS)
 
-		//return base_api::win32_api;
 		return API_GLFW;
+		//return API_WIN32;
 
 		#elif defined(TE_PLATFORM_LINUX)
 
@@ -147,10 +147,6 @@ namespace TE::Core
 	{
 		InitializeBaseAPI();
 		CreateContextObject();
-
-		Renderer::Init();
-		BatchRenderer2D::Init();
-
 		s_CoreInitialized = true;
 	}
 
@@ -172,6 +168,18 @@ namespace TE::Core
 
 		s_BaseAPI->Quit();
 		s_BaseAPI = nullptr;
+	}
+
+	void Core::InitRenderer()
+	{
+		Renderer::Init();
+		BatchRenderer2D::Init();
+	}
+
+	void Core::QuitRenderer()
+	{
+		BatchRenderer2D::Quit();
+		Renderer::Quit();
 	}
 
 	Window Core::CreateWindow(const std::string& title)

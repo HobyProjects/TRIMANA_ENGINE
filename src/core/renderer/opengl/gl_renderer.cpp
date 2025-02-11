@@ -19,7 +19,8 @@ namespace TE::Core
 	}
 
 	void OpenGL_Renderer::Quit()
-	{}
+	{
+	}
 
 	void OpenGL_Renderer::Clear()
 	{

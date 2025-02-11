@@ -59,7 +59,6 @@ set(
 #Header Files
 set(
     TRIMANA_CORE_HEADERS
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/trimana_core.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/asserts.hpp 
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/log.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/base.hpp
@@ -101,11 +100,9 @@ set(
 set(
     TRIMANA_CORE_SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/log.cpp
-
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/glfw_window.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/sdl_window.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/core.cpp
-
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/renderer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/buffers.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/vertex_array.cpp
@@ -114,7 +111,6 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/texture.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/camera2d.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/camera3d.cpp
-
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/glfw_gl_context.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/sdl_gl_context.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_renderer.cpp
@@ -128,7 +124,7 @@ set(
 
 
 add_library(TrimanaEngineCore STATIC ${TRIMANA_CORE_HEADERS} ${TRIMANA_CORE_SOURCES})
-target_precompile_headers(TrimanaEngineCore PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/core_pch.hpp)
+target_precompile_headers(TrimanaEngineCore PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/core_pch.hpp)
 target_include_directories(TrimanaEngineCore PUBLIC ${TRIMANA_CORE_INCLUDE_DIRS})
 target_link_libraries(
     TrimanaEngineCore 
@@ -163,15 +159,16 @@ set(
 )
 
 add_executable(TrimanaEngine ${TRIMANA_CORE_HEADERS} ${TRIMANA_APP_HEADERS} ${TRIMANA_APP_SOURCES})
+target_precompile_headers(TrimanaEngineCore PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint/app_pch.hpp)
 target_include_directories(TrimanaEngine PUBLIC ${TRIMANA_CORE_INCLUDE_DIRS} ${TRIMANA_APP_INCLUDE_DIRS})
 target_link_libraries(TrimanaEngine PUBLIC TrimanaEngineCore)
 
 add_custom_target(
-    copy_resource ALL
+    TrimanaEngineResources ALL
     COMMAND ${CMAKE_COMMAND} -E copy_directory
     ${PROJECT_SOURCE_DIR}/res 
     ${PROJECT_BINARY_DIR}/res 
     COMMENT "Copying resources into the binary dir"
 )
-add_dependencies(TrimanaEngine copy_resource)
+add_dependencies(TrimanaEngine TrimanaEngineResources)
 

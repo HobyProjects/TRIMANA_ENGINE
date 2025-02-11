@@ -59,7 +59,6 @@
 #include "opengl/gl_shader.hpp"
 #include "opengl/gl_frame_buffer.hpp"
 #include "opengl/gl_texture.hpp"
-#include "opengl/gl_functions.hpp"
 
 // events
 #include "events.hpp"

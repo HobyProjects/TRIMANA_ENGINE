@@ -1,5 +1,4 @@
-#include <iostream>
-#include "application.hpp"
+#include "app_pch.hpp"
 
 int main(int argc, char** argv)
 {

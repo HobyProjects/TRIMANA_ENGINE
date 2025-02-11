@@ -147,6 +147,10 @@ namespace TE::Core
 	{
 		InitializeBaseAPI();
 		CreateContextObject();
+
+		Renderer::Init();
+		BatchRenderer2D::Init();
+
 		s_CoreInitialized = true;
 	}
 
@@ -162,6 +166,9 @@ namespace TE::Core
 			delete window;
 			window = nullptr;
 		}
+
+		BatchRenderer2D::Quit();
+		Renderer::Quit();
 
 		s_BaseAPI->Quit();
 		s_BaseAPI = nullptr;

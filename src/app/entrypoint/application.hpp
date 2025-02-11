@@ -1,6 +1,6 @@
 #pragma once
 
-#include "trimana_core.hpp"
+#include "core.hpp"
 
 namespace TE::App
 {
@@ -19,11 +19,5 @@ namespace TE::App
 
 		private:
 			TE::Core::Window m_window{ nullptr };
-
-			std::shared_ptr<TE::Core::ShaderProgram> m_Shader{ nullptr };
-			std::shared_ptr<TE::Core::VertexBuffer> m_VBO{ nullptr };
-			std::shared_ptr<TE::Core::IndexBuffer> m_IBO{ nullptr };
-			std::shared_ptr<TE::Core::VertexArray> m_VAO{ nullptr };
-			std::shared_ptr<TE::Core::Texture2D> m_Texture{ nullptr };
 	};
 }

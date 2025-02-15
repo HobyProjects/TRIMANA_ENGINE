@@ -19,5 +19,7 @@ namespace TE::App
 
 		private:
 			TE::Core::Window m_window{ nullptr };
+			TE::Core::Camera2D m_Camera{ 10.f, -1.0f, 1.0f };
+			std::shared_ptr<TE::Core::Texture2D> m_Texture{ nullptr };
 	};
 }

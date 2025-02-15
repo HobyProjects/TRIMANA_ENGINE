@@ -93,6 +93,10 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/window_events.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/keyboard_events.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/mouse_events.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/inputs_handler.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/glfw_inputs_poll.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/sdl_inputs_poll.hpp
+
 )
 
 
@@ -103,6 +107,7 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/glfw_window.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/sdl_window.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/core.cpp
+
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/renderer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/buffers.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/vertex_array.cpp
@@ -111,6 +116,7 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/texture.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/camera2d.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/camera3d.cpp
+
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/glfw_gl_context.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/sdl_gl_context.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_renderer.cpp
@@ -120,6 +126,11 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_shader.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_frame_buffer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/gl_texture.cpp
+
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/inputs_handler.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/glfw_inputs_poll.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/sdl_inputs_poll.cpp
+
 )
 
 
@@ -145,17 +156,21 @@ target_link_libraries(
 set(
     TRIMANA_APP_INCLUDE_DIRS
         ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/app/camera
 )
 
 set(
     TRIMANA_APP_HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint/application.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/app/camera/main_camera.hpp
 )
 
 set(
     TRIMANA_APP_SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint/application.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint/main.cpp
+
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/app/camera/main_camera.cpp
 )
 
 add_executable(TrimanaEngine ${TRIMANA_CORE_HEADERS} ${TRIMANA_APP_HEADERS} ${TRIMANA_APP_SOURCES})

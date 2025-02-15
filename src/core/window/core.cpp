@@ -236,4 +236,9 @@ namespace TE::Core
 		return s_Context;
 	}
 
+	BASE_APIS Core::GetBaseAPI()
+	{
+		return s_BaseAPI->API();
+	}
+
 }

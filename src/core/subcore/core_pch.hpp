@@ -65,6 +65,9 @@
 #include "window_events.hpp"
 #include "keyboard_events.hpp"
 #include "mouse_events.hpp"
+#include "inputs_handler.hpp"
+#include "glfw_inputs_poll.hpp"
+#include "sdl_inputs_poll.hpp"
 
 // window
 #include "base_window.hpp"

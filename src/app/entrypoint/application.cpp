@@ -10,6 +10,7 @@ namespace TE::App
 
 		//NOTE: Always init the renderer after creating the main window
 		TE::Core::Core::InitRenderer();
+		m_Texture = TE::Core::CreateTexture2D("res/textures/sasuke.jpg");
 	}
 
 	Application::~Application()
@@ -27,7 +28,9 @@ namespace TE::App
 			TE::Core::Renderer::Clear();
 			TE::Core::Renderer::ClearColor({ 0.243f, 0.243f, 0.243f, 1.0f });
 
-
+			TE::Core::BatchRenderer2D::Begin(m_Camera);
+			TE::Core::BatchRenderer2D::DrawQuad({ 0.0f, 0.0f, 0.0f }, { 100.0f, 100.0f }, { 1.0f, 0.0f, 0.0f, 1.0f });
+			TE::Core::BatchRenderer2D::End();
 
 
 

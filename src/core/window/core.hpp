@@ -26,5 +26,7 @@ namespace TE::Core
 			static Window CreateWindow(const std::string& title);
 			static void DestroyWindow(Window window);
 			static std::shared_ptr<Context> GetContext();
+
+			static BASE_APIS GetBaseAPI();
 	};
 }

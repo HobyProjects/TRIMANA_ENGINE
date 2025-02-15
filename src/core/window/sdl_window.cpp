@@ -241,8 +241,16 @@ namespace TE::Core
 			}
 			case SDL_EVENT_KEY_DOWN:
 			{
+				auto targetWindow = SDL3_InputsPolling::TargetWindow();
+
 				if( s_Event.key.down )
 				{
+					if( targetWindow != nullptr )
+					{
+						if( (SDL_Window*) targetWindow != s_Window )
+							TE_ASSERT(false, "Input handler associate with wrong window.");
+						SDL3_InputsPolling::SetKeyState(s_Event.key.scancode, KEY_PRESSED);
+					}
 					EventKeyboardKeyPress keyPress(static_cast<KEY>( s_Event.key.key ));
 					s_CallbackFunc(s_Properties.Handle, keyPress);
 					break;
@@ -250,6 +258,12 @@ namespace TE::Core
 
 				if( s_Event.key.repeat )
 				{
+					if( targetWindow != nullptr )
+					{
+						if( (SDL_Window*) targetWindow != s_Window )
+							TE_ASSERT(false, "Input handler associate with wrong window.");
+						SDL3_InputsPolling::SetKeyState(s_Event.key.scancode, KEY_REPEAT);
+					}
 					EventKeyboardKeyRepeate keyRepeate(static_cast<KEY>( s_Event.key.key ));
 					s_CallbackFunc(s_Properties.Handle, keyRepeate);
 					break;
@@ -259,18 +273,39 @@ namespace TE::Core
 			}
 			case SDL_EVENT_KEY_UP:
 			{
+				auto targetWindow = SDL3_InputsPolling::TargetWindow();
+				if( targetWindow != nullptr )
+				{
+					if( (SDL_Window*) targetWindow != s_Window )
+						TE_ASSERT(false, "Input handler associate with wrong window.");
+					SDL3_InputsPolling::SetKeyState(s_Event.key.scancode, KEY_RELEASED);
+				}
 				EventKeyboardKeyRelease keyRelease(static_cast<KEY>( s_Event.key.key ));
 				s_CallbackFunc(s_Properties.Handle, keyRelease);
 				break;
 			}
 			case SDL_EVENT_MOUSE_BUTTON_DOWN:
 			{
+				auto targetWindow = SDL3_InputsPolling::TargetWindow();
+				if( targetWindow != nullptr )
+				{
+					if( (SDL_Window*) targetWindow != s_Window )
+						TE_ASSERT(false, "Input handler associate with wrong window.");
+					SDL3_InputsPolling::SetMouseButtonState(s_Event.button.button, MOUSE_BUTTON_PRESSED);
+				}
 				EventMouseButtonDown mouseButtonPress(static_cast<MOUSE_BUTTON>( s_Event.button.button ));
 				s_CallbackFunc(s_Properties.Handle, mouseButtonPress);
 				break;
 			}
 			case SDL_EVENT_MOUSE_BUTTON_UP:
 			{
+				auto targetWindow = SDL3_InputsPolling::TargetWindow();
+				if( targetWindow != nullptr )
+				{
+					if( (SDL_Window*) targetWindow != s_Window )
+						TE_ASSERT(false, "Input handler associate with wrong window.");
+					SDL3_InputsPolling::SetMouseButtonState(s_Event.button.button, MOUSE_BUTTON_RELEASED);
+				}
 				EventMouseButtonUp mouseButtonRelease(static_cast<MOUSE_BUTTON>( s_Event.button.button ));
 				s_CallbackFunc(s_Properties.Handle, mouseButtonRelease);
 				break;

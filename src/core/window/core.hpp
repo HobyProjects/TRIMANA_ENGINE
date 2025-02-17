@@ -5,9 +5,6 @@
 
 namespace TE::Core
 {
-	using Window = IWindow*;
-	using Context = IContext;
-
 	class Core
 	{
 		private:
@@ -23,9 +20,9 @@ namespace TE::Core
 			static void InitRenderer();
 			static void QuitRenderer();
 
-			static Window CreateWindow(const std::string& title);
-			static void DestroyWindow(Window window);
-			static std::shared_ptr<Context> GetContext();
+			static IWindow* CreateWindow(const std::string& title);
+			static void DestroyWindow(IWindow* window);
+			static std::shared_ptr<IContext> GetContext();
 
 			static BASE_APIS GetBaseAPI();
 	};

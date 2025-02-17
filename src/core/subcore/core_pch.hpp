@@ -37,6 +37,7 @@
 #include "asserts.hpp"
 #include "keycodes.hpp"
 #include "log.hpp"
+#include "delta_time.hpp"
 
 //renderer
 #include "renderer.hpp"

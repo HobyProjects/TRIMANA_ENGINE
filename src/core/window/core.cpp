@@ -182,11 +182,11 @@ namespace TE::Core
 		Renderer::Quit();
 	}
 
-	Window Core::CreateWindow(const std::string& title)
+	IWindow* Core::CreateWindow(const std::string& title)
 	{
 		TE_ASSERT(s_CoreInitialized, "Initialize the core before calling this method. Use TE::Core::Core::Init() method to initalize the core");
 
-		Window window = nullptr;
+		IWindow* window = nullptr;
 
 		switch( GetPlatformBaseAPI() )
 		{
@@ -218,7 +218,7 @@ namespace TE::Core
 		return window;
 	}
 
-	void Core::DestroyWindow(Window window)
+	void Core::DestroyWindow(IWindow* window)
 	{
 		TE_ASSERT(s_CoreInitialized, "Initialize the core before calling this method. Use TE::Core::Core::Init() method to initalize the core");
 		TE_ASSERT(window, "This window is not valid, Unable to destroy it.");
@@ -230,7 +230,7 @@ namespace TE::Core
 		window = nullptr;
 	}
 
-	std::shared_ptr<Context> Core::GetContext()
+	std::shared_ptr<IContext> Core::GetContext()
 	{
 		TE_ASSERT(s_CoreInitialized, "Initialize the core before calling this method. Use TE::Core::Core::Init() method to initalize the core");
 		return s_Context;

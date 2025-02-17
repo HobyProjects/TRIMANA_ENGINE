@@ -63,6 +63,7 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/log.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/base.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/keycodes.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/subcore/delta_time.hpp
 
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/base_window.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/window/glfw_window.hpp
@@ -162,15 +163,18 @@ set(
 set(
     TRIMANA_APP_HEADERS
         ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint/application.hpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/app/camera/main_camera.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint/application_layer.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint/application_layers_stack.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/app/camera/primary_camera.hpp
 )
 
 set(
     TRIMANA_APP_SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint/application.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint/application_layers_stack.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint/main.cpp
 
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/app/camera/main_camera.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/app/camera/primary_camera.cpp
 )
 
 add_executable(TrimanaEngine ${TRIMANA_CORE_HEADERS} ${TRIMANA_APP_HEADERS} ${TRIMANA_APP_SOURCES})

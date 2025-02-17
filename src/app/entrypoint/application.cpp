@@ -2,39 +2,55 @@
 
 namespace TE::App
 {
+	static Application* s_ApplicationInstance = nullptr;
+
 	Application::Application()
 	{
+		s_ApplicationInstance = this;
 		TE::Core::Core::Init();
-		m_window = TE::Core::Core::CreateWindow("Trimana Engine");
-		m_window->SetEventsCallbackFunc(EVENT_CALLBACK(OnEvent));
-
-		//NOTE: Always init the renderer after creating the main window
-		TE::Core::Core::InitRenderer();
-		m_Texture = TE::Core::CreateTexture2D("res/textures/sasuke.jpg");
+		m_Window = TE::Core::Core::CreateWindow("Trimana Engine");
+		m_Window->SetEventsCallbackFunc(EVENT_CALLBACK(OnEvent));
+		TE::Core::Core::InitRenderer(); //NOTE: Always init the renderer after creating the main window
 	}
 
 	Application::~Application()
 	{
-		TE::Core::Core::DestroyWindow(m_window);
+		TE::Core::Core::DestroyWindow(m_Window);
 		TE::Core::Core::QuitRenderer();
 		TE::Core::Core::Quit();
 	}
 
 	void Application::Run() const
 	{
-		while( m_window->IsActive() )
+		while( m_Window->IsActive() )
 		{
-			m_window->PollEvents();
+			m_Window->PollEvents();
 			TE::Core::Renderer::Clear();
 			TE::Core::Renderer::ClearColor({ 0.243f, 0.243f, 0.243f, 1.0f });
 
-			TE::Core::BatchRenderer2D::Begin(m_Camera);
-			TE::Core::BatchRenderer2D::DrawQuad({ 0.0f, 0.0f, 0.0f }, { 100.0f, 100.0f }, { 1.0f, 0.0f, 0.0f, 1.0f });
-			TE::Core::BatchRenderer2D::End();
+			if( m_Window->Properties().WindowState != TE::Core::WINDOW_MINIMIZED )
+			{
+				float currentTime{ 0.0f };
+				static float lastFrameTime{ 0.0f };
+
+				if( TE::Core::Core::GetBaseAPI() & TE::Core::API_GLFW )
+					currentTime = (float) glfwGetTime();
+
+				if( TE::Core::Core::GetBaseAPI() & TE::Core::API_SDL )
+					currentTime = (float) SDL_GetTicks();
+
+				TE::Core::DeltaTime deltaTime = currentTime - lastFrameTime;
+				lastFrameTime = currentTime;
+
+				for( auto& layers : *m_LayerStack )
+				{
+					layers->OnUpdate(deltaTime);
+				}
+			}
 
 
 
-			m_window->SwapBuffers();
+			m_Window->SwapBuffers();
 		}
 	}
 
@@ -43,19 +59,49 @@ namespace TE::App
 		TE::Core::EventsHandler handler(handle, e);
 		handler.Dispatch<TE::Core::WindowHandle, TE::Core::EventWindowClose>(EVENT_CALLBACK(OnWindowClose));
 		handler.Dispatch<TE::Core::WindowHandle, TE::Core::EventWindowResize>(EVENT_CALLBACK(OnWindowResize));
+
+		for( std::vector<std::shared_ptr<ApplicationLayers>>::reverse_iterator it = m_LayerStack->rbegin(); it != m_LayerStack->rend(); ++it )
+		{
+			if( handler.IsHandled() )
+				break;
+
+			( *it )->OnEvent(e);
+		}
+	}
+
+	void Application::PushLayer(const std::shared_ptr<ApplicationLayers>& applicationLayer)
+	{
+		applicationLayer->OnAttach();
+		m_LayerStack->PushLayer(applicationLayer);
+	}
+
+	void Application::PushOverlay(const std::shared_ptr<ApplicationLayers>& applicationLayer)
+	{
+		applicationLayer->OnAttach();
+		m_LayerStack->PushOverlay(applicationLayer);
+	}
+
+	TE::Core::Native Application::GetNativeWindow()
+	{
+		return s_ApplicationInstance->m_Window->Window();
+	}
+
+	Application* Application::GetApplicationInstance()
+	{
+		return s_ApplicationInstance;
 	}
 
 	bool Application::OnWindowClose(TE::Core::WindowHandle handle, TE::Core::EventWindowClose& e)
 	{
-		if( handle == m_window->GetWindowHandle() )
-			m_window->Properties().IsActive = false;
+		if( handle == m_Window->GetWindowHandle() )
+			m_Window->Properties().IsActive = false;
 
 		return true;
 	}
 
 	bool Application::OnWindowResize(TE::Core::WindowHandle handle, TE::Core::EventWindowResize& e)
 	{
-		if( !m_window->Properties().WindowState & TE::Core::WINDOW_MINIMIZED )
+		if( !m_Window->Properties().WindowState & TE::Core::WINDOW_MINIMIZED )
 			TE::Core::Renderer::SetViewport(NULL, NULL, e.Width(), e.Height());
 
 		return false;

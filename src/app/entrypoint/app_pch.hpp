@@ -8,3 +8,4 @@
 
 
 //camera
+#include "primary_camera.hpp"

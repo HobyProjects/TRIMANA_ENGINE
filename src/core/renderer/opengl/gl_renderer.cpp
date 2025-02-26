@@ -32,9 +32,9 @@ namespace TE::Core
 		glClearColor(color.r, color.g, color.b, color.a);
 	}
 
-	void OpenGL_Renderer::SetViewport(int32_t x, int32_t y, int32_t width, int32_t height)
+	void OpenGL_Renderer::SetViewport(int32_t x, int32_t y, int32_t width, int32_t Height)
 	{
-		glViewport(x, y, width, height);
+		glViewport(x, y, width, Height);
 	}
 
 	void OpenGL_Renderer::Draw(uint32_t indicesCount)

@@ -41,7 +41,7 @@ namespace TE::Core
 		if( mode != nullptr )
 		{
 			s_Properties.Width = mode->w;
-			s_Properties.height = mode->h;
+			s_Properties.Height = mode->h;
 			s_Properties.FixedWidth = mode->w;
 			s_Properties.FixedHeight = mode->h;
 			s_Properties.MinWidth = 1024;
@@ -59,7 +59,7 @@ namespace TE::Core
 		{
 			TE_CORE_WARN("Failed to get display mode, using default values");
 			s_Properties.Width = 1024;
-			s_Properties.height = 720;
+			s_Properties.Height = 720;
 			s_Properties.FixedWidth = 0;
 			s_Properties.FixedHeight = 0;
 			s_Properties.MinWidth = 1024;
@@ -184,7 +184,7 @@ namespace TE::Core
 			{
 				EventWindowResize windowResizedEvent(s_Event.window.data1, s_Event.window.data2);
 				s_Properties.Width = s_Event.window.data1;
-				s_Properties.height = s_Event.window.data2;
+				s_Properties.Height = s_Event.window.data2;
 				s_CallbackFunc(s_Properties.Handle, windowResizedEvent);
 				break;
 			}

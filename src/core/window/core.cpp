@@ -65,7 +65,6 @@ namespace TE::Core
 	***********************************************/
 
 	static std::shared_ptr<IContext> s_Context{};
-	static std::unordered_map<WindowHandle, IWindow*> s_WindowPool{};
 
 	static WindowHandle GetUniqueHandle()
 	{
@@ -154,15 +153,6 @@ namespace TE::Core
 	{
 		TE_ASSERT(s_CoreInitialized, "Initialize the core before calling this method. Use TE::Core::Core::Init() method to initalize the core");
 
-		for( auto& [handle, window] : s_WindowPool )
-		{
-			if( window != nullptr || window->Properties().IsActive )
-				TE_CORE_WARN("Window with handle {0} is still active, destroying window...", handle);
-
-			delete window;
-			window = nullptr;
-		}
-
 		BatchRenderer2D::Quit();
 		Renderer::Quit();
 
@@ -182,22 +172,35 @@ namespace TE::Core
 		Renderer::Quit();
 	}
 
-	IWindow* Core::CreateWindow(const std::string& title)
+	float Core::GetSystemTicks()
+	{
+		if( GetBaseAPI() & API_GLFW )
+		{
+			return static_cast<float>( glfwGetTime() );
+		}
+
+		if( GetBaseAPI() & API_SDL )
+		{
+			return static_cast<float>(SDL_GetTicks());
+		}
+	}
+
+	std::shared_ptr<IWindow> Core::CreateWindow(const std::string& title)
 	{
 		TE_ASSERT(s_CoreInitialized, "Initialize the core before calling this method. Use TE::Core::Core::Init() method to initalize the core");
 
-		IWindow* window = nullptr;
+		std::shared_ptr<IWindow> window = nullptr;
 
 		switch( GetPlatformBaseAPI() )
 		{
 			case API_GLFW:
 			{
-				window = new GLFW3_Window(title, s_Context);
+				window = std::make_shared<GLFW3_Window>(title, s_Context);
 				break;
 			}
 			case API_SDL:
 			{
-				window = new SDL3_Window(title, s_Context);
+				window = std::make_shared<SDL3_Window>(title, s_Context);
 				break;
 			}
 			case API_WIN32:
@@ -214,20 +217,7 @@ namespace TE::Core
 		TE_ASSERT(window, "Unable to create the window");
 
 		window->Properties().Handle = GetUniqueHandle();
-		s_WindowPool [window->GetWindowHandle()] = window;
 		return window;
-	}
-
-	void Core::DestroyWindow(IWindow* window)
-	{
-		TE_ASSERT(s_CoreInitialized, "Initialize the core before calling this method. Use TE::Core::Core::Init() method to initalize the core");
-		TE_ASSERT(window, "This window is not valid, Unable to destroy it.");
-
-		WindowHandle handle = window->Properties().Handle;
-		s_WindowPool.erase(handle);
-
-		delete window;
-		window = nullptr;
 	}
 
 	std::shared_ptr<IContext> Core::GetContext()

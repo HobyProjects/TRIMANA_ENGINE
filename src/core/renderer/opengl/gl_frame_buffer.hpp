@@ -16,7 +16,7 @@ namespace TE::Core
 
             virtual void Bind() const override;
             virtual void Unbind() const override;
-            virtual void ResizeFrame(uint32_t width, uint32_t height) override;
+            virtual void ResizeFrame(uint32_t width, uint32_t Height) override;
             virtual FrameBufferID GetFrameBufferID() const override;
             virtual FrameBufferAttachmentID GetColorAttachment() const override;
             virtual FrameBufferSpecification& GetFrameSpecification() override;

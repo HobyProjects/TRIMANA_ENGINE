@@ -178,7 +178,7 @@ set(
 )
 
 add_executable(TrimanaEngine ${TRIMANA_CORE_HEADERS} ${TRIMANA_APP_HEADERS} ${TRIMANA_APP_SOURCES})
-target_precompile_headers(TrimanaEngineCore PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint/app_pch.hpp)
+target_precompile_headers(TrimanaEngine PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint/app_pch.hpp)
 target_include_directories(TrimanaEngine PUBLIC ${TRIMANA_CORE_INCLUDE_DIRS} ${TRIMANA_APP_INCLUDE_DIRS})
 target_link_libraries(TrimanaEngine PUBLIC TrimanaEngineCore)
 

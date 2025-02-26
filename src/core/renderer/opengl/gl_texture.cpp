@@ -2,10 +2,10 @@
 
 namespace TE::Core
 {
-	GL_Texture::GL_Texture(uint32_t width, uint32_t height)
+	GL_Texture::GL_Texture(uint32_t width, uint32_t Height)
 	{
 		m_Specification.Width					= width;
-		m_Specification.Height					= height;
+		m_Specification.Height					= Height;
 		m_Specification.NumberOfChannels		= GL_RGBA;
 		m_Specification.InternalDataFormat		= GL_RGBA8;
 		m_Specification.TextureDataFormat		= GL_RGBA;

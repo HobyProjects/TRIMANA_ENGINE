@@ -19,9 +19,9 @@ namespace TE::Core
 
 			static void InitRenderer();
 			static void QuitRenderer();
+			static float GetSystemTicks();
 
-			static IWindow* CreateWindow(const std::string& title);
-			static void DestroyWindow(IWindow* window);
+			static std::shared_ptr<IWindow> CreateWindow(const std::string& title);
 			static std::shared_ptr<IContext> GetContext();
 
 			static BASE_APIS GetBaseAPI();

@@ -118,13 +118,13 @@ namespace TE::Core
 		};
 	}
 
-	void Renderer::SetViewport(int32_t x, int32_t y, int32_t width, int32_t height)
+	void Renderer::SetViewport(int32_t x, int32_t y, int32_t width, int32_t Height)
 	{
 		switch( s_API )
 		{
 			case RENDERER_API_OPENGL:
 			{
-				OpenGL_Renderer::SetViewport(x, y, width, height);
+				OpenGL_Renderer::SetViewport(x, y, width, Height);
 				break;
 			}
 			case RENDERER_API_VULKAN:

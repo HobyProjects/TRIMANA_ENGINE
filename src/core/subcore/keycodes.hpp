@@ -1,6 +1,7 @@
 #pragma once
 
-#include "memory"
+#include <memory>
+#include "base.hpp"
 
 namespace TE::Core
 {
@@ -146,21 +147,21 @@ namespace TE::Core
 
 	enum KEY_STATE : int32_t
 	{
-		KEY_PRESSED 	= 1,
-		KEY_RELEASED 	= 0,
-		KEY_REPEAT 		= 2
+		KEY_PRESSED 	= TE_BIT(1),
+		KEY_RELEASED 	= TE_BIT(0),
+		KEY_REPEAT 		= TE_BIT(2)
 	};
 
 	enum MOUSE_BUTTON : int32_t
 	{
-		MOUSE_BUTTON_LEFT 	= 0,
-		MOUSE_BUTTON_RIGHT 	= 1,
-		MOUSE_BUTTON_MIDDLE	= 2
+		MOUSE_BUTTON_LEFT 	= TE_BIT(0),
+		MOUSE_BUTTON_RIGHT 	= TE_BIT(1),
+		MOUSE_BUTTON_MIDDLE	= TE_BIT(2)
 	};
 
 	enum MOUSE_BUTTON_STATE : int32_t
 	{
-		MOUSE_BUTTON_PRESSED 	= 1,
-		MOUSE_BUTTON_RELEASED 	= 0
+		MOUSE_BUTTON_PRESSED 	= TE_BIT(1),
+		MOUSE_BUTTON_RELEASED 	= TE_BIT(0)
 	};
 }

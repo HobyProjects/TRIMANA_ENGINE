@@ -30,7 +30,7 @@ namespace TE::Core
 			static void ChangeAPI(RENDERING_API api);
 			static void Clear();
 			static void ClearColor(const glm::vec4& color);
-			static void SetViewport(int32_t x, int32_t y, int32_t width, int32_t height);
+			static void SetViewport(int32_t x, int32_t y, int32_t width, int32_t Height);
 			static void Draw(uint32_t indicesCount);
 	};
 

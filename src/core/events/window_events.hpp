@@ -17,7 +17,7 @@ namespace TE::Core
 	class EventWindowResize : public Events
 	{
 		public:
-			EventWindowResize(uint32_t width, uint32_t height) : m_Width(width), m_Height(height) {}
+			EventWindowResize(uint32_t width, uint32_t Height) : m_Width(width), m_Height(Height) {}
 			virtual ~EventWindowResize() = default;
 
 			EVENT_CLASS_CATEGORY(EVENT_CATEGORY_WINDOW);
@@ -71,7 +71,7 @@ namespace TE::Core
 	class EventWindowPixelSizeChange : public Events
 	{
 		public:
-			EventWindowPixelSizeChange(int32_t width, int32_t height) : m_Width(width), m_Height(height) {}
+			EventWindowPixelSizeChange(int32_t width, int32_t Height) : m_Width(width), m_Height(Height) {}
 			virtual ~EventWindowPixelSizeChange() = default;
 
 			EVENT_CLASS_CATEGORY(EVENT_CATEGORY_WINDOW);

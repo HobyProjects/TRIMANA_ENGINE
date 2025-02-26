@@ -29,6 +29,6 @@ namespace TE::Core
 	};
 
 	using Texture2D = ITexture;
-	std::shared_ptr<Texture2D> CreateTexture2D(uint32_t width, uint32_t height);
+	std::shared_ptr<Texture2D> CreateTexture2D(uint32_t width, uint32_t Height);
 	std::shared_ptr<Texture2D> CreateTexture2D(const std::filesystem::path& textureFile, bool flip = true);
 }

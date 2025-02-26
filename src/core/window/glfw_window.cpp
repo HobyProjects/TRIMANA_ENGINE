@@ -41,9 +41,9 @@ namespace TE::Core
 		if( mode != nullptr )
 		{
 			s_Properties.Width = mode->width;
-			s_Properties.height = mode->height;
+			s_Properties.Height = mode->Height;
 			s_Properties.FixedWidth = mode->width;
-			s_Properties.FixedHeight = mode->height;
+			s_Properties.FixedHeight = mode->Height;
 			s_Properties.MinWidth = 1024;
 			s_Properties.MinHeight = 720;
 			s_Properties.ColorBits.RedBit = mode->redBits;
@@ -59,7 +59,7 @@ namespace TE::Core
 		{
 			TE_CORE_WARN("Failed to get video mode, using default values");
 			s_Properties.Width = 1280;
-			s_Properties.height = 720;
+			s_Properties.Height = 720;
 			s_Properties.FixedWidth = 0;
 			s_Properties.FixedHeight = 0;
 			s_Properties.MinWidth = 1024;
@@ -98,7 +98,7 @@ namespace TE::Core
 		glfwWindowHint(GLFW_DEPTH_BITS, s_Properties.ColorBits.DepthBit);
 		glfwWindowHint(GLFW_STENCIL_BITS, s_Properties.ColorBits.DepthStencilBit);
 
-		s_Window = glfwCreateWindow(s_Properties.Width, s_Properties.height, s_Properties.Title.c_str(), nullptr, nullptr);
+		s_Window = glfwCreateWindow(s_Properties.Width, s_Properties.Height, s_Properties.Title.c_str(), nullptr, nullptr);
 		if( s_Window != nullptr )
 		{
 			TE_CORE_INFO("GLFW window created successfully");
@@ -161,11 +161,11 @@ namespace TE::Core
 			s_CallbackFunc(s_Properties.Handle, windowCloseEvent);
 		});
 
-		glfwSetWindowSizeCallback(s_Window, [](GLFWwindow* window, int width, int height)
+		glfwSetWindowSizeCallback(s_Window, [](GLFWwindow* window, int width, int Height)
 		{
-			EventWindowResize windowResizeEvent(width, height);
+			EventWindowResize windowResizeEvent(width, Height);
 			s_Properties.Width = width;
-			s_Properties.height = height;
+			s_Properties.Height = Height;
 			s_CallbackFunc(s_Properties.Handle, windowResizeEvent);
 		});
 
@@ -214,11 +214,11 @@ namespace TE::Core
 			s_CallbackFunc(s_Properties.Handle, windowMoveEvent);
 		});
 
-		glfwSetFramebufferSizeCallback(s_Window, [](GLFWwindow* window, int width, int height)
+		glfwSetFramebufferSizeCallback(s_Window, [](GLFWwindow* window, int width, int Height)
 		{
-			EventWindowPixelSizeChange windowPixelSizeEvent(width, height);
+			EventWindowPixelSizeChange windowPixelSizeEvent(width, Height);
 			s_Properties.PixelWidth = width;
-			s_Properties.PixelHeight = height;
+			s_Properties.PixelHeight = Height;
 			s_CallbackFunc(s_Properties.Handle, windowPixelSizeEvent);
 		});
 

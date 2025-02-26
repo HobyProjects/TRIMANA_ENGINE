@@ -31,7 +31,7 @@ namespace TE::Core
 	{
 		std::string Title{ "" };                                     
 		uint32_t Width{ 0 };                                         
-		uint32_t height{ 0 };                                        
+		uint32_t Height{ 0 };                                        
 		WindowColorBit ColorBits;
 		uint32_t RefreshRate{ 60 };                                  
 		uint32_t FixedWidth{ 0 };                                    

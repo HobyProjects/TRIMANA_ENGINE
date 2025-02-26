@@ -25,10 +25,10 @@ namespace TE::Core
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 
-	void GL_FrameBuffer::ResizeFrame(uint32_t width, uint32_t height)
+	void GL_FrameBuffer::ResizeFrame(uint32_t width, uint32_t Height)
 	{
 		m_Specification.Width = width;
-		m_Specification.Height = height;
+		m_Specification.Height = Height;
 
 		CreateFrame();
 	}

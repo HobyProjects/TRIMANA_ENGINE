@@ -8,7 +8,7 @@ namespace TE::Core
 	class GL_Texture final : public ITexture
 	{
 		public:
-			GL_Texture(uint32_t width, uint32_t height);
+			GL_Texture(uint32_t width, uint32_t Height);
 			GL_Texture(const std::filesystem::path& textureFile, bool Flip = true);
 			virtual ~GL_Texture();
 

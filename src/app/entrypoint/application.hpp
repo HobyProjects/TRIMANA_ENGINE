@@ -25,7 +25,7 @@ namespace TE::App
 			bool OnWindowResize(TE::Core::WindowHandle handle, TE::Core::EventWindowResize& e);
 
 		private:
-			TE::Core::IWindow* m_Window{ nullptr };
+			std::shared_ptr<TE::Core::IWindow> m_Window{ nullptr };
 			std::shared_ptr<ApplicationLayerStack> m_LayerStack{ nullptr };
 	};
 }

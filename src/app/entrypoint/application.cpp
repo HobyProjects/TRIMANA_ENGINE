@@ -15,7 +15,6 @@ namespace TE::App
 
 	Application::~Application()
 	{
-		TE::Core::Core::DestroyWindow(m_Window);
 		TE::Core::Core::QuitRenderer();
 		TE::Core::Core::Quit();
 	}
@@ -32,12 +31,7 @@ namespace TE::App
 			{
 				float currentTime{ 0.0f };
 				static float lastFrameTime{ 0.0f };
-
-				if( TE::Core::Core::GetBaseAPI() & TE::Core::API_GLFW )
-					currentTime = (float) glfwGetTime();
-
-				if( TE::Core::Core::GetBaseAPI() & TE::Core::API_SDL )
-					currentTime = (float) SDL_GetTicks();
+				currentTime = TE::Core::Core::GetSystemTicks();
 
 				TE::Core::DeltaTime deltaTime = currentTime - lastFrameTime;
 				lastFrameTime = currentTime;

@@ -19,7 +19,7 @@ namespace TE::Core
 
 			virtual void Bind() const = 0;
 			virtual void Unbind() const = 0;
-			virtual void ResizeFrame(uint32_t width, uint32_t height) = 0;
+			virtual void ResizeFrame(uint32_t width, uint32_t Height) = 0;
 			virtual uint32_t GetFrameBufferID() const = 0;
 			virtual uint32_t GetColorAttachment() const = 0;
 			virtual FrameBufferSpecification& GetFrameSpecification() = 0;

@@ -21,6 +21,5 @@ namespace TE::Core
 			virtual const std::shared_ptr<IndexBuffer>& GetIdexBuffer() const = 0;
 	};
 
-	using VertexArray = IVertexArray;
-	std::shared_ptr<VertexArray> CreateVertexArray();
+	std::shared_ptr<IVertexArray> CreateVertexArray();
 }

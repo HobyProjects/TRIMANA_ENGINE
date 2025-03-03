@@ -39,11 +39,11 @@ namespace TE::Core
 		{
 			glEnableVertexAttribArray(layout_index);
 			glVertexAttribPointer(
-				layout_index,
+				layout_index++,
 				static_cast<GLint>( element.Components ),
 				GL_FLOAT,
 				element.Normalized ? GL_TRUE : GL_FALSE,
-				layout.GetStride(),
+				element.Stride,
 				(const void*) element.Offset
 			);
 		}

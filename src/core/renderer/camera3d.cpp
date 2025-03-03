@@ -9,49 +9,49 @@ namespace TE::Core
 		m_PerspectiveFov	= fov;
 		m_PerspectiveNear	= nearClip;
 		m_PerspectiveFar	= farClip;
-		RefreshWVP();
+		RefreshProjectionMatrix();
 	}
 
 	void Camera3D::SetAspectRatio(float ratio)
 	{
 		m_AspectRatio = ratio;
-		RefreshWVP();
+		RefreshProjectionMatrix();
 	}
 
 	void Camera3D::SetRotation(float rotation)
 	{
 		m_Rotation = rotation;
-		RefreshWVP();
+		RefreshProjectionMatrix();
 	}
 
 	void Camera3D::SetPosition(const glm::vec3& position)
 	{
 		m_Position = position;
-		RefreshWVP();
+		RefreshProjectionMatrix();
 	}
 
 	void Camera3D::SetFOV(float fov)
 	{
 		m_PerspectiveFov = fov;
-		RefreshWVP();
+		RefreshProjectionMatrix();
 	}
 
 	void Camera3D::SetNearClip(float nearClip)
 	{
 		m_PerspectiveNear = nearClip;
-		RefreshWVP();
+		RefreshProjectionMatrix();
 	}
 
 	void Camera3D::SetFarClip(float farClip)
 	{
 		m_PerspectiveFar = farClip;
-		RefreshWVP();
+		RefreshProjectionMatrix();
 	}
 
 	void Camera3D::SetOriantaion(const glm::vec3& oriantaion)
 	{
 		m_Oriantaion = oriantaion;
-		RefreshWVP();
+		RefreshProjectionMatrix();
 	}
 
 	void Camera3D::SetPerspective(float fov, float nearClip, float farClip)
@@ -59,10 +59,10 @@ namespace TE::Core
 		m_PerspectiveFov	= fov;
 		m_PerspectiveNear	= nearClip;
 		m_PerspectiveFar	= farClip;
-		RefreshWVP();
+		RefreshProjectionMatrix();
 	}
 
-	void Camera3D::RefreshWVP()
+	void Camera3D::RefreshProjectionMatrix()
 	{
 		m_View = glm::mat4(1.0f);
 		m_Projection = glm::mat4(1.0f);

@@ -4,19 +4,18 @@
 
 namespace TE::Core
 {
-	class Camera3D : public ICamera
+	class Camera3D
 	{
 		public:
 			Camera3D() = default;
 			Camera3D(float aspectRatio, float fov = 45.0f, float nearClip = 0.01f, float farClip = 1000.0f);
 			~Camera3D() = default;
 
-			virtual CAMERA_TYPE GetType() const override { return CAMERA_TYPE::CAMERA_3D; }
-			virtual glm::mat4 GetProjection() const override { return m_Projection; }
-			virtual glm::mat4 GetView() const override { return m_View; }
-			virtual glm::mat4 GetViewProjectionMatrix() const override { return m_MVP; }
-			virtual glm::vec3 GetPosition() const override { return m_Position; }
-			virtual float GetRotation() const override { return m_Rotation; }
+			glm::mat4 GetProjection() const { return m_Projection; }
+			glm::mat4 GetView() const { return m_View; }
+			glm::mat4 GetViewProjectionMatrix() const { return m_MVP; }
+			glm::vec3 GetPosition() const { return m_Position; }
+			float GetRotation() const { return m_Rotation; }
 
 			void SetAspectRatio(float ratio);
 			void SetRotation(float rotation);
@@ -35,7 +34,7 @@ namespace TE::Core
 			glm::vec3 GetOriantaionUp() const { return m_OriantaionUp; }
 
 		private:
-			void RefreshWVP();
+			void RefreshProjectionMatrix();
 
 		private:
 			float m_AspectRatio{ 1.0f };

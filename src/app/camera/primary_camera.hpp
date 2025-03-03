@@ -25,14 +25,14 @@ namespace TE::App
 
 		public:
 			float AspectRatio{ 0.0f };
-			float ZoomLevel{ 1.0f };
+			float ZoomLevel{ 0.25f };
 			glm::vec3 CameraPosition{ 0.0f, 0.0f, 0.0f };
 
 			float Camera2DRotationAngle{ 0.0f };
-			float Camera2DTranslationSpeed{ 100.0f };
+			float Camera2DTranslationSpeed{ 50.0f };
 			float Camera2DRotationSpeed{ 10.0f };
 
-			float Camera3DTranslationSpeed{ 0.01f };
+			float Camera3DTranslationSpeed{ 100.0f };
 			float Camera3DSensitivity{ 1.0f };
 
 			float MousePosX{ 0.0f };

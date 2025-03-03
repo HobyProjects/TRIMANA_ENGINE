@@ -16,7 +16,17 @@ namespace TE::Core
 
 		std::shared_ptr<IWindow> windowPtr = s_Window.lock();
 		int state = glfwGetKey((GLFWwindow*) windowPtr->Window(), static_cast<int>( key ));
-		return static_cast<KEY_STATE>( state );
+		
+		if( state == GLFW_PRESS )
+			return KEY_STATE::KEY_PRESSED;
+
+		if( state == GLFW_RELEASE )
+			return KEY_STATE::KEY_RELEASED;
+
+		if( state == GLFW_REPEAT )
+			return KEY_STATE::KEY_REPEAT;
+
+		return KEY_STATE::KEY_NONE;
 	}
 
 	MOUSE_BUTTON_STATE GLFW3_InputPolling::GetMouseState(MOUSE_BUTTON button)
@@ -24,9 +34,27 @@ namespace TE::Core
 		if( s_Window.expired() )
 			TE_ASSERT(false, "Input handling from destroyed window.");
 
+		int mouseButton = 0;
+
+		if( button & MOUSE_BUTTON::MOUSE_BUTTON_LEFT )
+			mouseButton = GLFW_MOUSE_BUTTON_LEFT;
+		else if( button & MOUSE_BUTTON::MOUSE_BUTTON_RIGHT )
+			mouseButton = GLFW_MOUSE_BUTTON_RIGHT;
+		else if( button & MOUSE_BUTTON::MOUSE_BUTTON_MIDDLE )
+			mouseButton = GLFW_MOUSE_BUTTON_MIDDLE;
+		else
+			TE_ASSERT(false, "Unknown mouse button.");
+
 		std::shared_ptr<IWindow> windowPtr = s_Window.lock();
-		int state = glfwGetMouseButton((GLFWwindow*) windowPtr->Window(), static_cast<int>( button ));
-		return static_cast<MOUSE_BUTTON_STATE>( state );
+		int state = glfwGetMouseButton((GLFWwindow*) windowPtr->Window(), mouseButton);
+
+		if( state == GLFW_PRESS )
+			return MOUSE_BUTTON_STATE::MOUSE_BUTTON_PRESSED;
+
+		if( state == GLFW_RELEASE )
+			return MOUSE_BUTTON_STATE::MOUSE_BUTTON_RELEASED;
+
+		return MOUSE_BUTTON_STATE::MOUSE_BUTTON_NONE;
 	}
 
 	glm::vec2 GLFW3_InputPolling::GetCurrentMousePosition()

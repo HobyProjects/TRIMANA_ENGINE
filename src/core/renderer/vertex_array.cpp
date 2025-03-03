@@ -2,7 +2,7 @@
 
 namespace TE::Core
 {
-	std::shared_ptr<VertexArray> CreateVertexArray()
+	std::shared_ptr<IVertexArray> CreateVertexArray()
 	{
 		switch( Renderer::API() )
 		{

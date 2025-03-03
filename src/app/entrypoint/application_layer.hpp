@@ -16,7 +16,7 @@ namespace TE::App
             virtual void OnAttach() {}
             virtual void OnDetach() {}
             virtual void OnUpdate(TE::Core::DeltaTime dt) {}
-            virtual void OnEvent(TE::Core::Events& event) {}
+            virtual void OnEvent(TE::Core::WindowHandle handle, TE::Core::Events& event) {}
             virtual void OnImGuiRenders() {}
 
         private:

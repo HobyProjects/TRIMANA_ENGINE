@@ -148,6 +148,8 @@ namespace TE::Core
 
 		if( mouseButton == SDL_BUTTON_MASK(SDL_BUTTON_MIDDLE) )
 			return MOUSE_BUTTON_MIDDLE;
+
+		return MOUSE_BUTTON_UNKNOWN;
 	}
 
 	void SDL3_InputsPolling::SetTargetWindow(const std::shared_ptr<IWindow>& window)
@@ -192,6 +194,7 @@ namespace TE::Core
 			return s_Window.lock()->Window();
 
 		TE_ASSERT(false, "The input handler targeting window is already destroyed.");
+		return nullptr;
 	}
 
 }

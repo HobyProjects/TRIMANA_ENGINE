@@ -4,6 +4,8 @@
 #include "application_layer.hpp"
 #include "application_layers_stack.hpp"
 
+#include "sandbox.hpp"
+
 namespace TE::App
 {
 	class Application
@@ -12,7 +14,7 @@ namespace TE::App
 			Application();
 			~Application();
 
-			void Run() const;
+			void Run();
 			void OnEvent(TE::Core::WindowHandle handle, TE::Core::Events& e);
 			void PushLayer(const std::shared_ptr<ApplicationLayers>& applicationLayer);
 			void PushOverlay(const std::shared_ptr<ApplicationLayers>& applicationLayer);
@@ -27,5 +29,10 @@ namespace TE::App
 		private:
 			std::shared_ptr<TE::Core::IWindow> m_Window{ nullptr };
 			std::shared_ptr<ApplicationLayerStack> m_LayerStack{ nullptr };
+			std::shared_ptr<PrimaryCameraController> m_Camera{ nullptr };
+
+			//Application Layers
+			std::shared_ptr<SandBoxLayer> m_SandboxLayer{ nullptr };
+			float m_LastFrameTime{ 0.0f };
 	};
 }

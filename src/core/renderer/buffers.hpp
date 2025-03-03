@@ -35,14 +35,15 @@ namespace TE::Core
 
 	struct BufferElements
 	{
-		int32_t Offset{ 0 };
-		std::string Name{};
-		BUFFER_STRIDE Stride{};
+		int32_t Offset{ -1 };
+		std::string Name{"Unknown"};
+		uint32_t Stride{0};
 		bool Normalized{ false };
-		BUFFER_COMPONENTS Components{};
+		uint32_t Components{0};
 
 		BufferElements() = default;
-		BufferElements(const std::string& name, BUFFER_COMPONENTS components, BUFFER_STRIDE stride, bool normalized) : Name(name), Components(components), Stride(stride), Normalized(normalized) {}
+		BufferElements(const std::string& name, uint32_t components, uint32_t stride, bool normalized, int32_t offset)
+			: Name(name), Components(components), Stride(stride), Normalized(normalized), Offset(offset) {}
 		~BufferElements() = default;
 	};
 
@@ -50,29 +51,15 @@ namespace TE::Core
 	{
 		public:
 			BufferLayout() = default;
-			BufferLayout(std::initializer_list<BufferElements> elements) : m_Elements(elements) { CalStride(); }
+			BufferLayout(std::initializer_list<BufferElements> elements) : m_Elements(elements) {}
 			~BufferLayout() = default;
-
-			uint32_t GetStride() const { return m_Stride; }
 
 			const std::vector<BufferElements>& GetElements() const { return m_Elements; }
 			std::vector<BufferElements>::iterator begin() { return m_Elements.begin(); }
 			std::vector<BufferElements>::iterator end() { return m_Elements.end(); }
 
 		private:
-			void CalStride()
-			{
-				m_Stride = 0;
-				for( auto& element : m_Elements )
-				{
-					element.Offset = m_Stride;
-					m_Stride += element.Stride;
-				}
-			}
-
-		private:
 			std::vector<BufferElements> m_Elements{};
-			uint32_t m_Stride{ 0 };
 	};
 
 	class IVertexBuffer

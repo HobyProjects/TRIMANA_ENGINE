@@ -33,7 +33,6 @@ namespace TE::Core
 			virtual void SetUniform(const std::string& uniformName, const glm::mat4& value) = 0;
 	};
 
-	using ShaderProgram = IShader;
-	std::shared_ptr<ShaderProgram> CreateShaderProgram(const std::string& name, const std::filesystem::path& vtxShader, const std::filesystem::path& fragShader);
-	std::shared_ptr<ShaderProgram> CreateShaderProgram(const std::string& name, const std::string& vtxShader, const std::string& fragShader);
+	std::shared_ptr<IShader> CreateShaderProgram(const std::string& name, const std::filesystem::path& vtxShader, const std::filesystem::path& fragShader);
+	std::shared_ptr<IShader> CreateShaderProgram(const std::string& name, const std::string& vtxShader, const std::string& fragShader);
 }

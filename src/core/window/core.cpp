@@ -183,6 +183,8 @@ namespace TE::Core
 		{
 			return static_cast<float>(SDL_GetTicks());
 		}
+
+		return 0.0f;
 	}
 
 	std::shared_ptr<IWindow> Core::CreateWindow(const std::string& title)

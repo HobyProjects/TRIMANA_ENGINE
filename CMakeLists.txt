@@ -165,6 +165,7 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint/application.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint/application_layer.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint/application_layers_stack.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint/sandbox.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/app/camera/primary_camera.hpp
 )
 
@@ -172,6 +173,7 @@ set(
     TRIMANA_APP_SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint/application.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint/application_layers_stack.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint/sandbox.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint/main.cpp
 
         ${CMAKE_CURRENT_SOURCE_DIR}/src/app/camera/primary_camera.cpp

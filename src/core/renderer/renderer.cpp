@@ -194,7 +194,7 @@ namespace TE::Core
 
 	struct BatchData
 	{
-		std::shared_ptr<VertexArray> QuadVAO{ nullptr };
+		std::shared_ptr<IVertexArray> QuadVAO{ nullptr };
 		std::shared_ptr<VertexBuffer> QuadVBO{ nullptr };
 		std::shared_ptr<IndexBuffer> QuadIBO{ nullptr };
 
@@ -205,14 +205,14 @@ namespace TE::Core
 		Vertex* QuadBuffer{ nullptr };
 		Vertex* QuadBufferPtr{ nullptr };
 
-		std::shared_ptr<ShaderProgram> BatchShader{ nullptr };
+		std::shared_ptr<IShader> BatchShader{ nullptr };
 		std::array<std::shared_ptr<Texture2D>, MAX_TEXTURE_SLOTS> TextureSlots;
 		uint32_t TextureSlotIndex{ 1 };
 
 		BatchRenderer2D::RendererStatus Status;
 		glm::vec4 QuadVertexPositions [MAX_QUAD_VERTEX_COUNT];
 
-	}; static BatchData s_BatchData;
+	}; static BatchData s_BatchData{};
 
 	void BatchRenderer2D::Restart()
 	{
@@ -225,16 +225,19 @@ namespace TE::Core
 	void BatchRenderer2D::Init()
 	{
 		s_BatchData.QuadBuffer = new Vertex[MAX_QUADS];
+		for( int i = 0; i < MAX_QUADS; i++ )
+			s_BatchData.QuadBuffer [i] = {};
+
 		s_BatchData.QuadVBO = CreateVertexBuffer(MAX_VERTICES * sizeof(Vertex));
 		s_BatchData.QuadVBO->SetLayout({
-			{"a_Position", BUFFER_COMPO_XYZ, BUFFER_STRIDE_F3, false},
-			{"a_Color", BUFFER_COMPO_RGBA, BUFFER_STRIDE_F4, false},
-			{"a_Texcoord", BUFFER_COMPO_UV, BUFFER_STRIDE_F2, false},
-			{"a_TexIndex", BUFFER_COMPO_X, BUFFER_STRIDE_F1, false},
-			{"a_TilingFactor", BUFFER_COMPO_X, BUFFER_STRIDE_F1, false}
+			{"a_Position", BUFFER_COMPO_XYZ, sizeof(Vertex), false, offsetof(Vertex, Position)},
+			{"a_Color", BUFFER_COMPO_RGBA, sizeof(Vertex), false, offsetof(Vertex, Color)},
+			{"a_Texcoord", BUFFER_COMPO_UV, sizeof(Vertex), false, offsetof(Vertex, TexCoords)},
+			{"a_TexIndex", BUFFER_COMPO_X, sizeof(Vertex), false, offsetof(Vertex, TexIndex)},
+			{"a_TilingFactor", BUFFER_COMPO_X, sizeof(Vertex), false, offsetof(Vertex, TilingFactor)}
 		});
 
-		uint32_t indices [MAX_INDICES];
+		uint32_t* indices = new  uint32_t[MAX_INDICES];
 		uint32_t offset = 0;
 		for( uint32_t i = 0; i < MAX_INDICES; i += 6 )
 		{
@@ -273,7 +276,8 @@ namespace TE::Core
 
 	void BatchRenderer2D::Quit()
 	{
-		delete[] s_BatchData.QuadBuffer;
+		if( s_BatchData.QuadBuffer != nullptr )
+			delete[] (Vertex*)s_BatchData.QuadBuffer;
 	}
 
 	void BatchRenderer2D::Begin(const Camera2D& camera)
@@ -281,7 +285,7 @@ namespace TE::Core
 		s_BatchData.BatchShader->Bind();
 		s_BatchData.BatchShader->SetUniform("u_MVP", camera.GetViewProjectionMatrix());
 		uint32_t texture_location = s_BatchData.BatchShader->GetUniformLocation("u_Textures");
-		int32_t samplers [MAX_TEXTURE_SLOTS];
+		int32_t samplers [MAX_TEXTURE_SLOTS]{0};
 
 		for( uint32_t i = 0; i < MAX_TEXTURE_SLOTS; i++ )
 			samplers [i] = i;
@@ -299,7 +303,7 @@ namespace TE::Core
 		s_BatchData.BatchShader->SetUniform("u_MVP", MVP);
 
 		uint32_t texture_location = s_BatchData.BatchShader->GetUniformLocation("u_Textures");
-		int32_t samplers [MAX_TEXTURE_SLOTS];
+		int32_t samplers [MAX_TEXTURE_SLOTS]{0};
 		for( uint32_t i = 0; i < MAX_TEXTURE_SLOTS; i++ )
 			samplers [i] = i;
 

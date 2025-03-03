@@ -26,6 +26,8 @@ namespace TE::Core
 		{
 			return SDL3_InputsPolling::GetKeyState(key);
 		}
+
+		return KEY_NONE;
 	}
 
 	MOUSE_BUTTON_STATE InputHandler::GetMouseState(MOUSE_BUTTON button)
@@ -39,6 +41,8 @@ namespace TE::Core
 		{
 			return SDL3_InputsPolling::GetMouseState(button);
 		}
+
+		return MOUSE_BUTTON_NONE;
 	}
 
 	glm::vec2 InputHandler::GetCurrentMousePosition()
@@ -52,5 +56,7 @@ namespace TE::Core
 		{
 			return SDL3_InputsPolling::GetCurrentMousePosition();
 		}
+
+		return { 0.0f, 0.0f };
 	}
 }

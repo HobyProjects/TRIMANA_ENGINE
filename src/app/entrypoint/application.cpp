@@ -11,6 +11,10 @@ namespace TE::App
 		m_Window = TE::Core::Core::CreateWindow("Trimana Engine");
 		m_Window->SetEventsCallbackFunc(EVENT_CALLBACK(OnEvent));
 		TE::Core::Core::InitRenderer(); //NOTE: Always init the renderer after creating the main window
+
+		m_LayerStack = std::make_shared<ApplicationLayerStack>();
+		m_SandboxLayer = std::make_shared<SandBoxLayer>(m_Window);
+		PushLayer(m_SandboxLayer);
 	}
 
 	Application::~Application()
@@ -19,7 +23,7 @@ namespace TE::App
 		TE::Core::Core::Quit();
 	}
 
-	void Application::Run() const
+	void Application::Run()
 	{
 		while( m_Window->IsActive() )
 		{
@@ -30,11 +34,10 @@ namespace TE::App
 			if( m_Window->Properties().WindowState != TE::Core::WINDOW_MINIMIZED )
 			{
 				float currentTime{ 0.0f };
-				static float lastFrameTime{ 0.0f };
 				currentTime = TE::Core::Core::GetSystemTicks();
 
-				TE::Core::DeltaTime deltaTime = currentTime - lastFrameTime;
-				lastFrameTime = currentTime;
+				TE::Core::DeltaTime deltaTime = currentTime - m_LastFrameTime;
+				m_LastFrameTime = currentTime;
 
 				for( auto& layers : *m_LayerStack )
 				{
@@ -59,7 +62,7 @@ namespace TE::App
 			if( handler.IsHandled() )
 				break;
 
-			( *it )->OnEvent(e);
+			( *it )->OnEvent(handle, e);
 		}
 	}
 
@@ -95,7 +98,7 @@ namespace TE::App
 
 	bool Application::OnWindowResize(TE::Core::WindowHandle handle, TE::Core::EventWindowResize& e)
 	{
-		if( !m_Window->Properties().WindowState & TE::Core::WINDOW_MINIMIZED )
+		if( !(m_Window->Properties().WindowState & TE::Core::WINDOW_MINIMIZED) )
 			TE::Core::Renderer::SetViewport(NULL, NULL, e.Width(), e.Height());
 
 		return false;

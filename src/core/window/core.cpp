@@ -153,7 +153,7 @@ namespace TE::Core
 	{
 		TE_ASSERT(s_CoreInitialized, "Initialize the core before calling this method. Use TE::Core::Core::Init() method to initalize the core");
 
-		BatchRenderer2D::Quit();
+		BatchRenderer::Quit();
 		Renderer::Quit();
 
 		s_BaseAPI->Quit();
@@ -163,12 +163,12 @@ namespace TE::Core
 	void Core::InitRenderer()
 	{
 		Renderer::Init();
-		BatchRenderer2D::Init();
+		BatchRenderer::Init();
 	}
 
 	void Core::QuitRenderer()
 	{
-		BatchRenderer2D::Quit();
+		BatchRenderer::Quit();
 		Renderer::Quit();
 	}
 

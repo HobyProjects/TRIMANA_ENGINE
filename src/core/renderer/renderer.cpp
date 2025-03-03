@@ -209,12 +209,12 @@ namespace TE::Core
 		std::array<std::shared_ptr<Texture2D>, MAX_TEXTURE_SLOTS> TextureSlots;
 		uint32_t TextureSlotIndex{ 1 };
 
-		BatchRenderer2D::RendererStatus Status;
+		BatchRenderer::RendererStatus Status;
 		glm::vec4 QuadVertexPositions [MAX_QUAD_VERTEX_COUNT];
 
 	}; static BatchData s_BatchData{};
 
-	void BatchRenderer2D::Restart()
+	void BatchRenderer::Restart()
 	{
 		End();
 		s_BatchData.QuadBufferPtr = s_BatchData.QuadBuffer;
@@ -222,7 +222,7 @@ namespace TE::Core
 		s_BatchData.TextureSlotIndex = 1;
 	}
 
-	void BatchRenderer2D::Init()
+	void BatchRenderer::Init()
 	{
 		s_BatchData.QuadBuffer = new Vertex[MAX_QUADS];
 		for( int i = 0; i < MAX_QUADS; i++ )
@@ -274,13 +274,13 @@ namespace TE::Core
 													  std::filesystem::path("res/shaders/Batch2DFragment.glsl"));
 	}
 
-	void BatchRenderer2D::Quit()
+	void BatchRenderer::Quit()
 	{
 		if( s_BatchData.QuadBuffer != nullptr )
 			delete[] (Vertex*)s_BatchData.QuadBuffer;
 	}
 
-	void BatchRenderer2D::Begin(const Camera2D& camera)
+	void BatchRenderer::Begin(const Camera2D& camera)
 	{
 		s_BatchData.BatchShader->Bind();
 		s_BatchData.BatchShader->SetUniform("u_MVP", camera.GetViewProjectionMatrix());
@@ -296,7 +296,7 @@ namespace TE::Core
 		s_BatchData.QuadBufferPtr = s_BatchData.QuadBuffer;
 	}
 
-	void BatchRenderer2D::Begin(const Camera2D& camera, const glm::mat4& transform)
+	void BatchRenderer::Begin(const Camera2D& camera, const glm::mat4& transform)
 	{
 		glm::mat4 MVP = camera.GetProjection() * glm::inverse(transform);
 		s_BatchData.BatchShader->Bind();
@@ -313,7 +313,7 @@ namespace TE::Core
 		s_BatchData.QuadBufferPtr = s_BatchData.QuadBuffer;
 	}
 
-	void BatchRenderer2D::End()
+	void BatchRenderer::End()
 	{
 		GLsizeiptr size = (uint8_t*) s_BatchData.QuadBufferPtr - (uint8_t*) s_BatchData.QuadBuffer;
 		s_BatchData.QuadVBO->Bind();
@@ -321,7 +321,7 @@ namespace TE::Core
 		Flush();
 	}
 
-	void BatchRenderer2D::Flush()
+	void BatchRenderer::Flush()
 	{
 		for( uint32_t i = 0; i < s_BatchData.TextureSlotIndex; i++ )
 		{
@@ -336,32 +336,32 @@ namespace TE::Core
 		s_BatchData.TextureSlotIndex = 1;
 	}
 
-	void BatchRenderer2D::DrawQuad(const glm::vec3& pos, const glm::vec2& size, const glm::vec4& color)
+	void BatchRenderer::DrawQuad(const glm::vec3& pos, const glm::vec2& size, const glm::vec4& color)
 	{
 		DrawQuad(pos, size, color, s_BatchData.PlainTexture, 0.0f, 1.0f);
 	}
 
-	void BatchRenderer2D::DrawQuad(const glm::vec3& pos, const glm::vec2& size, const glm::vec4& color, float rotation)
+	void BatchRenderer::DrawQuad(const glm::vec3& pos, const glm::vec2& size, const glm::vec4& color, float rotation)
 	{
 		DrawQuad(pos, size, color, s_BatchData.PlainTexture, rotation, 1.0f);
 	}
 
-	void BatchRenderer2D::DrawQuad(const glm::vec3& pos, const glm::vec2& size, const std::shared_ptr<Texture2D> texture)
+	void BatchRenderer::DrawQuad(const glm::vec3& pos, const glm::vec2& size, const std::shared_ptr<Texture2D> texture)
 	{
 		DrawQuad(pos, size, DEFAULT_COLOR, texture, 0.0f, 1.0f);
 	}
 
-	void BatchRenderer2D::DrawQuad(const glm::vec3& pos, const glm::vec2& size, const std::shared_ptr<Texture2D> texture, float rotation)
+	void BatchRenderer::DrawQuad(const glm::vec3& pos, const glm::vec2& size, const std::shared_ptr<Texture2D> texture, float rotation)
 	{
 		DrawQuad(pos, size, DEFAULT_COLOR, texture, rotation, 1.0f);
 	}
 
-	void BatchRenderer2D::DrawQuad(const glm::vec3& pos, const glm::vec2& size, const glm::vec4& color, const std::shared_ptr<Texture2D>& texture, float rotation)
+	void BatchRenderer::DrawQuad(const glm::vec3& pos, const glm::vec2& size, const glm::vec4& color, const std::shared_ptr<Texture2D>& texture, float rotation)
 	{
 		DrawQuad(pos, size, color, texture, rotation, 1.0f);
 	}
 
-	void BatchRenderer2D::DrawQuad(const glm::vec3& pos, const glm::vec2& size, const glm::vec4& color, const std::shared_ptr<Texture2D> texture, float rotation, float tillingFactor)
+	void BatchRenderer::DrawQuad(const glm::vec3& pos, const glm::vec2& size, const glm::vec4& color, const std::shared_ptr<Texture2D> texture, float rotation, float tillingFactor)
 	{
 		if( s_BatchData.IndexCount >= MAX_INDICES || s_BatchData.TextureSlotIndex >= MAX_TEXTURE_SLOTS )
 		{
@@ -403,12 +403,12 @@ namespace TE::Core
 		s_BatchData.Status.QuadCount++;
 	}
 
-	const BatchRenderer2D::RendererStatus& BatchRenderer2D::Status()
+	const BatchRenderer::RendererStatus& BatchRenderer::Status()
 	{
 		return s_BatchData.Status;
 	}
 
-	void BatchRenderer2D::StatusReset()
+	void BatchRenderer::StatusReset()
 	{
 		s_BatchData.Status.DrawCount = s_BatchData.Status.QuadCount = 0;
 	}

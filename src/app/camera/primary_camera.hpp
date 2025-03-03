@@ -18,31 +18,9 @@ namespace TE::App
 			void OnEvents(TE::Core::WindowHandle handle, TE::Core::Events& e);
 			void ChangeCamera(TE::Core::CAMERA_TYPE type);
 
-		private:
-			bool OnMouseWheelScrollEvent(TE::Core::WindowHandle handle, TE::Core::EventMouseWheelScroll& e);
-			bool OnWindowResizeEvent(TE::Core::WindowHandle handle, TE::Core::EventWindowResize& e);
-			bool OnMouseCursorPosChange(TE::Core::WindowHandle handle, TE::Core::EventMouseCursorMove& e);
-
 		public:
-			float AspectRatio{ 0.0f };
-			float ZoomLevel{ 0.25f };
-			glm::vec3 CameraPosition{ 0.0f, 0.0f, 0.0f };
-
-			float Camera2DRotationAngle{ 0.0f };
-			float Camera2DTranslationSpeed{ 50.0f };
-			float Camera2DRotationSpeed{ 10.0f };
-
-			float Camera3DTranslationSpeed{ 100.0f };
-			float Camera3DSensitivity{ 1.0f };
-
-			float MousePosX{ 0.0f };
-			float MousePosY{ 0.0f };
-
-			TE::Core::Camera2D Main2DCamera;
-			TE::Core::Camera3D Main3DCamera;
-			TE::Core::CameraBounds CameraBounds;
-
-			TE::Core::CAMERA_TYPE CurrentCameraType;
-			bool IsRotationEnabled{ false };
+			TE::Core::Camera2D Orthographic_Camera;
+			TE::Core::Camera3D Perspective_Camera;
+			TE::Core::CAMERA_TYPE CurrentCameraType{ TE::Core::CAMERA_TYPE::CAMERA_2D };
 	};
 }

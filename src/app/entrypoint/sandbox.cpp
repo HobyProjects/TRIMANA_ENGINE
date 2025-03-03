@@ -30,9 +30,9 @@ namespace TE::App
 	{
 		m_CameraController->OnUpdate(dt);
 
-		TE::Core::BatchRenderer2D::Begin(m_CameraController->Main2DCamera);
-		TE::Core::BatchRenderer2D::DrawQuad({ 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f }, m_Texture);
-		TE::Core::BatchRenderer2D::End();
+		TE::Core::BatchRenderer::Begin(m_CameraController->Orthographic_Camera);
+		TE::Core::BatchRenderer::DrawQuad({ 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f }, m_Texture);
+		TE::Core::BatchRenderer::End();
 	}
 
 	void SandBoxLayer::OnEvent(TE::Core::WindowHandle handle, TE::Core::Events& event)

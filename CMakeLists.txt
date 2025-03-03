@@ -23,6 +23,7 @@ find_package(SDL3 REQUIRED)
 find_package(glad REQUIRED)
 find_package(glm REQUIRED)
 find_package(stb REQUIRED)
+find_package(assimp REQUIRED)
 
 
 ###############################################################################
@@ -147,6 +148,7 @@ target_link_libraries(
             glad::glad 
             glm::glm-header-only
             stb::stb
+            assimp::assimp
 )
 
 

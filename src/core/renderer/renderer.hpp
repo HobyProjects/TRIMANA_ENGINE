@@ -4,6 +4,7 @@
 
 #include "base.hpp"
 #include "camera2d.hpp"
+#include "camera3d.hpp"
 #include "texture.hpp"
 
 namespace TE::Core
@@ -34,11 +35,11 @@ namespace TE::Core
 			static void Draw(uint32_t indicesCount);
 	};
 
-	class BatchRenderer2D
+	class BatchRenderer
 	{
 		private:
-			BatchRenderer2D() = default;
-			~BatchRenderer2D() = default;
+			BatchRenderer() = default;
+			~BatchRenderer() = default;
 			
 			static void Restart();
 

@@ -49,6 +49,8 @@
 #include "camera.hpp"
 #include "camera2d.hpp"
 #include "camera3d.hpp"
+#include "mesh.hpp"
+#include "model.hpp"
 
 //renderer - opengl
 #include "opengl/glfw_gl_context.hpp"

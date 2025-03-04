@@ -80,6 +80,8 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/camera.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/camera2d.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/camera3d.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/model.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/mesh.hpp
 
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/glfw_gl_context.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/sdl_gl_context.hpp
@@ -118,6 +120,8 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/texture.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/camera2d.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/camera3d.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/model.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/mesh.cpp
 
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/glfw_gl_context.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/renderer/opengl/sdl_gl_context.cpp

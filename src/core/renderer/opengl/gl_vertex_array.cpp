@@ -27,7 +27,7 @@ namespace TE::Core
 		return m_VertexArrayID;
 	}
 
-	void GL_VertexArray::EmplaceVtxBuffer(const std::shared_ptr<VertexBuffer>& vtxBuffer)
+	void GL_VertexArray::EmplaceVtxBuffer(const std::shared_ptr<IVertexBuffer>& vtxBuffer)
 	{
 		glBindVertexArray(m_VertexArrayID);
 		vtxBuffer->Bind();
@@ -51,19 +51,19 @@ namespace TE::Core
 		m_VtxBuffers.emplace_back(vtxBuffer);
 	}
 
-	void GL_VertexArray::EmplaceIdxBuffer(const std::shared_ptr<IndexBuffer>& idxBuffer)
+	void GL_VertexArray::EmplaceIdxBuffer(const std::shared_ptr<IindexBuffer>& idxBuffer)
 	{
 		glBindVertexArray(m_VertexArrayID);
 		idxBuffer->Bind();
 		m_IdexBuffer = idxBuffer;
 	}
 
-	const std::vector<std::shared_ptr<VertexBuffer>>& GL_VertexArray::GetVtxBuffers() const
+	const std::vector<std::shared_ptr<IVertexBuffer>>& GL_VertexArray::GetVtxBuffers() const
 	{
 		return m_VtxBuffers;
 	}
 
-	const std::shared_ptr<IndexBuffer>& GL_VertexArray::GetIdexBuffer() const
+	const std::shared_ptr<IindexBuffer>& GL_VertexArray::GetIdexBuffer() const
 	{
 		return m_IdexBuffer;
 	}

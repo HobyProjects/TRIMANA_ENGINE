@@ -11,7 +11,7 @@ namespace TE::Core
 	GL_VertexBuffer::GL_VertexBuffer(float* data, uint32_t dataSize)
 	{
 		glCreateBuffers(1, &m_VertexBufferID);
-		glNamedBufferData(m_VertexBufferID, dataSize, data, GL_STATIC_DRAW);
+		glNamedBufferData(m_VertexBufferID, sizeof(data[0]) * dataSize, data, GL_STATIC_DRAW);
 	}
 
 	GL_VertexBuffer::~GL_VertexBuffer()

@@ -2,7 +2,7 @@
 
 namespace TE::Core
 {
-	std::shared_ptr<VertexBuffer> CreateVertexBuffer(uint32_t alloca_size)
+	std::shared_ptr<IVertexBuffer> CreateVertexBuffer(uint32_t alloca_size)
 	{
 		switch( Renderer::API() )
 		{
@@ -13,7 +13,7 @@ namespace TE::Core
 		};
 	}
 
-	std::shared_ptr<VertexBuffer> CreateVertexBuffer(float* data, uint32_t size)
+	std::shared_ptr<IVertexBuffer> CreateVertexBuffer(float* data, uint32_t size)
 	{
 		switch( Renderer::API() )
 		{
@@ -24,7 +24,7 @@ namespace TE::Core
 		};
 	}
 
-	std::shared_ptr<IndexBuffer> CreateIndexBuffer(uint32_t* data, uint32_t count)
+	std::shared_ptr<IindexBuffer> CreateIndexBuffer(uint32_t* data, uint32_t count)
 	{
 		switch( Renderer::API() )
 		{

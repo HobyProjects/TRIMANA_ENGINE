@@ -41,9 +41,9 @@ namespace TE::Core
 		if( mode != nullptr )
 		{
 			s_Properties.Width = mode->width;
-			s_Properties.Height = mode->Height;
+			s_Properties.Height = mode->height;
 			s_Properties.FixedWidth = mode->width;
-			s_Properties.FixedHeight = mode->Height;
+			s_Properties.FixedHeight = mode->height;
 			s_Properties.MinWidth = 1024;
 			s_Properties.MinHeight = 720;
 			s_Properties.ColorBits.RedBit = mode->redBits;

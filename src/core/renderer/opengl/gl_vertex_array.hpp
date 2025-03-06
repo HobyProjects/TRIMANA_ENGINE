@@ -14,14 +14,14 @@ namespace TE::Core
             virtual void Unbind() const override;
 
             virtual RendererID GetID() const override;
-            virtual void EmplaceVtxBuffer(const std::shared_ptr<VertexBuffer>& vtxBuffer) override;
-            virtual void EmplaceIdxBuffer(const std::shared_ptr<IndexBuffer>& idxBuffer) override;
-            virtual const std::vector<std::shared_ptr<VertexBuffer>>& GetVtxBuffers() const override;
-            virtual const std::shared_ptr<IndexBuffer>& GetIdexBuffer() const override;
+            virtual void EmplaceVtxBuffer(const std::shared_ptr<IVertexBuffer>& vtxBuffer) override;
+            virtual void EmplaceIdxBuffer(const std::shared_ptr<IindexBuffer>& idxBuffer) override;
+            virtual const std::vector<std::shared_ptr<IVertexBuffer>>& GetVtxBuffers() const override;
+            virtual const std::shared_ptr<IindexBuffer>& GetIdexBuffer() const override;
 
         private:
             RendererID m_VertexArrayID{ 0 };
-            std::vector<std::shared_ptr<VertexBuffer>> m_VtxBuffers{};
-            std::shared_ptr<IndexBuffer> m_IdexBuffer{};
+            std::vector<std::shared_ptr<IVertexBuffer>> m_VtxBuffers{};
+            std::shared_ptr<IindexBuffer> m_IdexBuffer{};
 	};
 }

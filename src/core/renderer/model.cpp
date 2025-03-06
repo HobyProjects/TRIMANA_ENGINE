@@ -17,8 +17,8 @@ namespace TE::Core
 
 	void Model::LoadMesh(aiMesh* mesh, const aiScene* scene)
 	{
-		std::vector<GLfloat> vertices;
-		std::vector<unsigned int> indices;
+		std::vector<float> vertices;
+		std::vector<uint32_t> indices;
 
 		for( size_t i = 0; i < mesh->mNumVertices; i++ )
 		{
@@ -31,6 +31,7 @@ namespace TE::Core
 			{
 				vertices.insert(vertices.end(), { 0.0f, 0.0f });
 			}
+
 			vertices.insert(vertices.end(), { -mesh->mNormals [i].x, -mesh->mNormals [i].y, -mesh->mNormals [i].z });
 		}
 
@@ -43,8 +44,17 @@ namespace TE::Core
 			}
 		}
 
-		std::shared_ptr<Mesh> newMesh = std::make_shared<Mesh>();
-		newMesh->Create(vertices.data(), sizeof(vertices[0]) * vertices.size(), indices.data(), indices.size());
+		std::shared_ptr<Mesh> newMesh = std::make_shared<Mesh>(
+			vertices.data(),
+			(uint32_t)vertices.size(),
+			indices.data(),
+			(uint32_t)indices.size(),
+			BufferLayout({
+				{ "a_Position", BUFFER_COMPO_XYZ, sizeof(VertexStructure), false, offsetof(VertexStructure, Position) },
+				{ "a_TexCoords", BUFFER_COMPO_UV, sizeof(VertexStructure), false, offsetof(VertexStructure, TexCoords) },
+				{ "a_Normal", BUFFER_COMPO_XYZ, sizeof(VertexStructure), false, offsetof(VertexStructure, Normal) }
+			}));
+
 		m_MeshList.emplace_back(newMesh);
 		m_MeshTexturesMapping [newMesh] = mesh->mMaterialIndex;
 	}
@@ -67,13 +77,18 @@ namespace TE::Core
 					int idx = std::string(path.data).rfind("\\");
 					std::string filename = std::string(path.data).substr(idx + 1);
 					std::string texPath = std::string("textures/") + filename;
-					m_TextureList [i] = CreateTexture2D(texPath);
-				}
-			}
 
-			if( !m_TextureList [i] )
-			{
-				m_TextureList [i] = CreateTexture2D(1, 1);
+					if(std::filesystem::exists(texPath) )
+					{
+						TE_CORE_INFO("Texture {0} found", texPath);
+						m_TextureList [i] = CreateTexture2D(texPath);
+					}
+					else
+					{
+						TE_CORE_ERROR("Texture {0} not found, Continuing with the default texture", texPath);
+						m_TextureList [i] = CreateTexture2D(10, 10);
+					}
+				}
 			}
 		}
 	}
@@ -82,16 +97,21 @@ namespace TE::Core
 	{
 		Assimp::Importer importer;
 		const aiScene* scene = importer.ReadFile(path.string(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenSmoothNormals | aiProcess_JoinIdenticalVertices);
+		
 		TE_ASSERT(scene, "Model {0} failed to load: {1}", path.string(), importer.GetErrorString());
+		if( !scene ) return false;
+
 		LoadNode(scene->mRootNode, scene);
 		LoadMaterials(scene);
+
+		return true;
 	}
 
 	void Model::Render()
 	{
 		for( size_t i = 0; i < m_MeshList.size(); i++ )
 		{
-			unsigned int materialIndex = m_MeshTexturesMapping[m_MeshList[i]];
+			uint32_t materialIndex = m_MeshTexturesMapping[m_MeshList[i]];
 
 			if( materialIndex < m_TextureList.size() && m_TextureList [materialIndex] )
 			{

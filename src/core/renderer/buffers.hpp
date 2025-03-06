@@ -77,11 +77,11 @@ namespace TE::Core
 			virtual const BufferLayout& GetLayout() const = 0;
 	};
 
-	class IIndexBuffer
+	class IindexBuffer
 	{
 		public:
-			IIndexBuffer() = default;
-			virtual ~IIndexBuffer() = default;
+			IindexBuffer() = default;
+			virtual ~IindexBuffer() = default;
 
 			virtual void Bind() const = 0;
 			virtual void Unbind() const = 0;
@@ -89,10 +89,7 @@ namespace TE::Core
 			virtual uint32_t GetCount() const = 0;
 	};
 
-	using VertexBuffer = IVertexBuffer;
-	using IndexBuffer = IIndexBuffer;
-
-	std::shared_ptr<VertexBuffer> CreateVertexBuffer(uint32_t alloca_size);
-	std::shared_ptr<VertexBuffer> CreateVertexBuffer(float* data, uint32_t size);
-	std::shared_ptr<IndexBuffer> CreateIndexBuffer(uint32_t* data, uint32_t count);
+	std::shared_ptr<IVertexBuffer> CreateVertexBuffer(uint32_t alloca_size);
+	std::shared_ptr<IVertexBuffer> CreateVertexBuffer(float* data, uint32_t size);
+	std::shared_ptr<IindexBuffer> CreateIndexBuffer(uint32_t* data, uint32_t count);
 }

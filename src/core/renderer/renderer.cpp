@@ -195,8 +195,8 @@ namespace TE::Core
 	struct BatchData
 	{
 		std::shared_ptr<IVertexArray> QuadVAO{ nullptr };
-		std::shared_ptr<VertexBuffer> QuadVBO{ nullptr };
-		std::shared_ptr<IndexBuffer> QuadIBO{ nullptr };
+		std::shared_ptr<IVertexBuffer> QuadVBO{ nullptr };
+		std::shared_ptr<IindexBuffer> QuadIBO{ nullptr };
 
 		std::shared_ptr<Texture2D> PlainTexture{ nullptr };
 		uint32_t PlainTextureSlot{ 0 };
@@ -269,15 +269,13 @@ namespace TE::Core
 		s_BatchData.QuadVertexPositions [2] = { 0.5f,  0.5f, 0.0f, 1.0f };
 		s_BatchData.QuadVertexPositions [3] = { -0.5f,  0.5f, 0.0f, 1.0f };
 
-		s_BatchData.BatchShader = CreateShaderProgram("BatchRenderer2D", 
-													  std::filesystem::path("res/shaders/Batch2DVertex.glsl"), 
-													  std::filesystem::path("res/shaders/Batch2DFragment.glsl"));
+		s_BatchData.BatchShader = CreateShaderProgram("BatchRenderer2D", "res/shaders/Batch2DVertex.glsl", "res/shaders/Batch2DFragment.glsl");
 	}
 
 	void BatchRenderer::Quit()
 	{
-		if( s_BatchData.QuadBuffer != nullptr )
-			delete[] (Vertex*)s_BatchData.QuadBuffer;
+		//[FIXME]: This is causing a crash
+		//delete[] s_BatchData.QuadBuffer;
 	}
 
 	void BatchRenderer::Begin(const Camera2D& camera)

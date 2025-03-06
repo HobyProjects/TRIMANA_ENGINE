@@ -24,7 +24,7 @@ namespace TE::Core
 			BufferLayout m_Layout;
 	};
 
-	class GL_IndexBuffer final : public IIndexBuffer
+	class GL_IndexBuffer final : public IindexBuffer
 	{
 		public:
 			GL_IndexBuffer() = default;

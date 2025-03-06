@@ -6,6 +6,7 @@
 
 #include "mesh.hpp"
 #include "texture.hpp"
+#include "shader.hpp"
 
 namespace TE::Core
 {

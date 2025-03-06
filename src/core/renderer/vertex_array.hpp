@@ -15,10 +15,10 @@ namespace TE::Core
 			virtual void Unbind() const = 0;
 
 			virtual RendererID GetID() const = 0;
-			virtual void EmplaceVtxBuffer(const std::shared_ptr<VertexBuffer>& vtxBuffer) = 0;
-			virtual void EmplaceIdxBuffer(const std::shared_ptr<IndexBuffer>& idxBuffer) = 0;
-			virtual const std::vector<std::shared_ptr<VertexBuffer>>& GetVtxBuffers() const = 0;
-			virtual const std::shared_ptr<IndexBuffer>& GetIdexBuffer() const = 0;
+			virtual void EmplaceVtxBuffer(const std::shared_ptr<IVertexBuffer>& vtxBuffer) = 0;
+			virtual void EmplaceIdxBuffer(const std::shared_ptr<IindexBuffer>& idxBuffer) = 0;
+			virtual const std::vector<std::shared_ptr<IVertexBuffer>>& GetVtxBuffers() const = 0;
+			virtual const std::shared_ptr<IindexBuffer>& GetIdexBuffer() const = 0;
 	};
 
 	std::shared_ptr<IVertexArray> CreateVertexArray();

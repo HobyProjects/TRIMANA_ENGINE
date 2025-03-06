@@ -4,13 +4,41 @@ namespace TE::App
 {
 	static std::weak_ptr<TE::Core::IWindow> s_Window;
 
+	// Vertices coordinates
+	float vertices[] =
+	{ //     COORDINATES     /        COLORS                /   TexCoord  //
+		-0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f, 1.0f,	0.0f, 0.0f,
+		-0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f, 1.0f,	5.0f, 0.0f,
+		 0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f, 1.0f,	0.0f, 0.0f,
+		 0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f, 1.0f,	5.0f, 0.0f,
+		 0.0f, 0.8f,  0.0f,     0.92f, 0.86f, 0.76f, 1.0f,	2.5f, 5.0f
+	};
+
+	// Indices for vertices order
+	uint32_t indices[] =
+	{
+		0, 1, 2,
+		0, 2, 3,
+		0, 1, 4,
+		1, 2, 4,
+		2, 3, 4,
+		3, 0, 4
+	};
+
+	struct MeshStruct
+	{
+		glm::vec3 position;
+		glm::vec4 color;
+		glm::vec2 texCoord;
+	};
+
 	SandBoxLayer::SandBoxLayer(const std::shared_ptr<TE::Core::IWindow>& window): ApplicationLayers("SandboxLayer")
 	{
 		s_Window = window;
 		if( !s_Window.expired() )
 		{
 			auto windowShrPtr = s_Window.lock();
-			m_CameraController = std::make_shared<PrimaryCameraController>(windowShrPtr, TE::Core::CAMERA_TYPE::CAMERA_2D, false);
+			m_CameraController = std::make_shared<PrimaryCameraController>(windowShrPtr, TE::Core::CAMERA_TYPE::CAMERA_3D, false);
 			return;
 		}
 
@@ -19,6 +47,27 @@ namespace TE::App
 
 	void SandBoxLayer::OnAttach()
 	{
+		m_ShaderProgram = TE::Core::CreateShaderProgram("3DModelShader", "res/shaders/Vertex3D.glsl", "res/shaders/Fragment3D.glsl");
+		m_Model = std::make_shared<TE::Core::Model>();
+		if(m_Model->Load("res/models/x-wing.obj"))
+			TE_INFO("Model loaded successfully");
+		else
+			TE_ERROR("Model loading failed");
+
+		m_VertexBuffer = TE::Core::CreateVertexBuffer(vertices, sizeof(vertices));
+		m_VertexBuffer->SetLayout(
+			{
+				{"a_Psition", TE::Core::BUFFER_COMPO_XYZ, sizeof(MeshStruct), false, offsetof(MeshStruct, position)},
+				{"a_Color", TE::Core::BUFFER_COMPO_RGBA, sizeof(MeshStruct), false, offsetof(MeshStruct, color)},
+				{"a_TexCoord", TE::Core::BUFFER_COMPO_UV, sizeof(MeshStruct), false, offsetof(MeshStruct, texCoord)}
+			}
+		);
+
+		m_IndexBuffer = TE::Core::CreateIndexBuffer(indices, sizeof(indices) / sizeof(uint32_t));
+		m_VertexArray = TE::Core::CreateVertexArray();
+		m_VertexArray->EmplaceVtxBuffer(m_VertexBuffer);
+		m_VertexArray->EmplaceIdxBuffer(m_IndexBuffer);
+
 		m_Texture = TE::Core::CreateTexture2D("res/textures/sasuke.jpg");
 	}
 
@@ -30,9 +79,20 @@ namespace TE::App
 	{
 		m_CameraController->OnUpdate(dt);
 
-		TE::Core::BatchRenderer::Begin(m_CameraController->Orthographic_Camera);
-		TE::Core::BatchRenderer::DrawQuad({ 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f }, m_Texture);
-		TE::Core::BatchRenderer::End();
+		m_ShaderProgram->Bind();
+		m_ShaderProgram->SetUniform("u_CameraMatrix", m_CameraController->Perspective_Camera.GetCameraMatrix());
+		//m_ShaderProgram->SetUniform("u_Color", glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+		//m_Model->Render();
+
+		m_Texture->Bind();
+
+		m_VertexArray->Bind();
+		TE::Core::Renderer::Draw((uint32_t)sizeof(indices) / sizeof(uint32_t));
+		m_VertexArray->Unbind();
+
+		m_Texture->Unbind();
+		m_ShaderProgram->Unbind();
+
 	}
 
 	void SandBoxLayer::OnEvent(TE::Core::WindowHandle handle, TE::Core::Events& event)

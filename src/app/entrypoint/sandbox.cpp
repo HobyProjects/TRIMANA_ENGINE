@@ -49,26 +49,10 @@ namespace TE::App
 	{
 		m_ShaderProgram = TE::Core::CreateShaderProgram("3DModelShader", "res/shaders/Vertex3D.glsl", "res/shaders/Fragment3D.glsl");
 		m_Model = std::make_shared<TE::Core::Model>();
-		if(m_Model->Load("res/models/x-wing.obj"))
+		if(m_Model->Load("res/models/78176/78176.obj"))
 			TE_INFO("Model loaded successfully");
 		else
 			TE_ERROR("Model loading failed");
-
-		m_VertexBuffer = TE::Core::CreateVertexBuffer(vertices, sizeof(vertices));
-		m_VertexBuffer->SetLayout(
-			{
-				{"a_Psition", TE::Core::BUFFER_COMPO_XYZ, sizeof(MeshStruct), false, offsetof(MeshStruct, position)},
-				{"a_Color", TE::Core::BUFFER_COMPO_RGBA, sizeof(MeshStruct), false, offsetof(MeshStruct, color)},
-				{"a_TexCoord", TE::Core::BUFFER_COMPO_UV, sizeof(MeshStruct), false, offsetof(MeshStruct, texCoord)}
-			}
-		);
-
-		m_IndexBuffer = TE::Core::CreateIndexBuffer(indices, sizeof(indices) / sizeof(uint32_t));
-		m_VertexArray = TE::Core::CreateVertexArray();
-		m_VertexArray->EmplaceVtxBuffer(m_VertexBuffer);
-		m_VertexArray->EmplaceIdxBuffer(m_IndexBuffer);
-
-		m_Texture = TE::Core::CreateTexture2D("res/textures/sasuke.jpg");
 	}
 
 	void SandBoxLayer::OnDetach()
@@ -81,16 +65,8 @@ namespace TE::App
 
 		m_ShaderProgram->Bind();
 		m_ShaderProgram->SetUniform("u_CameraMatrix", m_CameraController->Perspective_Camera.GetCameraMatrix());
-		//m_ShaderProgram->SetUniform("u_Color", glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
-		//m_Model->Render();
-
-		m_Texture->Bind();
-
-		m_VertexArray->Bind();
-		TE::Core::Renderer::Draw((uint32_t)sizeof(indices) / sizeof(uint32_t));
-		m_VertexArray->Unbind();
-
-		m_Texture->Unbind();
+		m_ShaderProgram->SetUniform("u_Color", glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+		m_Model->Render();
 		m_ShaderProgram->Unbind();
 
 	}

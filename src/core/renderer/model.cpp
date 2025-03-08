@@ -59,7 +59,7 @@ namespace TE::Core
 		m_MeshTexturesMapping [newMesh] = mesh->mMaterialIndex;
 	}
 
-	void Model::LoadMaterials(const aiScene* scene)
+	void Model::LoadMaterials(const aiScene* scene, const std::filesystem::path& modelPath)
 	{
 		m_TextureList.resize(scene->mNumMaterials);
 
@@ -74,20 +74,35 @@ namespace TE::Core
 				aiString path;
 				if( material->GetTexture(aiTextureType_DIFFUSE, 0, &path) == AI_SUCCESS )
 				{
-					int idx = std::string(path.data).rfind("\\");
-					std::string filename = std::string(path.data).substr(idx + 1);
-					std::string texPath = std::string("textures/") + filename;
+					std::filesystem::path modelFilePath(std::string(path.data));
+					std::string filename = modelFilePath.filename().string();
 
-					if(std::filesystem::exists(texPath) )
+					std::string enginePathA = modelPath.parent_path().string() + std::string("/textures/") + filename;
+					std::string enginePathB = modelPath.parent_path().string() + std::string("/") + filename;
+
+					TE_INFO("Texture path: {0}", enginePathB);
+					if( std::filesystem::exists(enginePathB))
 					{
-						TE_CORE_INFO("Texture {0} found", texPath);
-						m_TextureList [i] = CreateTexture2D(texPath);
+						TE_CORE_INFO("Texture {0} found", enginePathB);
+						m_TextureList [i] = CreateTexture2D(enginePathB);
 					}
 					else
 					{
-						TE_CORE_ERROR("Texture {0} not found, Continuing with the default texture", texPath);
-						m_TextureList [i] = CreateTexture2D(10, 10);
+						TE_CORE_WARN("Texture {0} not found, Trying alternative path...", enginePathA);
+
+						if( std::filesystem::exists(enginePathA) )
+						{
+							TE_CORE_INFO("Texture {0} found", enginePathA);
+							m_TextureList [i] = CreateTexture2D(enginePathA);
+
+						}
+						else
+						{
+							TE_CORE_WARN("Texture {0} not found, Continuing with the default texture", enginePathA);
+							m_TextureList [i] = CreateTexture2D(10, 10);
+						}
 					}
+	
 				}
 			}
 		}
@@ -102,7 +117,7 @@ namespace TE::Core
 		if( !scene ) return false;
 
 		LoadNode(scene->mRootNode, scene);
-		LoadMaterials(scene);
+		LoadMaterials(scene, path);
 
 		return true;
 	}

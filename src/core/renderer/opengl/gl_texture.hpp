@@ -23,5 +23,6 @@ namespace TE::Core
 			TextureSpecification m_Specification{};
 			TextureID m_TextureID{ 0 };
 			bool m_FromFile{ false };
+			bool m_IsUsingSOIL{ false };
 	};
 }

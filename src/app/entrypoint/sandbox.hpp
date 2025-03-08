@@ -24,10 +24,5 @@ namespace TE::App
 			std::shared_ptr<PrimaryCameraController> m_CameraController{ nullptr };
 			std::shared_ptr<TE::Core::IShader> m_ShaderProgram{ nullptr };
 			std::shared_ptr<TE::Core::Model> m_Model{ nullptr };
-
-			std::shared_ptr<TE::Core::IVertexArray> m_VertexArray{ nullptr };
-			std::shared_ptr<TE::Core::IVertexBuffer> m_VertexBuffer{ nullptr };
-			std::shared_ptr<TE::Core::IindexBuffer> m_IndexBuffer{ nullptr };
-			std::shared_ptr<TE::Core::ITexture> m_Texture{ nullptr };
 	};
 }

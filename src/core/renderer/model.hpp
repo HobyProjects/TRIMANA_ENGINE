@@ -24,7 +24,7 @@ namespace TE::Core
 		private:
 			void LoadNode(aiNode* node, const aiScene* scene);
 			void LoadMesh(aiMesh* mesh, const aiScene* scene);
-			void LoadMaterials(const aiScene* scene);
+			void LoadMaterials(const aiScene* scene, const std::filesystem::path& modelPath);
 
 		private:
 			std::vector<std::shared_ptr<Mesh>> m_MeshList;

@@ -53,11 +53,11 @@ namespace TE::Core
 			float m_AspectRatio{ 1.0f };
 			float m_PerspectiveFov{ 45.0f };
 			float m_PerspectiveNear{ 0.1f };
-			float m_PerspectiveFar{ 100.0f };
+			float m_PerspectiveFar{ 1000.0f };
 			float m_Rotation{ 0.0f };
 
-			float m_TranslationSpeed{ 0.1f };
-			float m_Sensitivity{ 2.0f };
+			float m_TranslationSpeed{ 1.0f };
+			float m_Sensitivity{ 1.5f };
 
 			float m_MouseX{ 0.0f };
 			float m_MouseY{ 0.0f };
@@ -72,7 +72,7 @@ namespace TE::Core
 			glm::mat4 m_View{ 1.0f };
 			glm::mat4 m_Projection{ 1.0f };
 			glm::mat4 m_CameraMatrix{ 1.0f };
-			glm::vec3 m_Position{ 0.0f, 0.0f, 3.0f };
+			glm::vec3 m_Position{ 0.0f, 0.0f, 10.0f };
 			glm::vec3 m_Oriantaion{ 0.0f, 0.0f, -1.0f };
 			glm::vec3 m_Up{ 0.0f, 1.0f, 0.0f };
 

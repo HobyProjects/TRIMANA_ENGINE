@@ -23,7 +23,7 @@
 #include <glad/glad.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/sinks/basic_file_sink.h>
-#include <stb/stb_image.h>
+#include <soil2/SOIL2.h>
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>

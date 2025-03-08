@@ -65,7 +65,6 @@ namespace TE::Core
 
 	void Camera3D::OnUpdate(DeltaTime deltaTime)
 	{
-		//m_TranslationSpeed = m_TranslationSpeed * deltaTime;
 
 		if( InputHandler::GetKeyState(KEY_W) & ( KEY_PRESSED | KEY_REPEAT ) )
 		{
@@ -103,6 +102,12 @@ namespace TE::Core
 			m_Position += m_TranslationSpeed * m_Up;
 			RefreshProjectionMatrix();
 		}
+
+		if( InputHandler::GetKeyState(KEY_LEFT_SHIFT) & ( KEY_PRESSED | KEY_REPEAT ) )
+			m_TranslationSpeed = 1.0f;
+		else
+			m_TranslationSpeed = 0.5f;
+
 	}
 
 	void Camera3D::OnEvents(WindowHandle handle, Events& e)
@@ -115,6 +120,10 @@ namespace TE::Core
 
 	bool Camera3D::OnMouseWheelScrollEvent(WindowHandle handle, EventMouseWheelScroll& e)
 	{
+		m_PerspectiveFov -= (float) e.OffsetY();
+		if( m_PerspectiveFov < 1.0f ) m_PerspectiveFov = 1.0f;
+		if( m_PerspectiveFov > 45.0f ) m_PerspectiveFov = 45.0f;
+
 		return false;
 	}
 
@@ -133,19 +142,22 @@ namespace TE::Core
 
 	bool Camera3D::OnMouseCursorPosChange(WindowHandle handle, EventMouseCursorMove& e)
 	{
-		float mouseX = e.GetX();
-		float mouseY = e.GetY();
+		if( InputHandler::GetMouseState(MOUSE_BUTTON_RIGHT) & ( KEY_PRESSED | KEY_REPEAT ) )
+		{
+			float mouseX = e.GetX();
+			float mouseY = e.GetY();
 
-		float rotX = m_Sensitivity * (float)( mouseY - ( m_ViewportHeight / 2 ) ) / m_ViewportHeight;
-		float rotY = m_Sensitivity * (float)( mouseX - ( m_ViewportWidth  / 2 ) ) / m_ViewportWidth;
+			float rotX = m_Sensitivity * (float) ( mouseY - ( m_ViewportHeight / 2 ) ) / m_ViewportHeight;
+			float rotY = m_Sensitivity * (float) ( mouseX - ( m_ViewportWidth / 2 ) ) / m_ViewportWidth;
 
-		glm::vec3 newOrientation = glm::rotate(m_Oriantaion, glm::radians(-rotX), glm::normalize(glm::cross(m_Oriantaion, m_Up)));
+			glm::vec3 newOrientation = glm::rotate(m_Oriantaion, glm::radians(-rotX), glm::normalize(glm::cross(m_Oriantaion, m_Up)));
 
-		if( abs(glm::angle(newOrientation, m_Up) - glm::radians(90.0f)) <= glm::radians(85.0f) )
-			m_Oriantaion = newOrientation;
+			if( abs(glm::angle(newOrientation, m_Up) - glm::radians(90.0f)) <= glm::radians(85.0f) )
+				m_Oriantaion = newOrientation;
 
-		m_Oriantaion = glm::rotate(m_Oriantaion, glm::radians(-rotY), m_Up);
-		RefreshProjectionMatrix();
+			m_Oriantaion = glm::rotate(m_Oriantaion, glm::radians(-rotY), m_Up);
+			RefreshProjectionMatrix();
+		}
 
 		return false;
 	}

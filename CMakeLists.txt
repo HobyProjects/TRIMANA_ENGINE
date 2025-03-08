@@ -24,8 +24,9 @@ find_package(spdlog REQUIRED)
 find_package(SDL3 REQUIRED)
 find_package(glad REQUIRED)
 find_package(glm REQUIRED)
-find_package(stb REQUIRED)
+# find_package(stb REQUIRED) # The SOIL2 library already includes the stb_image library
 find_package(assimp REQUIRED)
+find_package(soil2 REQUIRED)
 
 
 ###############################################################################
@@ -153,8 +154,9 @@ target_link_libraries(
             SDL3::SDL3-static 
             glad::glad 
             glm::glm-header-only
-            stb::stb
+            # stb::stb # The SOIL2 library already includes the stb_image library
             assimp::assimp
+            soil2::soil2
 )
 
 

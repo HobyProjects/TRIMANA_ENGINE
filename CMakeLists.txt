@@ -7,11 +7,9 @@ project(TrimanaEngine VERSION 1.0.0 LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-
 set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
-
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
 
@@ -27,6 +25,7 @@ find_package(glm REQUIRED)
 # find_package(stb REQUIRED) # The SOIL2 library already includes the stb_image library
 find_package(assimp REQUIRED)
 find_package(soil2 REQUIRED)
+find_package(imgui REQUIRED)
 
 
 ###############################################################################
@@ -157,6 +156,7 @@ target_link_libraries(
             # stb::stb # The SOIL2 library already includes the stb_image library
             assimp::assimp
             soil2::soil2
+            imgui::imgui
 )
 
 
@@ -168,6 +168,7 @@ set(
     TRIMANA_APP_INCLUDE_DIRS
         ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint
         ${CMAKE_CURRENT_SOURCE_DIR}/src/app/camera
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/app/imgui
 )
 
 set(
@@ -177,6 +178,7 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint/application_layers_stack.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint/sandbox.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/app/camera/primary_camera.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/app/imgui/tgui.hpp
 )
 
 set(
@@ -185,8 +187,8 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint/application_layers_stack.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint/sandbox.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint/main.cpp
-
         ${CMAKE_CURRENT_SOURCE_DIR}/src/app/camera/primary_camera.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/app/imgui/tgui.hpp
 )
 
 add_executable(TrimanaEngine ${TRIMANA_CORE_HEADERS} ${TRIMANA_APP_HEADERS} ${TRIMANA_APP_SOURCES})

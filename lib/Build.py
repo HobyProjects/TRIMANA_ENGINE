@@ -235,7 +235,7 @@ if __name__ == "__main__":
         PreCompileLibraries("stb", "stb_image", "build/config/stb", "build/packages/stb", ""),
         PreCompileLibraries("SOIL2", "SOIL2", "build/config/SOIL2", "build/packages/SOIL2", ""),
         PreCompileLibraries("assimp", "assimp", "build/config/assimp", "build/packages/assimp", ""),
-        #PreCompileLibraries("imgui", "lib/imgui_docking", "lib/build/config/imgui", "lib/build/packages/imgui", ""),
+        PreCompileLibraries("imgui", "imgui_docking", "build/config/imgui", "build/packages/imgui", ""),
         #PreCompileLibraries("entt", "lib/entt", "lib/build/config/entt", "lib/build/packages/entt", ""),
     ]
 

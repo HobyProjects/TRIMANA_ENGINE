@@ -179,6 +179,8 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint/sandbox.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/app/camera/primary_camera.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/app/imgui/tgui.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/app/imgui/imgui_keycodes.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/app/imgui/imgui_layer.hpp
 )
 
 set(
@@ -188,7 +190,8 @@ set(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint/sandbox.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/app/entrypoint/main.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/app/camera/primary_camera.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/app/imgui/tgui.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/app/imgui/tgui.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/app/imgui/imgui_layer.cpp
 )
 
 add_executable(TrimanaEngine ${TRIMANA_CORE_HEADERS} ${TRIMANA_APP_HEADERS} ${TRIMANA_APP_SOURCES})

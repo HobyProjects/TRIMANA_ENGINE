@@ -14,6 +14,9 @@ namespace TE::App
 
 		m_LayerStack = std::make_shared<ApplicationLayerStack>();
 		m_SandboxLayer = std::make_shared<SandBoxLayer>(m_Window);
+		m_ImGuiLayer = std::make_shared<ImGuiLayer>(m_Window, ImGuiColorScheme::Dark);
+
+		PushOverlay(m_ImGuiLayer);
 		PushLayer(m_SandboxLayer);
 	}
 
@@ -45,7 +48,14 @@ namespace TE::App
 				}
 			}
 
+			m_ImGuiLayer->Begin();
 
+			for( auto& layers : *m_LayerStack )
+			{
+				layers->OnImGuiRenders();
+			}
+
+			m_ImGuiLayer->End();
 
 			m_Window->SwapBuffers();
 		}

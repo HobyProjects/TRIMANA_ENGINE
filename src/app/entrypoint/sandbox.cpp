@@ -63,6 +63,7 @@ namespace TE::App
 	{
 		m_CameraController->OnUpdate(dt);
 
+
 		m_ShaderProgram->Bind();
 		m_ShaderProgram->SetUniform("u_CameraMatrix", m_CameraController->Perspective_Camera.GetCameraMatrix());
 		m_ShaderProgram->SetUniform("u_Color", glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
@@ -78,5 +79,6 @@ namespace TE::App
 
 	void SandBoxLayer::OnImGuiRenders()
 	{
+		ImGui::ShowDemoWindow();
 	}
 }

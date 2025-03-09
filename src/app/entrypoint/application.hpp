@@ -5,6 +5,7 @@
 #include "application_layers_stack.hpp"
 
 #include "sandbox.hpp"
+#include "imgui_layer.hpp"
 
 namespace TE::App
 {
@@ -33,6 +34,9 @@ namespace TE::App
 
 			//Application Layers
 			std::shared_ptr<SandBoxLayer> m_SandboxLayer{ nullptr };
+			std::shared_ptr<ImGuiLayer> m_ImGuiLayer{ nullptr };
+
+			//For Delta time calculation
 			float m_LastFrameTime{ 0.0f };
 	};
 }
